@@ -29,25 +29,25 @@ class Tricks
     private $Description;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Photo", mappedBy="TricksId")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Style", inversedBy="tricks")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $StyleId;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Photo", mappedBy="TricksId", orphanRemoval=true)
      */
     private $photos;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Video", mappedBy="TricksId")
+     * @ORM\OneToMany(targetEntity="App\Entity\Video", mappedBy="TricksId", orphanRemoval=true)
      */
     private $videos;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Style", mappedBy="tricks")
-     */
-    private $StyleId;
 
     public function __construct()
     {
         $this->photos = new ArrayCollection();
         $this->videos = new ArrayCollection();
-        $this->StyleId = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -75,6 +75,18 @@ class Tricks
     public function setDescription(string $Description): self
     {
         $this->Description = $Description;
+
+        return $this;
+    }
+
+    public function getStyleId(): ?Style
+    {
+        return $this->StyleId;
+    }
+
+    public function setStyleId(?Style $StyleId): self
+    {
+        $this->StyleId = $StyleId;
 
         return $this;
     }
@@ -135,37 +147,6 @@ class Tricks
             // set the owning side to null (unless already changed)
             if ($video->getTricksId() === $this) {
                 $video->setTricksId(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Style[]
-     */
-    public function getStyleId(): Collection
-    {
-        return $this->StyleId;
-    }
-
-    public function addStyleId(Style $styleId): self
-    {
-        if (!$this->StyleId->contains($styleId)) {
-            $this->StyleId[] = $styleId;
-            $styleId->setTricks($this);
-        }
-
-        return $this;
-    }
-
-    public function removeStyleId(Style $styleId): self
-    {
-        if ($this->StyleId->contains($styleId)) {
-            $this->StyleId->removeElement($styleId);
-            // set the owning side to null (unless already changed)
-            if ($styleId->getTricks() === $this) {
-                $styleId->setTricks(null);
             }
         }
 

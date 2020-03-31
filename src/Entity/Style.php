@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -22,9 +24,14 @@ class Style
     private $Name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Tricks", inversedBy="StyleId")
+     * @ORM\OneToMany(targetEntity="App\Entity\Tricks", mappedBy="StyleId", orphanRemoval=true)
      */
     private $tricks;
+
+    public function __construct()
+    {
+        $this->tricks = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -43,14 +50,33 @@ class Style
         return $this;
     }
 
-    public function getTricks(): ?Tricks
+    /**
+     * @return Collection|Tricks[]
+     */
+    public function getTricks(): Collection
     {
         return $this->tricks;
     }
 
-    public function setTricks(?Tricks $tricks): self
+    public function addTrick(Tricks $trick): self
     {
-        $this->tricks = $tricks;
+        if (!$this->tricks->contains($trick)) {
+            $this->tricks[] = $trick;
+            $trick->setStyleId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTrick(Tricks $trick): self
+    {
+        if ($this->tricks->contains($trick)) {
+            $this->tricks->removeElement($trick);
+            // set the owning side to null (unless already changed)
+            if ($trick->getStyleId() === $this) {
+                $trick->setStyleId(null);
+            }
+        }
 
         return $this;
     }

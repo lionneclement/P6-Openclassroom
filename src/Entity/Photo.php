@@ -22,7 +22,8 @@ class Photo
     private $Name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\tricks", inversedBy="photos")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Tricks", inversedBy="photos")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $TricksId;
 
@@ -43,12 +44,12 @@ class Photo
         return $this;
     }
 
-    public function getTricksId(): ?tricks
+    public function getTricksId(): ?Tricks
     {
         return $this->TricksId;
     }
 
-    public function setTricksId(?tricks $TricksId): self
+    public function setTricksId(?Tricks $TricksId): self
     {
         $this->TricksId = $TricksId;
 
