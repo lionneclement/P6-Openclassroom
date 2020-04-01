@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class TricksController extends AbstractController
 {
     /**
-     * @Route("/tricks", name="create_tricks")
+     * @Route("/tricks/create", name="create_tricks")
      */
     public function createTricks(Request $request)
     {
@@ -25,13 +25,45 @@ class TricksController extends AbstractController
                 'success',
                 'Votre Tricks à étais enregistrer'
             );
-            $task = $form->getData();
+            $formData = $form->getData();
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($task);
+            $entityManager->persist($formData);
             $entityManager->flush();
         }
-        return $this->render('tricks/index.html.twig', [
-            'controller_name' => 'TricksController',
+        return $this->render('tricks/form.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/tricks/update/{id}", name="update_tricks", requirements={"id"="\d+"})
+     */
+    public function updateTricks(Request $request,int $id)
+    {
+        $trick = $this->getDoctrine()
+        ->getRepository(Tricks::class)
+        ->find($id);
+
+        if (!$trick) {
+            throw $this->createNotFoundException(
+                'No product found for id '.$id
+            );
+        }
+        $form = $this->createForm(TricksType::class, $trick);
+        
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->addFlash(
+                'success',
+                'Votre Tricks à étais modifier'
+            );
+            $formData = $form->getData();
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($formData);
+            $entityManager->flush();
+        }
+        return $this->render('tricks/form.html.twig', [
             'form' => $form->createView(),
         ]);
     }
