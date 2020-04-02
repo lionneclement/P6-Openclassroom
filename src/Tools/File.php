@@ -35,6 +35,6 @@ class File
   public function removeImage($file)
   {
       $filesystem = new Filesystem();
-      $filesystem->remove(['symlink', $this->getPhotoDirectory(), $file]);
+      $filesystem->remove([$this->getPhotoDirectory().'/'.$file]);
   }
 }

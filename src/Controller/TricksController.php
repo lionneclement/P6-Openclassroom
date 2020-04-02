@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Photo;
 use App\Entity\Tricks;
-use App\Form\PhotoType;
+use App\Form\PhotosType;
 use App\Form\TricksType;
 use App\Tools\File;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,22 +26,26 @@ class TricksController extends AbstractController
         ->getRepository(Photo::class)
         ->findByTricksId($id);
 
-        $photo = new Photo;
-        $photo->setTricksId($trick);
-
-        $form = $this->createForm(PhotoType::class, $photo);
+        $form = $this->createForm(PhotosType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $imageFile = $form['Name']->getData();
-            if($imageFile){
-                $imageFileName = $File->uploadImage($imageFile);
-                $photo->setName($imageFileName);
+            $imageFiles = $form['Photos']->getData();
+
+            if($imageFiles){
+                $this->addFlash('success', 'Votre photo à étais enregistrer');
+                $entityManager = $this->getDoctrine()->getManager();
+
+                foreach ($imageFiles as $imageFile){
+                    $imageFileName = $File->uploadImage($imageFile);
+                    $photo = new Photo;
+                    $photo->setTricksId($trick);
+                    $photo->setName($imageFileName);
+                    $entityManager->persist($photo);
+                    $entityManager->flush();
+                }
+                return $this->redirect($request->getUri());
             }
-            $this->addFlash('success', 'Votre photo à étais enregistrer');
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($photo);
-            $entityManager->flush();
         }
         return $this->render('tricks/show.html.twig', [
             'photos' => $photos,
