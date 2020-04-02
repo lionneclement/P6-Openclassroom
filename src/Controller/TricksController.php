@@ -2,14 +2,48 @@
 
 namespace App\Controller;
 
+use App\Entity\Photo;
 use App\Entity\Tricks;
+use App\Form\PhotoType;
 use App\Form\TricksType;
+use App\Tools\UploadFile;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 class TricksController extends AbstractController
 {
+    /**
+     * @Route("/tricks/show/{id}", name="show_tricks", requirements={"id"="\d+"})
+     */
+    public function showTricks(Request $request, int $id, UploadFile $uploadFile)
+    {
+        $trick = $this->getDoctrine()
+        ->getRepository(Tricks::class)
+        ->find($id);
+
+        $photo = new Photo;
+        $photo->setTricksId($trick);
+
+        $form = $this->createForm(PhotoType::class, $photo);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $imageFile = $form['Name']->getData();
+            if($imageFile){
+                $imageFileName = $uploadFile->uploadImage($imageFile);
+                $photo->setName($imageFileName);
+            }
+            $this->addFlash('success', 'Votre photo à étais enregistrer');
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($photo);
+            $entityManager->flush();
+        }
+        return $this->render('tricks/show.html.twig', [
+            'trick'=> $trick,
+            'form' => $form->createView(),
+        ]);
+    }
     /**
      * @Route("/tricks/create", name="create_tricks")
      */
