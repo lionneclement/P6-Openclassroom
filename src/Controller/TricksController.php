@@ -16,7 +16,7 @@ class TricksController extends AbstractController
     /**
      * @Route("/tricks/show/{id}", name="show_tricks", requirements={"id"="\d+"})
      */
-    public function showTricks(Request $request, int $id, File $File)
+    public function showTricks(Request $request, int $id, MediaController $mediaController, File $File)
     {
         $trick = $this->getDoctrine()
         ->getRepository(Tricks::class)
@@ -34,16 +34,7 @@ class TricksController extends AbstractController
 
             if($imageFiles){
                 $this->addFlash('success', 'Votre photo à étais enregistrer');
-                $entityManager = $this->getDoctrine()->getManager();
-
-                foreach ($imageFiles as $imageFile){
-                    $imageFileName = $File->uploadImage($imageFile);
-                    $photo = new Photo;
-                    $photo->setTricksId($trick);
-                    $photo->setName($imageFileName);
-                    $entityManager->persist($photo);
-                    $entityManager->flush();
-                }
+                $mediaController->addPhotos($imageFiles, $trick, $File);
                 return $this->redirect($request->getUri());
             }
         }
@@ -58,16 +49,12 @@ class TricksController extends AbstractController
      */
     public function createTricks(Request $request)
     {
-        $tricks = new Tricks;
-        $form = $this->createForm(TricksType::class, $tricks);
+        $form = $this->createForm(TricksType::class);
         
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->addFlash(
-                'success',
-                'Votre Tricks à étais enregistrer'
-            );
+            $this->addFlash('success','Votre Tricks à étais enregistrer');
             $formData = $form->getData();
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($formData);
@@ -88,19 +75,14 @@ class TricksController extends AbstractController
         ->find($id);
 
         if (!$trick) {
-            throw $this->createNotFoundException(
-                'No product found for id '.$id
-            );
+            throw $this->createNotFoundException('No product found for id '.$id);
         }
         $form = $this->createForm(TricksType::class, $trick);
         
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->addFlash(
-                'success',
-                'Votre Tricks à étais modifier'
-            );
+            $this->addFlash('success','Votre Tricks à étais modifier');
             $formData = $form->getData();
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($formData);
@@ -111,32 +93,16 @@ class TricksController extends AbstractController
         ]);
     }
     /**
-     * @Route("/tricks/photo/delete/{photoId}/{trickId}", name="remove_photo", requirements={"photoId"="\d+","trickId"="\d+" })
-     */
-    public function removePhoto($photoId, $trickId, File $File)
-    {
-        $photo = $this->getDoctrine()
-        ->getRepository(Photo::class)
-        ->find($photoId);
-
-        $filename = $photo->getName();
-        $File->removeImage($filename);
-
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($photo);
-        $em->flush();
-
-        return $this->redirect('/tricks/show/'.$trickId);
-    }
-    /**
      * @Route("/tricks/delete/{id}", name="remove_tricks", requirements={"id"="\d+"})
      */
-    public function removeTricks($id)
+    public function removeTricks($id, MediaController $mediaController, File $File)
     {
         $Trick = $this->getDoctrine()
         ->getRepository(Tricks::class)
         ->find($id);
-
+        
+        $mediaController->removeMultiplePhotos($id, $File);
+        
         $em = $this->getDoctrine()->getManager();
         $em->remove($Trick);
         $em->flush();
