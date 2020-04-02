@@ -128,4 +128,19 @@ class TricksController extends AbstractController
 
         return $this->redirect('/tricks/show/'.$trickId);
     }
+    /**
+     * @Route("/tricks/delete/{id}", name="remove_tricks", requirements={"id"="\d+"})
+     */
+    public function removeTricks($id)
+    {
+        $Trick = $this->getDoctrine()
+        ->getRepository(Tricks::class)
+        ->find($id);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($Trick);
+        $em->flush();
+
+        return $this->redirect('/');
+    }
 }
