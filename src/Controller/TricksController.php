@@ -6,7 +6,7 @@ use App\Entity\Photo;
 use App\Entity\Tricks;
 use App\Form\PhotoType;
 use App\Form\TricksType;
-use App\Tools\UploadFile;
+use App\Tools\File;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,11 +16,15 @@ class TricksController extends AbstractController
     /**
      * @Route("/tricks/show/{id}", name="show_tricks", requirements={"id"="\d+"})
      */
-    public function showTricks(Request $request, int $id, UploadFile $uploadFile)
+    public function showTricks(Request $request, int $id, File $File)
     {
         $trick = $this->getDoctrine()
         ->getRepository(Tricks::class)
         ->find($id);
+        
+        $photos = $this->getDoctrine()
+        ->getRepository(Photo::class)
+        ->findByTricksId($id);
 
         $photo = new Photo;
         $photo->setTricksId($trick);
@@ -31,7 +35,7 @@ class TricksController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $imageFile = $form['Name']->getData();
             if($imageFile){
-                $imageFileName = $uploadFile->uploadImage($imageFile);
+                $imageFileName = $File->uploadImage($imageFile);
                 $photo->setName($imageFileName);
             }
             $this->addFlash('success', 'Votre photo à étais enregistrer');
@@ -40,6 +44,7 @@ class TricksController extends AbstractController
             $entityManager->flush();
         }
         return $this->render('tricks/show.html.twig', [
+            'photos' => $photos,
             'trick'=> $trick,
             'form' => $form->createView(),
         ]);
@@ -100,5 +105,23 @@ class TricksController extends AbstractController
         return $this->render('tricks/form.html.twig', [
             'form' => $form->createView(),
         ]);
+    }
+    /**
+     * @Route("/tricks/photo/delete/{photoId}/{trickId}", name="remove_photo", requirements={"photoId"="\d+","trickId"="\d+" })
+     */
+    public function removePhoto($photoId, $trickId, File $File)
+    {
+        $photo = $this->getDoctrine()
+        ->getRepository(Photo::class)
+        ->find($photoId);
+
+        $filename = $photo->getName();
+        $File->removeImage($filename);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($photo);
+        $em->flush();
+
+        return $this->redirect('/tricks/show/'.$trickId);
     }
 }

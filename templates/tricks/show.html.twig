@@ -5,7 +5,15 @@
 {% block body %}
 <div class="container">
   <div class="text-center pt-5">
-        <img src="{{asset('Images/default-top.jpg')}}" class="rounded mx-auto d-block" alt="Snowboard">
+        <img src="{{asset('Images/default-top.jpg')}}" class="img-fluid" alt="Snowboard">
+        <div class="row pt-3">
+          {% for photo in photos %}
+            <div class="col-3">
+              <img src="{{asset('Upload/'~ photo.name)}}" class="img-fluid" alt="Snowboard">
+              <a class="btn btn-secondary" href="/tricks/photo/delete/{{photo.id}}/{{trick.id}}">Supprimer</a>
+            </div>
+          {% endfor %}
+        </div>
         <h1>Ajouter une photo</h1>
         {% for message in app.flashes('success') %}
             <div class="alert alert-success" role="alert">

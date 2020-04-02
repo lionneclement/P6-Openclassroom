@@ -2,10 +2,11 @@
 
 namespace App\Tools;
 
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-class UploadFile
+class File
 {
   private $photoDirectory;
 
@@ -29,5 +30,11 @@ class UploadFile
   public function getPhotoDirectory()
   {
       return $this->photoDirectory;
+  }
+
+  public function removeImage($file)
+  {
+      $filesystem = new Filesystem();
+      $filesystem->remove(['symlink', $this->getPhotoDirectory(), $file]);
   }
 }
