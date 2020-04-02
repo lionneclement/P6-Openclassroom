@@ -22,7 +22,7 @@
                     <img src="{{ asset('Images/default.jpg')}}" class="card-img-top" alt="Snowboard freestyle">
                     <div class="card-body">
                         <h5 class="card-title">{{ trick.title }}</h5>
-                        <p class="card-text">{{ trick.description }}</p>
+                        <p class="card-text">{{ trick.description|slice(0, 50)}} ...</p>
                         <a class="btn btn-secondary" href="/tricks/update/{{ trick.id }}">Modifier</a>
                     </div>
                   </div>
