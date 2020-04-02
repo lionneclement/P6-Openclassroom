@@ -32,17 +32,17 @@ class Tricks
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Style", inversedBy="tricks")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     private $StyleId;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Photo", mappedBy="TricksId", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Photo", mappedBy="TricksId", orphanRemoval=true, cascade={"remove"})
      */
     private $photos;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Video", mappedBy="TricksId", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Video", mappedBy="TricksId", orphanRemoval=true, cascade={"remove"})
      */
     private $videos;
 

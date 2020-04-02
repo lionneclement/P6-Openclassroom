@@ -23,7 +23,7 @@ class Photo
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Tricks", inversedBy="photos")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     private $TricksId;
 
