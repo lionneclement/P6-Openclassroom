@@ -6,6 +6,7 @@ use App\Entity\Style;
 use App\Entity\Tricks;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -25,6 +26,10 @@ class TricksType extends AbstractType
                 'class' => Style::class,
                 'choice_label'=>'name',
                 'label'=>'Style'
+            ])
+            ->add('Photos', FileType::class,[
+                    'mapped' => false,
+                    'multiple'=> true,
             ])
             ->add('save', SubmitType::class,[
                 'label'=>'Confirmer'

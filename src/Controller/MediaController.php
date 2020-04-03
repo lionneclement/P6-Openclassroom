@@ -38,18 +38,4 @@ class MediaController extends AbstractController
             $File->removeImage($photo->getName());
        }
     }
-
-    public function addPhotos(array $imageFiles, object $Trick, File $File)
-    {
-        $entityManager = $this->getDoctrine()->getManager();
-
-        foreach ($imageFiles as $imageFile){
-            $imageFileName = $File->uploadImage($imageFile);
-            $photo = new Photo;
-            $photo->setTricksId($Trick);
-            $photo->setName($imageFileName);
-            $entityManager->persist($photo);
-            $entityManager->flush();
-        }
-    }
 }

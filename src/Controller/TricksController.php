@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Photo;
 use App\Entity\Tricks;
-use App\Form\PhotosType;
 use App\Form\TricksType;
 use App\Tools\File;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,39 +25,35 @@ class TricksController extends AbstractController
         ->getRepository(Photo::class)
         ->findByTricksId($id);
 
-        $form = $this->createForm(PhotosType::class);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $imageFiles = $form['Photos']->getData();
-
-            if($imageFiles){
-                $this->addFlash('success', 'Votre photo à étais enregistrer');
-                $mediaController->addPhotos($imageFiles, $trick, $File);
-                return $this->redirect($request->getUri());
-            }
-        }
         return $this->render('tricks/show.html.twig', [
             'photos' => $photos,
             'trick'=> $trick,
-            'form' => $form->createView(),
         ]);
     }
     /**
      * @Route("/tricks/create", name="create_tricks")
      */
-    public function createTricks(Request $request)
+    public function createTricks(Request $request, File $File)
     {
-        $form = $this->createForm(TricksType::class);
-        
+        $trick = new Tricks;
+
+        $form = $this->createForm(TricksType::class, $trick);
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
             $this->addFlash('success','Votre Tricks à étais enregistrer');
-            $formData = $form->getData();
+            $Images =$form['Photos']->getData();
+            foreach($Images as $Image){
+                $imageFileName = $File->uploadImage($Image);
+                $Photo = new Photo;
+                $Photo->setName($imageFileName);
+                $trick->addPhoto($Photo);
+            }
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($formData);
+            $entityManager->persist($trick);
             $entityManager->flush();
+            
+            return $this->redirectToRoute('home_page');
         }
         return $this->render('tricks/form.html.twig', [
             'form' => $form->createView(),
@@ -68,7 +63,7 @@ class TricksController extends AbstractController
     /**
      * @Route("/tricks/update/{id}", name="update_tricks", requirements={"id"="\d+"})
      */
-    public function updateTricks(Request $request,int $id)
+    public function updateTricks(Request $request,int $id, File $File)
     {
         $trick = $this->getDoctrine()
         ->getRepository(Tricks::class)
@@ -78,15 +73,22 @@ class TricksController extends AbstractController
             throw $this->createNotFoundException('No product found for id '.$id);
         }
         $form = $this->createForm(TricksType::class, $trick);
-        
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
             $this->addFlash('success','Votre Tricks à étais modifier');
-            $formData = $form->getData();
+            $Images =$form['Photos']->getData();
+            foreach($Images as $Image){
+                $imageFileName = $File->uploadImage($Image);
+                $Photo = new Photo;
+                $Photo->setName($imageFileName);
+                $trick->addPhoto($Photo);
+            }
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($formData);
+            $entityManager->persist($trick);
             $entityManager->flush();
+
+            return $this->redirectToRoute('home_page');
         }
         return $this->render('tricks/form.html.twig', [
             'form' => $form->createView(),
@@ -106,7 +108,6 @@ class TricksController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $em->remove($Trick);
         $em->flush();
-
-        return $this->redirect('/');
+        return $this->redirectToRoute('home_page');
     }
 }

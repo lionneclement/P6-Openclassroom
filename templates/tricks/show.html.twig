@@ -14,13 +14,6 @@
             </div>
           {% endfor %}
         </div>
-        <h1>Ajouter une photo</h1>
-        {% for message in app.flashes('success') %}
-            <div class="alert alert-success" role="alert">
-                {{ message }}
-            </div>
-        {% endfor %}
-        {{ form(form) }}
         <h1 class="card-title">{{ trick.title }}</h1>
         <p class="card-text">{{ trick.description }}</p>
         <a class="btn btn-secondary" href="/tricks/update/{{ trick.id }}">Modifier</a>

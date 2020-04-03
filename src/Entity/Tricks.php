@@ -37,12 +37,12 @@ class Tricks
     private $StyleId;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Photo", mappedBy="TricksId", orphanRemoval=true, cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="App\Entity\Photo", mappedBy="TricksId", orphanRemoval=true, cascade={"remove", "persist"})
      */
     private $photos;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Video", mappedBy="TricksId", orphanRemoval=true, cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="App\Entity\Video", mappedBy="TricksId", orphanRemoval=true, cascade={"remove", "persist"})
      */
     private $videos;
 
