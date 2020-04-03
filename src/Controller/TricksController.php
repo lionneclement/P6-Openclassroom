@@ -19,7 +19,7 @@ class TricksController extends AbstractController
     {
         $trick = $this->getDoctrine()
         ->getRepository(Tricks::class)
-        ->find($id);
+        ->findStyleNameById($id);
         
         $photos = $this->getDoctrine()
         ->getRepository(Photo::class)
