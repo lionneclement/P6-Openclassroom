@@ -13,6 +13,11 @@
       </div>
     </div>
   </header>
+    {% for message in app.flashes('success') %}
+      <div class="alert alert-success text-center" role="alert">
+          {{ message }}
+      </div>
+    {% endfor %}
 <section class="pt-3">
     <div class="container">
         <div class="row">

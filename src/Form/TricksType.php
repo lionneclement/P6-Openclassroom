@@ -30,6 +30,7 @@ class TricksType extends AbstractType
             ->add('Photos', FileType::class,[
                     'mapped' => false,
                     'multiple'=> true,
+                    'required'=>false,
             ])
             ->add('save', SubmitType::class,[
                 'label'=>'Confirmer'

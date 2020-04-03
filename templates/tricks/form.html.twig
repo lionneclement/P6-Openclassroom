@@ -5,11 +5,6 @@
 {% block body %}
 <div class="container pt-5">
     <div class="pt-5">
-        {% for message in app.flashes('success') %}
-            <div class="alert alert-success" role="alert">
-                {{ message }}
-            </div>
-        {% endfor %}
         {{ form(form) }}
     </div>
 </div>
