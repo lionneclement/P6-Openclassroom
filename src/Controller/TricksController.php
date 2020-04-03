@@ -2,20 +2,23 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
 use App\Entity\Photo;
 use App\Entity\Tricks;
+use App\Form\CommentType;
 use App\Form\TricksType;
 use App\Tools\File;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class TricksController extends AbstractController
 {
     /**
      * @Route("/tricks/show/{id}", name="show_tricks", requirements={"id"="\d+"})
      */
-    public function showTricks(Request $request, int $id, MediaController $mediaController, File $File)
+    public function showTricks(Request $request, int $id, UserInterface $User)
     {
         $trick = $this->getDoctrine()
         ->getRepository(Tricks::class)
@@ -25,9 +28,32 @@ class TricksController extends AbstractController
         ->getRepository(Photo::class)
         ->findByTricksId($id);
 
+        $comments = $this->getDoctrine()
+        ->getRepository(Comment::class)
+        ->findByTricksId($id);
+
+        $comment = new Comment;
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->addFlash('success','Votre message à étais enregistrer');
+
+            $comment->setUserId($User);
+            $comment->setTricksId($trick);
+            $comment->setDate(new \DateTime());
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($comment);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('show_tricks',['id'=>$id]);
+        }
+
         return $this->render('tricks/show.html.twig', [
+            'form' => $form->createView(),
             'photos' => $photos,
             'trick'=> $trick,
+            'comments' => $comments,
         ]);
     }
     /**
