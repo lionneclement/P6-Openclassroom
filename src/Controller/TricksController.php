@@ -30,7 +30,7 @@ class TricksController extends AbstractController
 
         $comments = $this->getDoctrine()
         ->getRepository(Comment::class)
-        ->findCommentByTricksId($id);
+        ->findAllCommentByTricksId($id, 1);
 
         $comment = new Comment;
         $form = $this->createForm(CommentType::class, $comment);

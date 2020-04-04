@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Les commentaires{% endblock %}
+
+{% block body %}
+<section class="pt-5">
+ <div class="container">
+    <div class="row pt-5">
+      {% for comment in comments %}
+        <div class="col-3">
+          <h5 class="card-text">Auteur: {{ comment.UserId.email }}</h5>
+          <p class="card-text">Message: {{ comment.Message }}</p>
+          <i class="card-text">Date: {{ comment.Date|date("d/m/Y")}}</i>
+          <br>
+          <p class="card-text">Status: 
+            {% if comment.Status %}
+              Valide
+            {% else %}
+              Invalide
+            {% endif %}
+          </p>
+          <a class="btn btn-secondary" href="/comment/delete/{{comment.id}}">Supprimer</a>
+          <a class="btn btn-secondary" href="/comment/changeStatus/{{comment.id}}">Changer le status</a>
+        </div>
+      {% endfor %}
+    </div>
+ </div>
+</section>
+{% endblock %}
