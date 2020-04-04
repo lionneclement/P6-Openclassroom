@@ -38,6 +38,11 @@ class Comment
      */
     private $TricksId;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $Status;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -87,6 +92,18 @@ class Comment
     public function setTricksId(?tricks $TricksId): self
     {
         $this->TricksId = $TricksId;
+
+        return $this;
+    }
+
+    public function getStatus(): ?bool
+    {
+        return $this->Status;
+    }
+
+    public function setStatus(bool $Status): self
+    {
+        $this->Status = $Status;
 
         return $this;
     }
