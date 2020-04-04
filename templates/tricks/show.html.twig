@@ -29,7 +29,12 @@
         {% endif %}
         <h1>Tout les commentaires</h1>
         {% for comment in comments %}
-          <img src="{{asset('Images/'~ comment.UserId.ImageName)}}" class="userimage" alt="Photo de profil">
+            {% if comment.UserId.ImageName == 'default-user.png' %}
+                {% set directory = 'Images' %}
+            {% else %}
+                {% set directory = 'Upload' %}
+            {% endif %}
+          <img src="{{asset(directory ~'/'~ comment.UserId.ImageName)}}" class="userimage" alt="Photo de profil">
           <p class="card-text">Auteur: {{ comment.UserId.Name }}</p>
           <p class="card-text">Message: {{ comment.Message }}</p>
           <p class="card-text">Date: {{ comment.Date|date("d/m/Y")}}</p>
