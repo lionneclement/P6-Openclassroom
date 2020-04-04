@@ -38,6 +38,7 @@ class TricksController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->addFlash('success','Votre message à étais enregistrer');
+            $comment->setStatus(0);
             $comment->setUserId($User);
             $comment->setTricksId($trick);
             $comment->setDate(new \DateTime());
