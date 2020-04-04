@@ -29,7 +29,8 @@
         {% endif %}
         <h1>Tout les commentaires</h1>
         {% for comment in comments %}
-          <p class="card-text">Auteur {{ comment.UserId.email }}</p>
+          <img src="{{asset('Images/'~ comment.UserId.ImageName)}}" class="userimage" alt="Photo de profil">
+          <p class="card-text">Auteur: {{ comment.UserId.Name }}</p>
           <p class="card-text">Message: {{ comment.Message }}</p>
           <p class="card-text">Date: {{ comment.Date|date("d/m/Y")}}</p>
         {% endfor %}

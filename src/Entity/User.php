@@ -48,7 +48,7 @@ class User implements UserInterface
     private $Name;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(type="text")
      */
     private $ImageName;
 
