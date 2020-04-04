@@ -29,7 +29,9 @@
               {{ message }}
           </div>
         {% endfor %}
-        {{ form(form) }}
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+          {{ form(form) }}
+        {% endif %}
   </div>  
 </div>
 {% endblock %}

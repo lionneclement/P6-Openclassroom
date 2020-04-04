@@ -18,7 +18,7 @@ class TricksController extends AbstractController
     /**
      * @Route("/tricks/show/{id}", name="show_tricks", requirements={"id"="\d+"})
      */
-    public function showTricks(Request $request, int $id, UserInterface $User)
+    public function showTricks(Request $request, int $id)
     {
         $trick = $this->getDoctrine()
         ->getRepository(Tricks::class)
@@ -38,7 +38,7 @@ class TricksController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->addFlash('success','Votre message à étais enregistrer');
-
+            $User = new UserInterface; 
             $comment->setUserId($User);
             $comment->setTricksId($trick);
             $comment->setDate(new \DateTime());
