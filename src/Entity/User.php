@@ -42,6 +42,16 @@ class User implements UserInterface
      */
     private $comments;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $Name;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $ImageName;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -152,6 +162,30 @@ class User implements UserInterface
                 $comment->setUserId(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->Name;
+    }
+
+    public function setName(string $Name): self
+    {
+        $this->Name = $Name;
+
+        return $this;
+    }
+
+    public function getImageName(): ?string
+    {
+        return $this->ImageName;
+    }
+
+    public function setImageName(?string $ImageName): self
+    {
+        $this->ImageName = $ImageName;
 
         return $this;
     }
