@@ -37,5 +37,7 @@ security:
           - { path: ^/login$, allow_if: is_anonymous() }
           - { path: ^/register$, allow_if: is_anonymous() }
           - { path: ^/logout$, roles: IS_AUTHENTICATED_FULLY }
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+          - { path: ^/comment, roles: ROLE_ADMIN }
+          - { path: ^/tricks/show}
+          - { path: ^/tricks, roles: IS_AUTHENTICATED_FULLY }
+          - { path: ^/profile, roles: IS_AUTHENTICATED_FULLY }
