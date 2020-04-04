@@ -10,7 +10,7 @@
           {% for photo in photos %}
             <div class="col-3">
               <img src="{{asset('Upload/'~ photo.name)}}" class="img-fluid" alt="Snowboard">
-              <a class="btn btn-secondary" href="/tricks/photo/delete/{{photo.id}}/{{trick.id}}">Supprimer</a>
+              <a class="btn btn-secondary" href="/tricks/photo/delete/{{photo.id}}">Supprimer</a>
             </div>
           {% endfor %}
         </div>
