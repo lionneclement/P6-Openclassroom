@@ -22,8 +22,6 @@ class TricksRepository extends ServiceEntityRepository
     public function findStyleNameById($value): ?Tricks
     {
         return $this->createQueryBuilder('t')
-            ->select('t, c')
-            ->leftJoin('t.StyleId', 'c')
             ->andWhere('t.id = :val')
             ->setParameter('val', $value)
             ->getQuery()

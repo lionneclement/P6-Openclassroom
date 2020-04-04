@@ -22,8 +22,6 @@ class CommentRepository extends ServiceEntityRepository
     public function findCommentByTricksId(int $id): array
     {
         return $this->createQueryBuilder('p')
-            ->select('p, c')
-            ->leftJoin('p.UserId', 'c')
             ->andWhere('p.TricksId = :val')
             ->setParameter('val', $id)
             ->orderBy('p.Date', 'DESC')
