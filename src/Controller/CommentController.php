@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Comment;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 class CommentController extends AbstractController
@@ -39,7 +40,7 @@ class CommentController extends AbstractController
     /**
      * @Route("/comment/delete/{id}", name="delete_comment", requirements={"id"="\d+"})
      */
-    public function DeleteComment(int $id)
+    public function DeleteComment(int $id, Request $request)
     {
         $comment = $this->getDoctrine()
         ->getRepository(Comment::class)
@@ -49,12 +50,12 @@ class CommentController extends AbstractController
         $entityManager->remove($comment);
         $entityManager->flush();
         
-        return $this->redirectToRoute('home_page');
+        return $this->redirect($request->headers->get('referer'));
     }
     /**
      * @Route("/comment/changeStatus/{id}", name="change_status_comment", requirements={"id"="\d+"})
      */
-    public function ChangeStatusComment(int $id)
+    public function ChangeStatusComment(int $id, Request $request)
     {
         $comment = $this->getDoctrine()
         ->getRepository(Comment::class)
@@ -66,6 +67,6 @@ class CommentController extends AbstractController
         $entityManager->persist($comment);
         $entityManager->flush();
         
-        return $this->redirectToRoute('home_page');
+        return $this->redirect($request->headers->get('referer'));
     }
 }
