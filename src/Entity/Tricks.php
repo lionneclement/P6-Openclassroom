@@ -51,6 +51,16 @@ class Tricks
      */
     private $comments;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $CreateDate;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $UpdateDate;
+
     public function __construct()
     {
         $this->photos = new ArrayCollection();
@@ -188,6 +198,30 @@ class Tricks
                 $comment->setTricksId(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCreateDate(): ?\DateTimeInterface
+    {
+        return $this->CreateDate;
+    }
+
+    public function setCreateDate(\DateTimeInterface $CreateDate): self
+    {
+        $this->CreateDate = $CreateDate;
+
+        return $this;
+    }
+
+    public function getUpdateDate(): ?\DateTimeInterface
+    {
+        return $this->UpdateDate;
+    }
+
+    public function setUpdateDate(\DateTimeInterface $UpdateDate): self
+    {
+        $this->UpdateDate = $UpdateDate;
 
         return $this;
     }

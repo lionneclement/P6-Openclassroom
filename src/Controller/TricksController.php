@@ -75,6 +75,8 @@ class TricksController extends AbstractController
                 $Photo->setName($imageFileName);
                 $trick->addPhoto($Photo);
             }
+            $trick->setCreateDate(new \DateTime());
+            $trick->setUpdateDate(new \DateTime());
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($trick);
             $entityManager->flush();
@@ -110,6 +112,7 @@ class TricksController extends AbstractController
                 $Photo->setName($imageFileName);
                 $trick->addPhoto($Photo);
             }
+            $trick->setUpdateDate(new \DateTime());
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($trick);
             $entityManager->flush();
