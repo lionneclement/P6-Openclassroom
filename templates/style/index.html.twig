@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello StyleController!{% endblock %}
+
+{% block body %}
+
+<div class="pt-5">
+    <div class="container pt-5">
+        {% for style in styles %}
+            <p>{{style.Name}}</p>
+        {% endfor %}
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success text-center" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+        {{ form_start(form) }}
+            {{ form_row(form.Name) }}
+            <button class="btn btn-secondary">Ajouter</button>
+        {{ form_end(form) }}
+    </div>
+</div>
+{% endblock %}
