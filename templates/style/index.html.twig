@@ -8,6 +8,7 @@
     <div class="container pt-5">
         {% for style in styles %}
             <p>{{style.Name}}</p>
+            <a class="btn btn-secondary" href="/style/remove/{{style.id}}">Supprimer</a>
         {% endfor %}
         {% for message in app.flashes('success') %}
             <div class="alert alert-success text-center" role="alert">

@@ -33,4 +33,19 @@ class StyleController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+    /**
+     * @Route("/style/remove/{id}", name="style-remove", requirements={"id"="\d+"})
+     */
+    public function remove($id)
+    {
+        $style = $this->getDoctrine()
+        ->getRepository(Style::class)
+        ->find($id);
+        
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($style);
+        $em->flush();
+
+        return $this->redirectToRoute('style');
+    }
 }
