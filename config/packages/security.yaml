@@ -41,3 +41,4 @@ security:
           - { path: ^/tricks/show}
           - { path: ^/tricks, roles: IS_AUTHENTICATED_FULLY }
           - { path: ^/profile, roles: IS_AUTHENTICATED_FULLY }
+          - { path: ^/style, roles: ROLE_ADMIN }
