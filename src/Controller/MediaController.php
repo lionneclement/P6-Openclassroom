@@ -28,15 +28,4 @@ class MediaController extends AbstractController
 
         return $this->redirect($request->headers->get('referer'));
     }
-    
-    public function removeMultiplePhotos($id, $File)
-    {
-        $photos = $this->getDoctrine()
-        ->getRepository(Photo::class)
-        ->findByTricksId($id);
-
-       foreach($photos as $photo){
-            $File->removeImage($photo->getName());
-       }
-    }
 }

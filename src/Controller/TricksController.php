@@ -129,7 +129,13 @@ class TricksController extends AbstractController
         ->getRepository(Tricks::class)
         ->find($id);
         
-        $mediaController->removeMultiplePhotos($id, $File);
+        $photos = $this->getDoctrine()
+        ->getRepository(Photo::class)
+        ->findByTricksId($id);
+
+        foreach($photos as $photo){
+            $File->removeImage($photo->getName());
+        }
         
         $em = $this->getDoctrine()->getManager();
         $em->remove($Trick);
