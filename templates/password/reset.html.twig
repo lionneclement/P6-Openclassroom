@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Oublie de mot de passe{% endblock %}
+
+{% block body %}
+<section class="pt-5">
+ <div class="container pt-5">
+   {{ form_start(form) }}
+      {{ form_row(form.password) }}
+      <button class="btn btn-secondary">Confirme</button>
+   {{ form_end(form) }}
+   </div>
+</section>
+{% endblock %}
