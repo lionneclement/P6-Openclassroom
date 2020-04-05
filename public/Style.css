@@ -11,3 +11,9 @@ img.userimage{
   height: 50px;
   width: 50px;
 }
+.fa-arrow-down{
+  position:absolute;
+  width:10px;
+  height:10px;
+  right:5%; 
+  }

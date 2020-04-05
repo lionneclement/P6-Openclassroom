@@ -11,6 +11,11 @@
             Mon objectif est de crée un site collaboratif pour faire connaître ce sport auprès du grand public et aider à l'apprentissage des tricks.
         </p>
       </div>
+      <div class="scroll-container">
+        <a href="/#tricks">
+          <i class="fas fa-arrow-down hover-arrow fa-2x"></i>
+        </a>
+    </div>
     </div>
   </header>
     {% for message in app.flashes('success') %}
@@ -18,20 +23,20 @@
           {{ message }}
       </div>
     {% endfor %}
-<section class="pt-3">
-    <div class="container">
+<section class="pb-5">
+    <div class="container text-center pb-5" id="tricks">
         <div class="row">
             {% for trick in tricks %}
-              <div class="col-3 py-3">
+              <div class="col-md-3 py-3">
                  <div class="card h-100">
                     <img src="{{ asset('Images/default.jpg')}}" class="card-img-top" alt="Snowboard freestyle">
                     <div class="card-body">
-                        <h5 class="card-title">{{ trick.title }}</h5>
+                        <h5 class="card-title">{{ trick.title|capitalize }} </h5>
                         <p class="card-text">{{ trick.description|slice(0, 50)}} ...</p>
                         <a class="btn btn-secondary" href="/tricks/show/{{ trick.id }}">Voir plus</a>
                         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                          <a class="btn btn-secondary" href="/tricks/update/{{ trick.id }}">Modifier</a>
-                          <a class="btn btn-secondary" href="/tricks/delete/{{ trick.id }}">Supprimer</a>
+                          <a class="btn btn-secondary" href="/tricks/update/{{ trick.id }}"><i class="fas fa-pen"></i></a>
+                          <a class="btn btn-secondary" href="/tricks/delete/{{ trick.id }}"><i class="fas fa-trash-restore"></i></a>
                         {% endif %}
                     </div>
                   </div>
