@@ -43,6 +43,12 @@
             </div>
             {% endfor %}
         </div>
+          {% if not tricks %}
+              <div class="alert alert-danger text-center" role="alert">
+                Il n'y as pas encore de trick.
+              </div>     
+              <a href="{{ url('create_tricks') }}" class="btn btn-secondary">Ajouter un trick</a>      
+          {% endif %}
     </div>
 </section>
 {% endblock %}
