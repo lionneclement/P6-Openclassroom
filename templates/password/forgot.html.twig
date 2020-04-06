@@ -10,9 +10,12 @@
          {{ message }}
       </div>
    {% endfor %}
+   <h1 class="text-center">Oublie de mot de passe</h1>
    {{ form_start(form) }}
       {{ form_row(form.email) }}
-      <button class="btn btn-secondary">Confirme</button>
+      <div class="text-center">
+         <button class="btn btn-secondary btn-lg">Valider</button>
+      </div>
    {{ form_end(form) }}
    </div>
 </section>

@@ -1,13 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Oublie de mot de passe{% endblock %}
+{% block title %}Réinitialiser le mot de passe{% endblock %}
 
 {% block body %}
 <section class="pt-5">
  <div class="container pt-5">
+   <h1 class="text-center">Réinitialiser le mot de passe</h1>
    {{ form_start(form) }}
       {{ form_row(form.password) }}
-      <button class="btn btn-secondary">Confirme</button>
+      <div class="text-center">
+         <button class="btn btn-secondary btn-lg">Valider</button>
+      </div>
    {{ form_end(form) }}
    </div>
 </section>
