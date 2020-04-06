@@ -7,14 +7,16 @@ footer a{
 footer a:hover{
   color:#212529;
 }
-img.userimage{
-  height: 50px;
-  width: 50px;
-}
 .fa-arrow-down{
   position:absolute;
   width:10px;
   height:10px;
   right:5%; 
   color: #212529;
+  }
+  .avatar {
+    vertical-align: middle;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
   }

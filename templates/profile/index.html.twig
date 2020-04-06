@@ -3,23 +3,31 @@
 {% block title %}Profile{% endblock %}
 
 {% block body %}
-<section class="pt-5">
-    <div class="container pt-5">
+<section class="py-5">
+    <div class="container py-5">
         {% if user.ImageName == 'default-user.png' %}
             {% set directory = 'Images' %}
         {% else %}
             {% set directory = 'Upload' %}
         {% endif %}
-        <img src="{{asset(directory ~'/'~ user.ImageName)}}" class="userimage" alt="Photo de profil">
+        <div class="text-center pb-5">
+            <img src="{{asset(directory ~'/'~ user.ImageName)}}" class="userimage avatar" alt="Photo de profil">
+            <h3>{{user.Name}}</h3>
+        </div>
         {% for message in app.flashes('success') %}
             <div class="alert alert-success text-center" role="alert">
                 {{ message }}
             </div>
         {% endfor %}
+        <div class="text-center">
+            <h1>Modifier votre profile</h1>
+        </div>
         {{ form_start(form) }}
             {{ form_row(form.Name) }}
             {{ form_row(form.ImageName) }}
-            <button class="btn btn-secondary" type="submit">Modifier</button>
+            <div class="text-center">
+                <button class="btn btn-secondary btn-lg" type="submit">Modifier</button>
+            </div>
         {{ form_end(form) }}
     </div>
 </section>

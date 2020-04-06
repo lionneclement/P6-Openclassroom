@@ -1,16 +1,19 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello TricksController!{% endblock %}
+{% block title %}Créer un Trick{% endblock %}
 
 {% block body %}
-<div class="container pt-5">
-    <div class="pt-5">
+<div class="container py-5">
+    <div class="py-5">
+        <h1 class="text-center">S'inscrire</h1>
         {{ form_start(form) }}
             {{ form_row(form.Title) }}
             {{ form_row(form.Description) }}
             {{ form_row(form.StyleId) }}
             {{ form_row(form.Photos) }}
-            <button class="btn btn-secondary" type="submit">Créer le trick</button>
+            <div class="text-center">
+                <button class="btn btn-secondary btn-lg" type="submit">Valider</button>
+            </div>
         {{ form_end(form) }}
     </div>
 </div>
