@@ -35,14 +35,15 @@
                   </li>
                   {% endif %}
                   {% if is_granted('ROLE_ADMIN') %}
-                  <li class="nav-item">
-                    <a class="nav-link" href="/style">Style</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="/comment/all">Tout les commentaires</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="/comment/invalide">Commentaire invalide</a>
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown">
+                      Admin
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                      <a class="dropdown-item" href="/style">Styles</a>
+                      <a class="dropdown-item" href="/comment/all">Commentaires</a>
+                      <a class="dropdown-item" href="/comment/invalide">Commentaires invalides</a>
+                    </div>
                   </li>
                   {% endif %}
                   {% if is_granted('IS_AUTHENTICATED_FULLY') %}
