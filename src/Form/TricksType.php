@@ -32,9 +32,6 @@ class TricksType extends AbstractType
                     'multiple'=> true,
                     'required'=>false,
             ])
-            ->add('save', SubmitType::class,[
-                'label'=>'Confirmer'
-            ])
         ;
     }
 

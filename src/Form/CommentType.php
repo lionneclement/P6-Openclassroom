@@ -15,9 +15,6 @@ class CommentType extends AbstractType
     {
         $builder
             ->add('Message', TextType::class)
-            ->add('save', SubmitType::class,[
-                'label'=>'Confirmer'
-            ])
         ;
     }
 

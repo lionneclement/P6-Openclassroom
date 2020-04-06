@@ -25,7 +25,10 @@
         {% endfor %}
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
         <a class="btn btn-secondary" href="/tricks/update/{{ trick.id }}">Modifier</a>
-          {{ form(form) }}
+        {{ form_start(form) }}
+          {{ form_row(form.Message) }}
+          <button class="btn btn-secondary" type="submit">Confirmer</button>
+        {{ form_end(form) }}
         {% endif %}
         <h1>Tout les commentaires</h1>
         {% for comment in comments %}

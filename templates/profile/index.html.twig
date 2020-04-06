@@ -16,7 +16,11 @@
                 {{ message }}
             </div>
         {% endfor %}
-        {{ form(form) }}
+        {{ form_start(form) }}
+            {{ form_row(form.Name) }}
+            {{ form_row(form.ImageName) }}
+            <button class="btn btn-secondary" type="submit">Modifier</button>
+        {{ form_end(form) }}
     </div>
 </section>
 {% endblock %}

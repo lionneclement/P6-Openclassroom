@@ -20,9 +20,6 @@ class ProfileType extends AbstractType
                 'mapped' => false,
                 'required'=>false,
             ])
-            ->add('save', SubmitType::class,[
-                'label'=>'Confirmer'
-            ])
         ;
     }
 
