@@ -1,24 +1,44 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello StyleController!{% endblock %}
+{% block title %}Les styles{% endblock %}
 
 {% block body %}
 
 <div class="pt-5">
-    <div class="container pt-5">
-        {% for style in styles %}
-            <p>{{style.Name}}</p>
-            <a class="btn btn-secondary" href="/style/remove/{{style.id}}">Supprimer</a>
-        {% endfor %}
+    <div class="container py-5">
+        <h1 class="text-center pb-3">Tout les styles</h1>
         {% for message in app.flashes('success') %}
             <div class="alert alert-success text-center" role="alert">
                 {{ message }}
             </div>
         {% endfor %}
-        {{ form_start(form) }}
-            {{ form_row(form.Name) }}
-            <button class="btn btn-secondary">Ajouter</button>
-        {{ form_end(form) }}
+        {% if not styles %}
+            <div class="alert alert-danger text-center" role="alert">
+                Il n'y a pas encore de style.
+            </div>
+        {% endif %}
+        <div class="row">
+            {% for style in styles %}
+            <div class="col-md-3 py-3" id="{{style.id}}">
+                <div class="card text-center">
+                    <div class="card-body">
+                      <h5 class="card-title">{{style.Name|capitalize}}</h5>
+                      <a href="{{ url('style-remove', {'id':style.id}) }}" class="btn btn-secondary btn-sm mt-1">Supprimer</a>
+                      <a href="{{ url('style-update', {'id':style.id}) }}" class="btn btn-secondary btn-sm mt-1">Modifier</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="py-5">
+            <h3 class="text-center">Ajouter un style</h3>
+            {{ form_start(form) }}
+                {{ form_row(form.Name) }}
+                <div class="text-center">
+                    <button class="btn btn-secondary" type="submit">Ajouter</button>
+                </div>
+            {{ form_end(form) }}
+        </div>
     </div>
 </div>
 {% endblock %}

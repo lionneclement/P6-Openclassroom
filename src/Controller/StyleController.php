@@ -25,7 +25,7 @@ class StyleController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($form->getData());
             $entityManager->flush();
-            $this->addFlash('success','Votre Tricks à étais enregistrer');
+            $this->addFlash('success','Votre style à étais enregistrer');
             return $this->redirect($request->getUri());
         }
         return $this->render('style/index.html.twig', [
@@ -36,16 +36,38 @@ class StyleController extends AbstractController
     /**
      * @Route("/style/remove/{id}", name="style-remove", requirements={"id"="\d+"})
      */
-    public function remove($id)
+    public function remove(int $id)
     {
         $style = $this->getDoctrine()
         ->getRepository(Style::class)
         ->find($id);
         
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($style);
-        $em->flush();
-
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($style);
+        $entityManager->flush();
+        $this->addFlash('success','Votre style à étais supprimer');
         return $this->redirectToRoute('style');
+    }
+    /**
+     * @Route("/style/update/{id}", name="style-update", requirements={"id"="\d+"})
+     */
+    public function update(int $id,Request $request)
+    {
+        $style = $this->getDoctrine()
+        ->getRepository(Style::class)
+        ->find($id);
+
+        $form = $this->createForm(StyleType::class, $style);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($style);
+            $entityManager->flush();
+            $this->addFlash('success','Votre style à étais modifier');
+            return $this->redirectToRoute('style',['_fragment' => $id]);
+        }
+        return $this->render('style/update.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 }
