@@ -49,6 +49,7 @@ class CommentController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($comment);
         $entityManager->flush();
+        $this->addFlash('success','Le commentaire à étais supprimer');
         
         return $this->redirect($request->headers->get('referer'));
     }
@@ -66,6 +67,7 @@ class CommentController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($comment);
         $entityManager->flush();
+        $this->addFlash('success','Le commentaire à étais modifer');
         
         return $this->redirect($request->headers->get('referer'));
     }
