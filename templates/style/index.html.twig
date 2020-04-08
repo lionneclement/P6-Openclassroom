@@ -23,8 +23,8 @@
                 <div class="card text-center">
                     <div class="card-body">
                       <h5 class="card-title">{{style.Name|capitalize}}</h5>
-                      <a href="{{ url('style-remove', {'id':style.id}) }}" class="btn btn-secondary btn-sm mt-1">Supprimer</a>
-                      <a href="{{ url('style-update', {'id':style.id}) }}" class="btn btn-secondary btn-sm mt-1">Modifier</a>
+                      <a href="{{ path('style-remove', {'id':style.id}) }}" class="btn btn-secondary btn-sm mt-1">Supprimer</a>
+                      <a href="{{ path('style-update', {'id':style.id}) }}" class="btn btn-secondary btn-sm mt-1">Modifier</a>
                     </div>
                 </div>
             </div>

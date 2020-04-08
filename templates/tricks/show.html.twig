@@ -10,8 +10,8 @@
             <h1>{{ trick.title }}</h1>
             <p>{{ trick.description|slice(0, 100) }}...</p>
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-            <a class="btn btn-secondary btn-sm" href="{{url('update_tricks', {'id':trick.id})}}"><i class="fas fa-pen"></i></a>
-            <a class="btn btn-secondary btn-sm" href="{{url('remove_tricks', {'id':trick.id})}}"><i class="fas fa-trash-restore"></i></a>
+            <a class="btn btn-secondary btn-sm" href="{{path('update_trick', {'id':trick.id})}}"><i class="fas fa-pen"></i></a>
+            <a class="btn btn-secondary btn-sm" href="{{path('remove_trick', {'id':trick.id})}}"><i class="fas fa-trash-restore"></i></a>
             {% endif %}
           </div>
       </div>
@@ -31,7 +31,7 @@
             <div class="card col-md-3">
               <img class="card-img-top" src="{{asset('Upload/'~ photo.name)}}" alt="{{trick.title}}">
               <div class="card-body text-center">
-                <a class="btn btn-secondary btn-sm" href="{{url('remove_photo', {'photoId':photo.id})}}">Supprimer</a>
+                <a class="btn btn-secondary btn-sm" href="{{path('remove_photo', {'photoId':photo.id})}}">Supprimer</a>
               </div>
             </div>
         {% endfor %} 

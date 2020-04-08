@@ -12,7 +12,7 @@
     <body>
         <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
             <div class="container">
-              <a class="navbar-brand" href="#">Jimmy Sweat</a>
+              <a class="navbar-brand">Jimmy Sweat</a>
               <button
                 class="navbar-toggler"
                 type="button"
@@ -24,14 +24,14 @@
               <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav nav ml-auto nav-pills">
                   <li class="nav-item">
-                    <a class="nav-link" href="/">Accueil</a>
+                    <a class="nav-link" href="{{path('home_page')}}">Accueil</a>
                   </li>
                   {% if not app.user %}
                   <li class="nav-item">
-                    <a class="nav-link" href="/login">Se connecter</a>
+                    <a class="nav-link" href="{{path('app_login')}}">Se connecter</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="/register">S'inscrire</a>
+                    <a class="nav-link" href="{{path('app_register')}}">S'inscrire</a>
                   </li>
                   {% endif %}
                   {% if is_granted('ROLE_ADMIN') %}
@@ -40,21 +40,21 @@
                       Admin
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                      <a class="dropdown-item" href="/style">Styles</a>
-                      <a class="dropdown-item" href="/comment/all">Commentaires</a>
-                      <a class="dropdown-item" href="/comment/invalide">Commentaires invalides</a>
+                      <a class="dropdown-item" href="{{path('style')}}">Styles</a>
+                      <a class="dropdown-item" href="{{path('all_comment')}}">Commentaires</a>
+                      <a class="dropdown-item" href="{{path('invalide_comment')}}">Commentaires invalides</a>
                     </div>
                   </li>
                   {% endif %}
                   {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                   <li class="nav-item">
-                    <a class="nav-link" href="/tricks/create">Crée un Trick</a>
+                    <a class="nav-link" href="{{path('create_trick')}}">Crée un Trick</a>
                   </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="/profile">Profile</a>
+                      <a class="nav-link" href="{{path('profile')}}">Profile</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="/logout">Se deconnecter</a>
+                      <a class="nav-link" href="{{path('app_logout')}}">Se deconnecter</a>
                     </li>
                   {% endif %}
                 </ul>

@@ -31,8 +31,8 @@
             {% endif %}
           </p>
           <div class="text-center">
-            <a class="btn btn-secondary mt-1" href="/comment/delete/{{comment.id}}">Supprimer</a>
-            <a class="btn btn-secondary mt-1" href="/comment/changeStatus/{{comment.id}}">Changer le status</a>
+            <a class="btn btn-secondary mt-1" href="{{ path('delete_comment', {'id':comment.id}) }}">Supprimer</a>
+            <a class="btn btn-secondary mt-1" href="{{ path('change_status_comment', {'id':comment.id}) }}">Changer le status</a>
           </div>
         </div>
       {% endfor %}

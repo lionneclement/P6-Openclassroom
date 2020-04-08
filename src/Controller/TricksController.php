@@ -16,7 +16,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class TricksController extends AbstractController
 {
     /**
-     * @Route("/tricks/show/{id}", name="show_tricks", requirements={"id"="\d+"})
+     * @Route("/tricks/show/{id}", name="show_trick", requirements={"id"="\d+"})
      */
     public function showTricks(Request $request, int $id,UserInterface $User=null)
     {
@@ -46,7 +46,7 @@ class TricksController extends AbstractController
             $entityManager->persist($comment);
             $entityManager->flush();
 
-            return $this->redirectToRoute('show_tricks', ['id'=>$id, '_fragment' => 'commentaire']);
+            return $this->redirectToRoute('show_trick', ['id'=>$id, '_fragment' => 'commentaire']);
         }
 
         return $this->render(
@@ -59,7 +59,7 @@ class TricksController extends AbstractController
         );
     }
     /**
-     * @Route("/tricks/create", name="create_tricks")
+     * @Route("/tricks/create", name="create_trick")
      */
     public function createTricks(Request $request, File $File)
     {
@@ -93,7 +93,7 @@ class TricksController extends AbstractController
     }
 
     /**
-     * @Route("/tricks/update/{id}", name="update_tricks", requirements={"id"="\d+"})
+     * @Route("/tricks/update/{id}", name="update_trick", requirements={"id"="\d+"})
      */
     public function updateTricks(Request $request,int $id, File $File)
     {
@@ -130,7 +130,7 @@ class TricksController extends AbstractController
         );
     }
     /**
-     * @Route("/tricks/delete/{id}", name="remove_tricks", requirements={"id"="\d+"})
+     * @Route("/tricks/delete/{id}", name="remove_trick", requirements={"id"="\d+"})
      */
     public function removeTricks($id, File $File)
     {
