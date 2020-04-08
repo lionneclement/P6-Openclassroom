@@ -18,19 +18,15 @@ class TricksController extends AbstractController
     /**
      * @Route("/tricks/show/{id}", name="show_trick", requirements={"id"="\d+"})
      */
-    public function showTricks(Request $request, int $id,UserInterface $User=null)
+    public function showTricks(Request $request, int $id,UserInterface $User=null, Tricks $trick)
     {
-        $trick = $this->getDoctrine()
-            ->getRepository(Tricks::class)
-            ->findStyleNameById($id);
-        
         $photos = $this->getDoctrine()
             ->getRepository(Photo::class)
-            ->findByTricksId($id);
+            ->findBy(['TricksId'=>$id]);
 
         $comments = $this->getDoctrine()
             ->getRepository(Comment::class)
-            ->findAllCommentByTricksId($id, 1);
+            ->findBy(['TricksId'=>$id, 'Status'=>1]);
 
         $comment = new Comment;
         $form = $this->createForm(CommentType::class, $comment);
@@ -95,12 +91,8 @@ class TricksController extends AbstractController
     /**
      * @Route("/auth/tricks/update/{id}", name="update_trick", requirements={"id"="\d+"})
      */
-    public function updateTricks(Request $request,int $id, File $File)
+    public function updateTricks(Request $request,int $id, Tricks $trick, File $File)
     {
-        $trick = $this->getDoctrine()
-            ->getRepository(Tricks::class)
-            ->find($id);
-
         if (!$trick) {
             throw $this->createNotFoundException('No product found for id '.$id);
         }
@@ -132,22 +124,17 @@ class TricksController extends AbstractController
     /**
      * @Route("/auth/tricks/delete/{id}", name="remove_trick", requirements={"id"="\d+"})
      */
-    public function removeTricks($id, File $File)
+    public function removeTricks($id, File $File, Tricks $trick)
     {
-        $Trick = $this->getDoctrine()
-            ->getRepository(Tricks::class)
-            ->find($id);
-        
         $photos = $this->getDoctrine()
             ->getRepository(Photo::class)
-            ->findByTricksId($id);
-
+            ->findBy(['TricksId'=>$id]);
         foreach($photos as $photo){
             $File->removeImage($photo->getName());
         }
         $this->addFlash('success', 'Votre Tricks à étais supprimer');
         $em = $this->getDoctrine()->getManager();
-        $em->remove($Trick);
+        $em->remove($trick);
         $em->flush();
         return $this->redirectToRoute('home_page');
     }

@@ -18,13 +18,4 @@ class TricksRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Tricks::class);
     }
-
-    public function findStyleNameById($value): ?Tricks
-    {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.id = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult();
-    }
 }

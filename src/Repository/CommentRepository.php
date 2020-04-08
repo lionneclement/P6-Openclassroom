@@ -18,25 +18,4 @@ class CommentRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Comment::class);
     }
-
-    public function findAllCommentByTricksId(int $id, bool $status): array
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.TricksId = :id')
-            ->andWhere('p.Status = :status')
-            ->setParameter('id', $id)
-            ->setParameter('status', $status)
-            ->orderBy('p.Date', 'DESC')
-            ->getQuery()
-            ->getResult();
-    }
-    public function findAllCommentByStatus(bool $status): array
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.Status = :val')
-            ->setParameter('val', $status)
-            ->orderBy('p.Date', 'DESC')
-            ->getQuery()
-            ->getResult();
-    }
 }

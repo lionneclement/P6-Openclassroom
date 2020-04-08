@@ -38,12 +38,8 @@ class StyleController extends AbstractController
     /**
      * @Route("/admin/style/remove/{id}", name="style-remove", requirements={"id"="\d+"})
      */
-    public function remove(int $id)
+    public function remove(Style $style)
     {
-        $style = $this->getDoctrine()
-            ->getRepository(Style::class)
-            ->find($id);
-        
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($style);
         $entityManager->flush();
@@ -53,12 +49,8 @@ class StyleController extends AbstractController
     /**
      * @Route("/admin/style/update/{id}", name="style-update", requirements={"id"="\d+"})
      */
-    public function update(int $id,Request $request)
+    public function update(int $id, Style $style ,Request $request)
     {
-        $style = $this->getDoctrine()
-            ->getRepository(Style::class)
-            ->find($id);
-
         $form = $this->createForm(StyleType::class, $style);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {

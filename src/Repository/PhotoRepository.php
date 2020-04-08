@@ -18,13 +18,4 @@ class PhotoRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Photo::class);
     }
-
-    public function findByTricksId(int $id): array
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.TricksId = :val')
-            ->setParameter('val', $id)
-            ->getQuery()
-            ->getResult();
-    }
 }

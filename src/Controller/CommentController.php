@@ -32,7 +32,7 @@ class CommentController extends AbstractController
     {
         $comments = $this->getDoctrine()
             ->getRepository(Comment::class)
-            ->findAllCommentByStatus(0);
+            ->findBy(['Status'=>0]);
 
         return $this->render(
             'comment/Comment.html.twig', [
@@ -44,12 +44,8 @@ class CommentController extends AbstractController
     /**
      * @Route("/admin/comment/delete/{id}", name="delete_comment", requirements={"id"="\d+"})
      */
-    public function DeleteComment(int $id, Request $request)
+    public function DeleteComment(Request $request, Comment $comment)
     {
-        $comment = $this->getDoctrine()
-            ->getRepository(Comment::class)
-            ->find($id);
-        
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($comment);
         $entityManager->flush();
@@ -60,12 +56,8 @@ class CommentController extends AbstractController
     /**
      * @Route("/admin/comment/changeStatus/{id}", name="change_status_comment", requirements={"id"="\d+"})
      */
-    public function ChangeStatusComment(int $id, Request $request)
+    public function ChangeStatusComment(Comment $comment, Request $request)
     {
-        $comment = $this->getDoctrine()
-            ->getRepository(Comment::class)
-            ->find($id);
-    
         $comment->setStatus(!$comment->getStatus());
 
         $entityManager = $this->getDoctrine()->getManager();
