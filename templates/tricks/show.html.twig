@@ -62,29 +62,39 @@
 </section>
 <section class="pb-5">
   <hr>
-  <div class="pb-5 container text-center">
-    {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
-          <div class="alert alert-danger text-center" role="alert">
+  <div class="pb-5 container">
+    <div class="text-center">
+        {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+          <div class="alert alert-danger" role="alert">
               Connecter vous pour pouvoir commenter.
           </div>
         {% endif %}
         <h4>Tout les commentaires</h4>
         {% if not comments %}
-          <div class="alert alert-danger text-center" role="alert">
+          <div class="alert alert-danger" role="alert">
               Il n'y a pas encore de commentaires.
           </div>
         {% endif %}
+    </div>
+      <div class="show-comment">
         {% for comment in comments %}
             {% if comment.UserId.ImageName == 'default-user.png' %}
                 {% set directory = 'Images' %}
             {% else %}
                 {% set directory = 'Upload' %}
             {% endif %}
-          <img src="{{asset(directory ~'/'~ comment.UserId.ImageName)}}" class="avatar-min" alt="Photo de profil">
-          <p class="card-text">Auteur: {{ comment.UserId.Name }}</p>
-          <p class="card-text">Message: {{ comment.Message }}</p>
-          <p class="card-text">Date: {{ comment.Date|date("d/m/Y")}}</p>
+            <div class="container  pt-4">
+              <div class="media media-commentaire">
+                <img src="{{asset(directory ~'/'~ comment.UserId.ImageName)}}" class="avatar-min mr-3" alt="Photo de profil">
+                <div class="media-body">
+                  <h5 class="mt-0">{{ comment.UserId.Name }}</h5>
+                  <i>{{ comment.Date|date("d/m/Y")}}</i>
+                  <p class="card-text">{{ comment.Message }}</p> 
+                </div>
+              </div>
+            </div>
         {% endfor %}
+      </div>
   </div>
 </section>
 {% endblock %}

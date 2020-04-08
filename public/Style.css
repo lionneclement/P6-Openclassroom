@@ -60,3 +60,10 @@ footer a:hover{
   height: 200px;
   object-fit: cover;
 }
+.show-comment{
+  width: 100%;
+  padding-right: 15%;
+  padding-left: 15%;
+  margin-right: auto;
+  margin-left: auto;
+}

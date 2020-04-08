@@ -37,7 +37,7 @@ class TricksController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->addFlash('success','Votre message à étais enregistrer');
+            $this->addFlash('success','Votre commentaire viens d\'être envoyer et doit être valider pas les administrateurs!');
             $comment->setStatus(0);
             $comment->setUserId($User);
             $comment->setTricksId($trick);
