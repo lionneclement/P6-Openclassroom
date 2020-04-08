@@ -12,7 +12,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class ProfileController extends AbstractController
 {
     /**
-     * @Route("/profile", name="profile")
+     * @Route("/auth/profile", name="profile")
      */
     public function index(UserInterface $User, Request $request, File $File)
     {

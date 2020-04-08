@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class StyleController extends AbstractController
 {
     /**
-     * @Route("/style", name="style")
+     * @Route("/admin/style", name="style")
      */
     public function index(Request $request)
     {
@@ -36,7 +36,7 @@ class StyleController extends AbstractController
         );
     }
     /**
-     * @Route("/style/remove/{id}", name="style-remove", requirements={"id"="\d+"})
+     * @Route("/admin/style/remove/{id}", name="style-remove", requirements={"id"="\d+"})
      */
     public function remove(int $id)
     {
@@ -51,7 +51,7 @@ class StyleController extends AbstractController
         return $this->redirectToRoute('style');
     }
     /**
-     * @Route("/style/update/{id}", name="style-update", requirements={"id"="\d+"})
+     * @Route("/admin/style/update/{id}", name="style-update", requirements={"id"="\d+"})
      */
     public function update(int $id,Request $request)
     {

@@ -59,7 +59,7 @@ class TricksController extends AbstractController
         );
     }
     /**
-     * @Route("/tricks/create", name="create_trick")
+     * @Route("/auth/tricks/create", name="create_trick")
      */
     public function createTricks(Request $request, File $File)
     {
@@ -93,7 +93,7 @@ class TricksController extends AbstractController
     }
 
     /**
-     * @Route("/tricks/update/{id}", name="update_trick", requirements={"id"="\d+"})
+     * @Route("/auth/tricks/update/{id}", name="update_trick", requirements={"id"="\d+"})
      */
     public function updateTricks(Request $request,int $id, File $File)
     {
@@ -130,7 +130,7 @@ class TricksController extends AbstractController
         );
     }
     /**
-     * @Route("/tricks/delete/{id}", name="remove_trick", requirements={"id"="\d+"})
+     * @Route("/auth/tricks/delete/{id}", name="remove_trick", requirements={"id"="\d+"})
      */
     public function removeTricks($id, File $File)
     {

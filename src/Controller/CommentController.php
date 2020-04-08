@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class CommentController extends AbstractController
 {
     /**
-     * @Route("/comment/all", name="all_comment")
+     * @Route("/admin/comment/all", name="all_comment")
      */
     public function AllComment()
     {        
@@ -26,7 +26,7 @@ class CommentController extends AbstractController
     }
 
     /**
-     * @Route("/comment/invalide", name="invalide_comment")
+     * @Route("/admin/comment/invalide", name="invalide_comment")
      */
     public function InvalideComment()
     {
@@ -42,7 +42,7 @@ class CommentController extends AbstractController
     }
 
     /**
-     * @Route("/comment/delete/{id}", name="delete_comment", requirements={"id"="\d+"})
+     * @Route("/admin/comment/delete/{id}", name="delete_comment", requirements={"id"="\d+"})
      */
     public function DeleteComment(int $id, Request $request)
     {
@@ -58,7 +58,7 @@ class CommentController extends AbstractController
         return $this->redirect($request->headers->get('referer'));
     }
     /**
-     * @Route("/comment/changeStatus/{id}", name="change_status_comment", requirements={"id"="\d+"})
+     * @Route("/admin/comment/changeStatus/{id}", name="change_status_comment", requirements={"id"="\d+"})
      */
     public function ChangeStatusComment(int $id, Request $request)
     {

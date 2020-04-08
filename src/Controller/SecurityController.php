@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 class SecurityController extends AbstractController
 {
     /**
-     * @Route("/login", name="app_login")
+     * @Route("/anony/login", name="app_login")
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
@@ -32,14 +32,14 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/logout", name="app_logout")
+     * @Route("/auth/logout", name="app_logout")
      */
     public function logout()
     {
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
     /**
-     * @Route("/register", name="app_register")
+     * @Route("/anony/register", name="app_register")
      */
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator): Response
     {
@@ -74,7 +74,7 @@ class SecurityController extends AbstractController
         );
     }
     /**
-     * @Route("/password/forgot", name="forgot_password")
+     * @Route("/anony/password/forgot", name="forgot_password")
      */
     public function forgotPassword(Request $request, SessionInterface $session, Mail $Mail, Token $Token)
     {
@@ -105,7 +105,7 @@ class SecurityController extends AbstractController
     }
     
     /**
-     * @Route("/password/reset", name="reset_password")
+     * @Route("/anony/password/reset", name="reset_password")
      */
     public function resetPassword(Request $request, SessionInterface $session, UserPasswordEncoderInterface $passwordEncoder)
     {

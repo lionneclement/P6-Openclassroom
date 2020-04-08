@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class MediaController extends AbstractController
 {
     /**
-     * @Route("/tricks/photo/delete/{photoId}", name="remove_photo", requirements={"photoId"="\d+"})
+     * @Route("/auth/tricks/photo/delete/{photoId}", name="remove_photo", requirements={"photoId"="\d+"})
      */
     public function removeOnePhoto($photoId, File $File, Request $request)
     {
