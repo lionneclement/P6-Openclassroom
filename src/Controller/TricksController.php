@@ -46,7 +46,7 @@ class TricksController extends AbstractController
             $entityManager->persist($comment);
             $entityManager->flush();
 
-            return $this->redirectToRoute('show_tricks',['id'=>$id]);
+            return $this->redirectToRoute('show_tricks',['id'=>$id, '_fragment' => 'commentaire']);
         }
 
         return $this->render('tricks/show.html.twig', [
@@ -126,7 +126,7 @@ class TricksController extends AbstractController
     /**
      * @Route("/tricks/delete/{id}", name="remove_tricks", requirements={"id"="\d+"})
      */
-    public function removeTricks($id, MediaController $mediaController, File $File)
+    public function removeTricks($id, File $File)
     {
         $Trick = $this->getDoctrine()
         ->getRepository(Tricks::class)
