@@ -1,18 +1,40 @@
 <?php
-
+/** 
+ * The file is for comment
+ * 
+ * PHP version 7.3.5
+ * 
+ * @category Controller
+ * @package  Controller
+ * @author   Clement <lionneclement@gmail.com>
+ * @license  https://opensource.org/licenses/MIT MIT License
+ * @link     http://localhost:8000
+ */
 namespace App\Controller;
 
 use App\Entity\Comment;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-
+/** 
+ * The class is for comment
+ * 
+ * @category Controller
+ * @package  Controller
+ * @author   Clement <lionneclement@gmail.com>
+ * @license  https://opensource.org/licenses/MIT MIT License
+ * @link     http://localhost:8000
+ */
 class CommentController extends AbstractController
 {
     /**
+     * Render all comment
+     * 
      * @Route("/admin/comment/all", name="all_comment")
+     * 
+     * @return response
      */
-    public function AllComment()
+    public function allComment()
     {        
         $comments = $this->getDoctrine()
             ->getRepository(Comment::class)
@@ -26,9 +48,13 @@ class CommentController extends AbstractController
     }
 
     /**
+     * Render invalide comment
+     * 
      * @Route("/admin/comment/invalide", name="invalide_comment")
+     * 
+     * @return response
      */
-    public function InvalideComment()
+    public function invalideComment()
     {
         $comments = $this->getDoctrine()
             ->getRepository(Comment::class)
@@ -42,9 +68,16 @@ class CommentController extends AbstractController
     }
 
     /**
+     * Delete one comment
+     * 
+     * @param object $request 
+     * @param object $comment 
+     * 
      * @Route("/admin/comment/delete/{id}", name="delete_comment", requirements={"id"="\d+"})
+     * 
+     * @return response
      */
-    public function DeleteComment(Request $request, Comment $comment)
+    public function deleteComment(Request $request, Comment $comment)
     {
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($comment);
@@ -54,9 +87,16 @@ class CommentController extends AbstractController
         return $this->redirect($request->headers->get('referer'));
     }
     /**
+     * Change status comment
+     * 
+     * @param object $request 
+     * @param object $comment 
+     * 
      * @Route("/admin/comment/changeStatus/{id}", name="change_status_comment", requirements={"id"="\d+"})
+     * 
+     * @return response
      */
-    public function ChangeStatusComment(Comment $comment, Request $request)
+    public function changeStatusComment(Request $request, Comment $comment)
     {
         $comment->setStatus(!$comment->getStatus());
 

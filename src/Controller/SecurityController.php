@@ -1,5 +1,15 @@
 <?php
-
+/** 
+ * The file is for security
+ * 
+ * PHP version 7.3.5
+ * 
+ * @category Controller
+ * @package  Controller
+ * @author   Clement <lionneclement@gmail.com>
+ * @license  https://opensource.org/licenses/MIT MIT License
+ * @link     http://localhost:8000
+ */
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,11 +27,25 @@ use App\Form\ResetPasswordType;
 use App\Mail\Mail;
 use App\Tools\Token;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-
+/** 
+ * The class is for security
+ * 
+ * @category Controller
+ * @package  Controller
+ * @author   Clement <lionneclement@gmail.com>
+ * @license  https://opensource.org/licenses/MIT MIT License
+ * @link     http://localhost:8000
+ */
 class SecurityController extends AbstractController
 {
     /**
+     * Login
+     * 
+     * @param object $authenticationUtils 
+     * 
      * @Route("/anony/login", name="app_login")
+     * 
+     * @return response
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
@@ -32,14 +56,27 @@ class SecurityController extends AbstractController
     }
 
     /**
+     * Logout
+     * 
      * @Route("/auth/logout", name="app_logout")
+     * 
+     * @return response
      */
     public function logout()
     {
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
     /**
+     * Register
+     * 
+     * @param object $request 
+     * @param object $passwordEncoder 
+     * @param object $guardHandler 
+     * @param object $authenticator 
+     * 
      * @Route("/anony/register", name="app_register")
+     * 
+     * @return response
      */
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator): Response
     {
@@ -74,7 +111,16 @@ class SecurityController extends AbstractController
         );
     }
     /**
+     * Forgot password
+     * 
+     * @param objet $request 
+     * @param objet $session 
+     * @param objet $Mail 
+     * @param objet $Token 
+     * 
      * @Route("/anony/password/forgot", name="forgot_password")
+     * 
+     * @return response
      */
     public function forgotPassword(Request $request, SessionInterface $session, Mail $Mail, Token $Token)
     {
@@ -88,7 +134,7 @@ class SecurityController extends AbstractController
                 ->getRepository(User::class)
                 ->findOneBy(['email' => $email]);
 
-            if($user) {
+            if ($user) {
                 $token= $Token->generator(10);
                 $session->set('token', $token);
                 $session->set('email', $email);
@@ -105,12 +151,20 @@ class SecurityController extends AbstractController
     }
     
     /**
+     * Reset password
+     * 
+     * @param object $request 
+     * @param object $session 
+     * @param object $passwordEncoder 
+     * 
      * @Route("/anony/password/reset", name="reset_password")
+     * 
+     * @return response
      */
     public function resetPassword(Request $request, SessionInterface $session, UserPasswordEncoderInterface $passwordEncoder)
     {
         $token = $request->query->get('token');
-        if($session->get('token') == $token) {
+        if ($session->get('token') == $token) {
             $user = $this->getDoctrine()
                 ->getRepository(User::class)
                 ->findOneBy(['email' => $session->get('email')]);
