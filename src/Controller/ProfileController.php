@@ -32,28 +32,28 @@ class ProfileController extends AbstractController
     /**
      * Render profile
      * 
-     * @param object $User 
+     * @param object $user 
      * @param object $request 
-     * @param object $File 
+     * @param object $file 
      * 
      * @Route("/auth/profile", name="profile")
      * 
      * @return response
      */
-    public function index(UserInterface $User, Request $request, File $File)
+    public function index(UserInterface $user, Request $request, File $file)
     {
-        $form = $this->createForm(ProfileType::class, $User);
+        $form = $this->createForm(ProfileType::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $this->addFlash('success', 'Votre profile à étais modifier');
             $profile = $form->getData();
             
-            $image =$form['ImageName']->getData();
+            $image =$form['imageName']->getData();
             if ($image) {
-                if ($User->getImageName() != 'default-user.png') {
-                    $File->removeImage($User->getImageName());
+                if ($user->getImageName() != 'default-user.png') {
+                    $file->removeImage($user->getImageName());
                 }
-                $imageFileName = $File->uploadImage($image);
+                $imageFileName = $file->uploadImage($image);
                 $profile->setImageName($imageFileName);
             }
             $entityManager = $this->getDoctrine()->getManager();
@@ -65,7 +65,7 @@ class ProfileController extends AbstractController
         return $this->render(
             'profile/index.html.twig', [
             'form' => $form->createView(),
-            'user' => $User,
+            'user' => $user,
             ]
         );
     }

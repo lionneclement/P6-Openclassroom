@@ -16,12 +16,12 @@ class ProfileType extends AbstractType
     {
         $builder
             ->add(
-                'Name', TextType::class, [
+                'name', TextType::class, [
                 'label' => 'Nom'
                 ]
             )
             ->add(
-                'ImageName', FileType::class, [
+                'imageName', FileType::class, [
                 'mapped' => false,
                 'required'=>false,
                 'label' => 'Photo de profile'
