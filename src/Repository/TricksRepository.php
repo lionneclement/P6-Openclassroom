@@ -25,7 +25,6 @@ class TricksRepository extends ServiceEntityRepository
             ->andWhere('t.id = :val')
             ->setParameter('val', $value)
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getOneOrNullResult();
     }
 }

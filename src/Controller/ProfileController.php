@@ -19,12 +19,12 @@ class ProfileController extends AbstractController
         $form = $this->createForm(ProfileType::class, $User);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->addFlash('success','Votre profile à étais modifier');
+            $this->addFlash('success', 'Votre profile à étais modifier');
             $profile = $form->getData();
             
             $image =$form['ImageName']->getData();
-            if($image){
-                if  ($User->getImageName() != 'default-user.png'){
+            if($image) {
+                if  ($User->getImageName() != 'default-user.png') {
                     $File->removeImage($User->getImageName());
                 }
                 $imageFileName = $File->uploadImage($image);
@@ -36,9 +36,11 @@ class ProfileController extends AbstractController
 
             return $this->redirect($request->getUri());
         }
-        return $this->render('profile/index.html.twig', [
+        return $this->render(
+            'profile/index.html.twig', [
             'form' => $form->createView(),
             'user' => $User,
-        ]);
+            ]
+        );
     }
 }

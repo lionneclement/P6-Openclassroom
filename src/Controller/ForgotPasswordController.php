@@ -27,21 +27,23 @@ class ForgotPasswordController extends AbstractController
             $email = $form['email']->getData();
             
             $user = $this->getDoctrine()
-            ->getRepository(User::class)
-            ->findOneBy(['email' => $email]);
+                ->getRepository(User::class)
+                ->findOneBy(['email' => $email]);
 
-            if($user){
+            if($user) {
                 $token= $Token->generator(10);
                 $session->set('token', $token);
                 $session->set('email', $email);
                 $Mail->forgotPassword($token, $user);
                 
-                $this->addFlash('success','Vous aller recevoir un mail');
+                $this->addFlash('success', 'Vous aller recevoir un mail');
             }
         }
-        return $this->render('password/forgot.html.twig', [
+        return $this->render(
+            'password/forgot.html.twig', [
             'form' => $form->createView(),
-        ]);
+            ]
+        );
     }
     
     /**
@@ -50,10 +52,10 @@ class ForgotPasswordController extends AbstractController
     public function resetPassword(Request $request, SessionInterface $session, UserPasswordEncoderInterface $passwordEncoder)
     {
         $token = $request->query->get('token');
-        if($session->get('token') == $token){
+        if($session->get('token') == $token) {
             $user = $this->getDoctrine()
-            ->getRepository(User::class)
-            ->findOneBy(['email' => $session->get('email')]);
+                ->getRepository(User::class)
+                ->findOneBy(['email' => $session->get('email')]);
 
             $form = $this->createForm(ResetPasswordType::class, $user);
             $form->handleRequest($request);
@@ -65,13 +67,15 @@ class ForgotPasswordController extends AbstractController
                 $entityManager->persist($user);
                 $entityManager->flush();
                 
-                $this->addFlash('success','Votre mot de passe a etais changer');
+                $this->addFlash('success', 'Votre mot de passe a etais changer');
                 $session->clear();
                 return $this->redirectToRoute('app_login');
             }
-        return $this->render('password/reset.html.twig', [
-            'form' => $form->createView(),
-        ]);
+            return $this->render(
+                'password/reset.html.twig', [
+                'form' => $form->createView(),
+                ]
+            );
         }
         return $this->redirectToRoute('home_page');
     }

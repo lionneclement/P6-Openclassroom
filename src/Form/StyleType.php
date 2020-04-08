@@ -12,14 +12,15 @@ class StyleType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('Name')
-        ;
+            ->add('Name');
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([
+        $resolver->setDefaults(
+            [
             'data_class' => Style::class,
-        ]);
+            ]
+        );
     }
 }

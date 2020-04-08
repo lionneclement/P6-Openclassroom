@@ -17,31 +17,40 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', TextType::class, [
+            ->add(
+                'name', TextType::class, [
                 'label' => 'Nom'
-            ])
+                ]
+            )
             ->add('email', EmailType::class)
-            ->add('plainPassword', PasswordType::class, [
+            ->add(
+                'plainPassword', PasswordType::class, [
                 'label'=> 'Mot de passe',
                 'mapped' => false,
                 'constraints' => [
-                    new NotBlank([
+                    new NotBlank(
+                        [
                         'message' => 'Veuillez entrer un mot de passe',
-                    ]),
-                    new Length([
+                        ]
+                    ),
+                    new Length(
+                        [
                         'min' => 6,
                         'minMessage' => 'Votre mot de passe doit contenir au moins 6 caractères',
                         'max' => 4096,
-                    ]),
+                        ]
+                    ),
                 ],
-            ])
-        ;
+                ]
+            );
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([
+        $resolver->setDefaults(
+            [
             'data_class' => User::class,
-        ]);
+            ]
+        );
     }
 }

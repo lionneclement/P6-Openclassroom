@@ -24,8 +24,7 @@ class Mail
                     ['name' => $user->getName(), 'token' => $token]
                 ),
                 'text/html'
-            )
-        ;
+            );
         $this->mailer->send($message);
     }
 }

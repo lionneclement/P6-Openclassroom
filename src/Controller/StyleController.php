@@ -16,8 +16,8 @@ class StyleController extends AbstractController
     public function index(Request $request)
     {
         $styles = $this->getDoctrine()
-        ->getRepository(Style::class)
-        ->findAll();
+            ->getRepository(Style::class)
+            ->findAll();
 
         $form = $this->createForm(StyleType::class);
         $form->handleRequest($request);
@@ -25,13 +25,15 @@ class StyleController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($form->getData());
             $entityManager->flush();
-            $this->addFlash('success','Votre style à étais enregistrer');
+            $this->addFlash('success', 'Votre style à étais enregistrer');
             return $this->redirect($request->getUri());
         }
-        return $this->render('style/index.html.twig', [
+        return $this->render(
+            'style/index.html.twig', [
             'styles' => $styles,
             'form' => $form->createView(),
-        ]);
+            ]
+        );
     }
     /**
      * @Route("/style/remove/{id}", name="style-remove", requirements={"id"="\d+"})
@@ -39,13 +41,13 @@ class StyleController extends AbstractController
     public function remove(int $id)
     {
         $style = $this->getDoctrine()
-        ->getRepository(Style::class)
-        ->find($id);
+            ->getRepository(Style::class)
+            ->find($id);
         
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($style);
         $entityManager->flush();
-        $this->addFlash('success','Votre style à étais supprimer');
+        $this->addFlash('success', 'Votre style à étais supprimer');
         return $this->redirectToRoute('style');
     }
     /**
@@ -54,8 +56,8 @@ class StyleController extends AbstractController
     public function update(int $id,Request $request)
     {
         $style = $this->getDoctrine()
-        ->getRepository(Style::class)
-        ->find($id);
+            ->getRepository(Style::class)
+            ->find($id);
 
         $form = $this->createForm(StyleType::class, $style);
         $form->handleRequest($request);
@@ -63,11 +65,13 @@ class StyleController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($style);
             $entityManager->flush();
-            $this->addFlash('success','Votre style à étais modifier');
-            return $this->redirectToRoute('style',['_fragment' => $id]);
+            $this->addFlash('success', 'Votre style à étais modifier');
+            return $this->redirectToRoute('style', ['_fragment' => $id]);
         }
-        return $this->render('style/update.html.twig', [
+        return $this->render(
+            'style/update.html.twig', [
             'form' => $form->createView(),
-        ]);
+            ]
+        );
     }
 }

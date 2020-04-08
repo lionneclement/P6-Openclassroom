@@ -15,12 +15,14 @@ class CommentController extends AbstractController
     public function AllComment()
     {        
         $comments = $this->getDoctrine()
-        ->getRepository(Comment::class)
-        ->findAll();
+            ->getRepository(Comment::class)
+            ->findAll();
 
-        return $this->render('comment/Comment.html.twig', [
+        return $this->render(
+            'comment/Comment.html.twig', [
             'comments' => $comments,
-        ]);
+            ]
+        );
     }
 
     /**
@@ -29,12 +31,14 @@ class CommentController extends AbstractController
     public function InvalideComment()
     {
         $comments = $this->getDoctrine()
-        ->getRepository(Comment::class)
-        ->findAllCommentByStatus(0);
+            ->getRepository(Comment::class)
+            ->findAllCommentByStatus(0);
 
-        return $this->render('comment/Comment.html.twig', [
+        return $this->render(
+            'comment/Comment.html.twig', [
             'comments' => $comments,
-        ]);
+            ]
+        );
     }
 
     /**
@@ -43,13 +47,13 @@ class CommentController extends AbstractController
     public function DeleteComment(int $id, Request $request)
     {
         $comment = $this->getDoctrine()
-        ->getRepository(Comment::class)
-        ->find($id);
+            ->getRepository(Comment::class)
+            ->find($id);
         
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($comment);
         $entityManager->flush();
-        $this->addFlash('success','Le commentaire à étais supprimer');
+        $this->addFlash('success', 'Le commentaire à étais supprimer');
         
         return $this->redirect($request->headers->get('referer'));
     }
@@ -59,15 +63,15 @@ class CommentController extends AbstractController
     public function ChangeStatusComment(int $id, Request $request)
     {
         $comment = $this->getDoctrine()
-        ->getRepository(Comment::class)
-        ->find($id);
+            ->getRepository(Comment::class)
+            ->find($id);
     
         $comment->setStatus(!$comment->getStatus());
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($comment);
         $entityManager->flush();
-        $this->addFlash('success','Le commentaire à étais modifer');
+        $this->addFlash('success', 'Le commentaire à étais modifer');
         
         return $this->redirect($request->headers->get('referer'));
     }

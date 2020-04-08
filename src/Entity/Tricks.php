@@ -32,7 +32,7 @@ class Tricks
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Style", inversedBy="tricks")
-     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
+     * @ORM\JoinColumn(nullable=false,                 onDelete="CASCADE")
      */
     private $StyleId;
 

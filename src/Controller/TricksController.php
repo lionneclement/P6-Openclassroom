@@ -21,23 +21,23 @@ class TricksController extends AbstractController
     public function showTricks(Request $request, int $id,UserInterface $User=null)
     {
         $trick = $this->getDoctrine()
-        ->getRepository(Tricks::class)
-        ->findStyleNameById($id);
+            ->getRepository(Tricks::class)
+            ->findStyleNameById($id);
         
         $photos = $this->getDoctrine()
-        ->getRepository(Photo::class)
-        ->findByTricksId($id);
+            ->getRepository(Photo::class)
+            ->findByTricksId($id);
 
         $comments = $this->getDoctrine()
-        ->getRepository(Comment::class)
-        ->findAllCommentByTricksId($id, 1);
+            ->getRepository(Comment::class)
+            ->findAllCommentByTricksId($id, 1);
 
         $comment = new Comment;
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->addFlash('success','Votre commentaire viens d\'être envoyer et doit être valider pas les administrateurs!');
+            $this->addFlash('success', 'Votre commentaire viens d\'être envoyer et doit être valider pas les administrateurs!');
             $comment->setStatus(0);
             $comment->setUserId($User);
             $comment->setTricksId($trick);
@@ -46,15 +46,17 @@ class TricksController extends AbstractController
             $entityManager->persist($comment);
             $entityManager->flush();
 
-            return $this->redirectToRoute('show_tricks',['id'=>$id, '_fragment' => 'commentaire']);
+            return $this->redirectToRoute('show_tricks', ['id'=>$id, '_fragment' => 'commentaire']);
         }
 
-        return $this->render('tricks/show.html.twig', [
+        return $this->render(
+            'tricks/show.html.twig', [
             'form' => $form->createView(),
             'photos' => $photos,
             'trick'=> $trick,
             'comments' => $comments,
-        ]);
+            ]
+        );
     }
     /**
      * @Route("/tricks/create", name="create_tricks")
@@ -67,7 +69,7 @@ class TricksController extends AbstractController
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->addFlash('success','Votre Tricks à étais enregistrer');
+            $this->addFlash('success', 'Votre Tricks à étais enregistrer');
             $Images =$form['Photos']->getData();
             foreach($Images as $Image){
                 $imageFileName = $File->uploadImage($Image);
@@ -83,9 +85,11 @@ class TricksController extends AbstractController
             
             return $this->redirectToRoute('home_page');
         }
-        return $this->render('tricks/form.html.twig', [
+        return $this->render(
+            'tricks/form.html.twig', [
             'form' => $form->createView(),
-        ]);
+            ]
+        );
     }
 
     /**
@@ -94,8 +98,8 @@ class TricksController extends AbstractController
     public function updateTricks(Request $request,int $id, File $File)
     {
         $trick = $this->getDoctrine()
-        ->getRepository(Tricks::class)
-        ->find($id);
+            ->getRepository(Tricks::class)
+            ->find($id);
 
         if (!$trick) {
             throw $this->createNotFoundException('No product found for id '.$id);
@@ -104,7 +108,7 @@ class TricksController extends AbstractController
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->addFlash('success','Votre Tricks à étais modifier');
+            $this->addFlash('success', 'Votre Tricks à étais modifier');
             $Images =$form['Photos']->getData();
             foreach($Images as $Image){
                 $imageFileName = $File->uploadImage($Image);
@@ -119,9 +123,11 @@ class TricksController extends AbstractController
 
             return $this->redirectToRoute('home_page');
         }
-        return $this->render('tricks/form.html.twig', [
+        return $this->render(
+            'tricks/form.html.twig', [
             'form' => $form->createView(),
-        ]);
+            ]
+        );
     }
     /**
      * @Route("/tricks/delete/{id}", name="remove_tricks", requirements={"id"="\d+"})
@@ -129,17 +135,17 @@ class TricksController extends AbstractController
     public function removeTricks($id, File $File)
     {
         $Trick = $this->getDoctrine()
-        ->getRepository(Tricks::class)
-        ->find($id);
+            ->getRepository(Tricks::class)
+            ->find($id);
         
         $photos = $this->getDoctrine()
-        ->getRepository(Photo::class)
-        ->findByTricksId($id);
+            ->getRepository(Photo::class)
+            ->findByTricksId($id);
 
         foreach($photos as $photo){
             $File->removeImage($photo->getName());
         }
-        $this->addFlash('success','Votre Tricks à étais supprimer');
+        $this->addFlash('success', 'Votre Tricks à étais supprimer');
         $em = $this->getDoctrine()->getManager();
         $em->remove($Trick);
         $em->flush();

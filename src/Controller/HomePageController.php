@@ -15,11 +15,13 @@ class HomePageController extends AbstractController
     public function index(): Response
     {
         $tricks = $this->getDoctrine()
-        ->getRepository(Tricks::class)
-        ->findAll();
+            ->getRepository(Tricks::class)
+            ->findAll();
 
-        return $this->render('home_page/index.html.twig', [
+        return $this->render(
+            'home_page/index.html.twig', [
             'tricks' => $tricks
-        ]);
+            ]
+        );
     }
 }

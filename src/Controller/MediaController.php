@@ -16,8 +16,8 @@ class MediaController extends AbstractController
     public function removeOnePhoto($photoId, File $File, Request $request)
     {
         $photo = $this->getDoctrine()
-        ->getRepository(Photo::class)
-        ->find($photoId);
+            ->getRepository(Photo::class)
+            ->find($photoId);
 
         $filename = $photo->getName();
         $File->removeImage($filename);

@@ -14,16 +14,19 @@ class CommentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('Message', TextType::class,[
+            ->add(
+                'Message', TextType::class, [
                 'label'=> false
-            ])
-        ;
+                ]
+            );
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([
+        $resolver->setDefaults(
+            [
             'data_class' => Comment::class,
-        ]);
+            ]
+        );
     }
 }

@@ -18,27 +18,34 @@ class TricksType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('Title', TextType::class,[
+            ->add(
+                'Title', TextType::class, [
                 'label'=>'Titre'
-            ])
+                ]
+            )
             ->add('Description', TextareaType::class)
-            ->add('StyleId', EntityType::class, [
+            ->add(
+                'StyleId', EntityType::class, [
                 'class' => Style::class,
                 'choice_label'=>'name',
                 'label'=>'Style'
-            ])
-            ->add('Photos', FileType::class,[
+                ]
+            )
+            ->add(
+                'Photos', FileType::class, [
                     'mapped' => false,
                     'multiple'=> true,
                     'required'=>false,
-            ])
-        ;
+                ]
+            );
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([
+        $resolver->setDefaults(
+            [
             'data_class' => Tricks::class,
-        ]);
+            ]
+        );
     }
 }

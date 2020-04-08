@@ -8,33 +8,33 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class File
 {
-  private $photoDirectory;
+    private $photoDirectory;
 
-  public function __construct($photoDirectory)
-  {
-      $this->photoDirectory = $photoDirectory;
-  }
-
-  public function uploadImage(UploadedFile $file)
-  {
-    $fileName = 'image'.'-'.uniqid().'.'.$file->guessExtension();
-
-    try {
-      $file->move($this->getPhotoDirectory(), $fileName);
-    } catch (FileException $e) {
+    public function __construct($photoDirectory)
+    {
+        $this->photoDirectory = $photoDirectory;
     }
 
-    return $fileName;
-  }
+    public function uploadImage(UploadedFile $file)
+    {
+        $fileName = 'image'.'-'.uniqid().'.'.$file->guessExtension();
 
-  public function getPhotoDirectory()
-  {
-      return $this->photoDirectory;
-  }
+        try {
+            $file->move($this->getPhotoDirectory(), $fileName);
+        } catch (FileException $e) {
+        }
 
-  public function removeImage($file)
-  {
-      $filesystem = new Filesystem();
-      $filesystem->remove([$this->getPhotoDirectory().'/'.$file]);
-  }
+        return $fileName;
+    }
+
+    public function getPhotoDirectory()
+    {
+        return $this->photoDirectory;
+    }
+
+    public function removeImage($file)
+    {
+        $filesystem = new Filesystem();
+        $filesystem->remove([$this->getPhotoDirectory().'/'.$file]);
+    }
 }
