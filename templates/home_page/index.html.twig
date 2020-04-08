@@ -15,7 +15,7 @@
         <a href="/#tricks">
           <i class="fas fa-arrow-down hover-arrow fa-2x"></i>
         </a>
-    </div>
+   </div>
     </div>
   </header>
     {% for message in app.flashes('success') %}
@@ -27,7 +27,7 @@
     <div class="container text-center pb-5" id="tricks">
         <div class="row">
             {% for trick in tricks %}
-              <div class="col-md-3 py-3">
+              <div class="col-md-6 col-lg-3 py-3">
                  <div class="card h-100">
                     <img src="{{ asset('Images/default.jpg')}}" class="card-img-top" alt="Snowboard freestyle">
                     <div class="card-body">
