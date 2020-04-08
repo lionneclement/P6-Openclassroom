@@ -3,18 +3,42 @@
 {% block title %}{{ trick.title }}{% endblock %}
 
 {% block body %}
-<div class="container">
-  <div class="text-center pt-5">
-        <img src="{{asset('Images/default-top.jpg')}}" class="img-fluid" alt="Snowboard">
-        <div class="row pt-3">
-          {% for photo in photos %}
-            <div class="col-3">
-              <img src="{{asset('Upload/'~ photo.name)}}" class="img-fluid" alt="Snowboard">
-              <a class="btn btn-secondary" href="/tricks/photo/delete/{{photo.id}}">Supprimer</a>
+<header>
+  <div class="view" style="background-image: url({{ asset('Images/default-top.jpg') }})">
+        <div class="container">
+          <div class="header-text text-center">
+            <h1>{{ trick.title }}</h1>
+            <p>{{ trick.description|slice(0, 100) }}...</p>
+          </div>
+    </div>
+  </div>
+</header>
+<section class="py-3">
+  <div class="text-center">
+    <a class="btn btn-secondary" data-toggle="collapse" href="#mediaCollapse" role="button" aria-expanded="false" aria-controls="mediaCollapse">
+      Voir les médias
+    </a>
+  </div>
+  <div class="collapse" id="mediaCollapse">
+    <div class="medias">
+      <div class="container">
+        <div class="row">
+        {% for photo in photos %}
+            <div class="card col-md-3">
+              <img class="card-img-top" src="{{asset('Upload/'~ photo.name)}}" alt="{{trick.title}}">
+              <div class="card-body text-center">
+                <a class="btn btn-secondary btn-sm" href="{{url('remove_photo', {'photoId':photo.id})}}">Supprimer</a>
+              </div>
             </div>
-          {% endfor %}
-        </div>
-        <h1 class="card-title">{{ trick.title }}</h1>
+        {% endfor %} 
+      </div>
+      </div>
+    </div>
+  </div>  
+</section>
+
+<div class="container pt-3 pb-5">
+  <div class="text-center pb-5">
         <p class="card-text">{{ trick.description }}</p>
         <h5>Groupe</h5>
         <p class="card-title">{{ trick.StyleId.Name}}</p>
@@ -30,14 +54,24 @@
           <button class="btn btn-secondary" type="submit">Confirmer</button>
         {{ form_end(form) }}
         {% endif %}
-        <h1>Tout les commentaires</h1>
+        {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+          <div class="alert alert-danger text-center" role="alert">
+              Connecter vous pour pouvoir commenter.
+          </div>
+        {% endif %}
+        <h5>Tout les commentaires</h5>
+        {% if not comments %}
+          <div class="alert alert-danger text-center" role="alert">
+              Il n'y a pas encore de commentaires.
+          </div>
+        {% endif %}
         {% for comment in comments %}
             {% if comment.UserId.ImageName == 'default-user.png' %}
                 {% set directory = 'Images' %}
             {% else %}
                 {% set directory = 'Upload' %}
             {% endif %}
-          <img src="{{asset(directory ~'/'~ comment.UserId.ImageName)}}" class="userimage" alt="Photo de profil">
+          <img src="{{asset(directory ~'/'~ comment.UserId.ImageName)}}" class="avatar-min" alt="Photo de profil">
           <p class="card-text">Auteur: {{ comment.UserId.Name }}</p>
           <p class="card-text">Message: {{ comment.Message }}</p>
           <p class="card-text">Date: {{ comment.Date|date("d/m/Y")}}</p>
