@@ -139,7 +139,7 @@ class TricksController extends AbstractController
         foreach($photos as $photo){
             $File->removeImage($photo->getName());
         }
-        
+        $this->addFlash('success','Votre Tricks à étais supprimer');
         $em = $this->getDoctrine()->getManager();
         $em->remove($Trick);
         $em->flush();
