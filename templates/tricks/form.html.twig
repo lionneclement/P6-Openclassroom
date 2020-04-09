@@ -11,7 +11,15 @@
             {{ form_row(form.description) }}
             {{ form_row(form.styleId) }}
             {{ form_row(form.photos) }}
-            <div class="text-center">
+            <div class="container text-center">
+                <h3>Video</h3>
+                <div class="video row" data-prototype="{{ form_widget(form.videos.vars.prototype)|e('html_attr') }}">
+                    {% for video in form.videos %}
+                        <div class="col-3">{{ form_row(video.name) }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="text-center pt-3">
                 <button class="btn btn-secondary btn-lg" type="submit">Valider</button>
             </div>
         {{ form_end(form) }}
