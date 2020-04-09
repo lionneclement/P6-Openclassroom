@@ -20,6 +20,7 @@ use App\Form\TricksType;
 use App\Tools\File;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
 /** 
@@ -45,7 +46,7 @@ class TricksController extends AbstractController
      *
      * @return response
      */
-    public function showTricks(Request $request, int $id,UserInterface $user=null, Tricks $trick)
+    public function showTricks(Request $request, int $id,UserInterface $user=null, Tricks $trick): Response
     {
         $photos = $this->getDoctrine()
             ->getRepository(Photo::class)
@@ -91,7 +92,7 @@ class TricksController extends AbstractController
      *
      * @return response
      */
-    public function createTricks(Request $request, File $file)
+    public function createTricks(Request $request, File $file): Response
     {
         $trick = new Tricks;
 
@@ -133,7 +134,7 @@ class TricksController extends AbstractController
      *
      * @return response 
      */
-    public function updateTricks(Request $request,int $id, Tricks $trick, File $file)
+    public function updateTricks(Request $request,int $id, Tricks $trick, File $file): Response
     {
         if (!$trick) {
             throw $this->createNotFoundException('No product found for id '.$id);
@@ -173,7 +174,7 @@ class TricksController extends AbstractController
      *
      * @return response 
      */
-    public function removeTricks(int $id, File $file, Tricks $trick)
+    public function removeTricks(int $id, File $file, Tricks $trick): Response
     {
         $photos = $this->getDoctrine()
             ->getRepository(Photo::class)

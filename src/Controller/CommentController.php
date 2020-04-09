@@ -15,6 +15,7 @@ namespace App\Controller;
 use App\Entity\Comment;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 /** 
  * The class is for comment
@@ -34,7 +35,7 @@ class CommentController extends AbstractController
      * 
      * @return response
      */
-    public function allComment()
+    public function allComment(): Response
     {        
         $comments = $this->getDoctrine()
             ->getRepository(Comment::class)
@@ -54,7 +55,7 @@ class CommentController extends AbstractController
      * 
      * @return response
      */
-    public function invalideComment()
+    public function invalideComment(): Response
     {
         $comments = $this->getDoctrine()
             ->getRepository(Comment::class)
@@ -77,7 +78,7 @@ class CommentController extends AbstractController
      * 
      * @return response
      */
-    public function deleteComment(Request $request, Comment $comment)
+    public function deleteComment(Request $request, Comment $comment): Response
     {
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($comment);
@@ -96,7 +97,7 @@ class CommentController extends AbstractController
      * 
      * @return response
      */
-    public function changeStatusComment(Request $request, Comment $comment)
+    public function changeStatusComment(Request $request, Comment $comment): Response
     {
         $comment->setStatus(!$comment->getStatus());
 

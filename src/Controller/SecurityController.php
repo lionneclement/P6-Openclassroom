@@ -122,7 +122,7 @@ class SecurityController extends AbstractController
      * 
      * @return response
      */
-    public function forgotPassword(Request $request, SessionInterface $session, Mail $mail, Token $token)
+    public function forgotPassword(Request $request, SessionInterface $session, Mail $mail, Token $token): Response
     {
         $form = $this->createForm(ForgotPasswordType::class);
         $form->handleRequest($request);
@@ -161,7 +161,7 @@ class SecurityController extends AbstractController
      * 
      * @return response
      */
-    public function resetPassword(Request $request, SessionInterface $session, UserPasswordEncoderInterface $passwordEncoder)
+    public function resetPassword(Request $request, SessionInterface $session, UserPasswordEncoderInterface $passwordEncoder): Response
     {
         $token = $request->query->get('token');
         if ($session->get('token') == $token) {

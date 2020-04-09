@@ -16,6 +16,7 @@ use App\Entity\Style;
 use App\Form\StyleType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 /** 
  * The class is for style
@@ -37,7 +38,7 @@ class StyleController extends AbstractController
      * 
      * @return reponse
      */
-    public function index(Request $request)
+    public function index(Request $request): Response
     {
         $styles = $this->getDoctrine()
             ->getRepository(Style::class)
@@ -68,7 +69,7 @@ class StyleController extends AbstractController
      *
      * @return response
      */
-    public function remove(Style $style)
+    public function remove(Style $style): Response
     {
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($style);
@@ -87,7 +88,7 @@ class StyleController extends AbstractController
      * 
      * @return response
      */
-    public function update(int $id, Style $style ,Request $request)
+    public function update(int $id, Style $style ,Request $request): Response
     {
         $form = $this->createForm(StyleType::class, $style);
         $form->handleRequest($request);

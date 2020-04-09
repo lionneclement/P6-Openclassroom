@@ -16,6 +16,7 @@ use App\Entity\Photo;
 use App\Tools\File;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 /** 
  * The file is for media
@@ -41,7 +42,7 @@ class MediaController extends AbstractController
      * 
      * @return response
      */
-    public function removeOnePhoto(Photo $photo, File $File, Request $request)
+    public function removeOnePhoto(Photo $photo, File $File, Request $request): Response
     {
         $filename = $photo->getName();
         $File->removeImage($filename);
