@@ -58,7 +58,7 @@ class CommentController extends AbstractController
     {
         $comments = $this->getDoctrine()
             ->getRepository(Comment::class)
-            ->findBy(['Status'=>0]);
+            ->findBy(['status'=>0]);
 
         return $this->render(
             'comment/Comment.html.twig', [

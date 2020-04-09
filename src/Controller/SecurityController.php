@@ -115,14 +115,14 @@ class SecurityController extends AbstractController
      * 
      * @param objet $request 
      * @param objet $session 
-     * @param objet $Mail 
-     * @param objet $Token 
+     * @param objet $mail 
+     * @param objet $token 
      * 
      * @Route("/anony/password/forgot", name="forgot_password")
      * 
      * @return response
      */
-    public function forgotPassword(Request $request, SessionInterface $session, Mail $Mail, Token $Token)
+    public function forgotPassword(Request $request, SessionInterface $session, Mail $mail, Token $token)
     {
         $form = $this->createForm(ForgotPasswordType::class);
         $form->handleRequest($request);
@@ -135,10 +135,10 @@ class SecurityController extends AbstractController
                 ->findOneBy(['email' => $email]);
 
             if ($user) {
-                $token= $Token->generator(10);
-                $session->set('token', $token);
+                $tokenGenerate= $token->generator(10);
+                $session->set('token', $tokenGenerate);
                 $session->set('email', $email);
-                $Mail->forgotPassword($token, $user);
+                $mail->forgotPassword($tokenGenerate, $user);
                 
                 $this->addFlash('success', 'Vous aller recevoir un mail');
             }

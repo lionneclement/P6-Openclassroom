@@ -19,13 +19,13 @@ class Video
     /**
      * @ORM\Column(type="text")
      */
-    private $Name;
+    private $name;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Tricks", inversedBy="videos")
      * @ORM\JoinColumn(nullable=false,                  onDelete="CASCADE")
      */
-    private $TricksId;
+    private $tricksId;
 
     public function getId(): ?int
     {
@@ -34,24 +34,24 @@ class Video
 
     public function getName(): ?string
     {
-        return $this->Name;
+        return $this->name;
     }
 
-    public function setName(string $Name): self
+    public function setName(string $name): self
     {
-        $this->Name = $Name;
+        $this->name = $name;
 
         return $this;
     }
 
     public function getTricksId(): ?Tricks
     {
-        return $this->TricksId;
+        return $this->tricksId;
     }
 
-    public function setTricksId(?Tricks $TricksId): self
+    public function setTricksId(?Tricks $tricksId): self
     {
-        $this->TricksId = $TricksId;
+        $this->tricksId = $tricksId;
 
         return $this;
     }

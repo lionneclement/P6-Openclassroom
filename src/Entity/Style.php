@@ -21,10 +21,10 @@ class Style
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $Name;
+    private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Tricks", mappedBy="StyleId", orphanRemoval=true, cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="App\Entity\Tricks", mappedBy="styleId", orphanRemoval=true, cascade={"remove"})
      */
     private $tricks;
 
@@ -40,12 +40,12 @@ class Style
 
     public function getName(): ?string
     {
-        return $this->Name;
+        return $this->name;
     }
 
-    public function setName(string $Name): self
+    public function setName(string $name): self
     {
-        $this->Name = $Name;
+        $this->name = $name;
 
         return $this;
     }

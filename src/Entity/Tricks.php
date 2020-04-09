@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TricksRepository")
- * @UniqueEntity("Title")
+ * @UniqueEntity("title")
  */
 class Tricks
 {
@@ -23,43 +23,43 @@ class Tricks
     /**
      * @ORM\Column(type="string", length=255, unique=true)
      */
-    private $Title;
+    private $title;
 
     /**
      * @ORM\Column(type="text")
      */
-    private $Description;
+    private $description;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Style", inversedBy="tricks")
      * @ORM\JoinColumn(nullable=false,                 onDelete="CASCADE")
      */
-    private $StyleId;
+    private $styleId;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Photo", mappedBy="TricksId", orphanRemoval=true, cascade={"remove", "persist"})
+     * @ORM\OneToMany(targetEntity="App\Entity\Photo", mappedBy="tricksId", orphanRemoval=true, cascade={"remove", "persist"})
      */
     private $photos;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Video", mappedBy="TricksId", orphanRemoval=true, cascade={"remove", "persist"})
+     * @ORM\OneToMany(targetEntity="App\Entity\Video", mappedBy="tricksId", orphanRemoval=true, cascade={"remove", "persist"})
      */
     private $videos;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="TricksId", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="tricksId", orphanRemoval=true)
      */
     private $comments;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $CreateDate;
+    private $createDate;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $UpdateDate;
+    private $updateDate;
 
     public function __construct()
     {
@@ -75,36 +75,36 @@ class Tricks
 
     public function getTitle(): ?string
     {
-        return $this->Title;
+        return $this->title;
     }
 
-    public function setTitle(string $Title): self
+    public function setTitle(string $title): self
     {
-        $this->Title = $Title;
+        $this->title = $title;
 
         return $this;
     }
 
     public function getDescription(): ?string
     {
-        return $this->Description;
+        return $this->description;
     }
 
-    public function setDescription(string $Description): self
+    public function setDescription(string $description): self
     {
-        $this->Description = $Description;
+        $this->description = $description;
 
         return $this;
     }
 
     public function getStyleId(): ?Style
     {
-        return $this->StyleId;
+        return $this->styleId;
     }
 
-    public function setStyleId(?Style $StyleId): self
+    public function setStyleId(?Style $styleId): self
     {
-        $this->StyleId = $StyleId;
+        $this->styleId = $styleId;
 
         return $this;
     }
@@ -204,24 +204,24 @@ class Tricks
 
     public function getCreateDate(): ?\DateTimeInterface
     {
-        return $this->CreateDate;
+        return $this->createDate;
     }
 
-    public function setCreateDate(\DateTimeInterface $CreateDate): self
+    public function setCreateDate(\DateTimeInterface $createDate): self
     {
-        $this->CreateDate = $CreateDate;
+        $this->createDate = $createDate;
 
         return $this;
     }
 
     public function getUpdateDate(): ?\DateTimeInterface
     {
-        return $this->UpdateDate;
+        return $this->updateDate;
     }
 
-    public function setUpdateDate(\DateTimeInterface $UpdateDate): self
+    public function setUpdateDate(\DateTimeInterface $updateDate): self
     {
-        $this->UpdateDate = $UpdateDate;
+        $this->updateDate = $updateDate;
 
         return $this;
     }

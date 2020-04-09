@@ -38,22 +38,22 @@ class TricksController extends AbstractController
      * 
      * @param object $request 
      * @param int    $id 
-     * @param object $User 
+     * @param object $user 
      * @param object $trick 
      * 
      * @Route("/tricks/show/{id}", name="show_trick", requirements={"id"="\d+"})
      *
      * @return response
      */
-    public function showTricks(Request $request, int $id,UserInterface $User=null, Tricks $trick)
+    public function showTricks(Request $request, int $id,UserInterface $user=null, Tricks $trick)
     {
         $photos = $this->getDoctrine()
             ->getRepository(Photo::class)
-            ->findBy(['TricksId'=>$id]);
+            ->findBy(['tricksId'=>$id]);
 
         $comments = $this->getDoctrine()
             ->getRepository(Comment::class)
-            ->findBy(['TricksId'=>$id, 'Status'=>1]);
+            ->findBy(['tricksId'=>$id, 'status'=>1]);
 
         $comment = new Comment;
         $form = $this->createForm(CommentType::class, $comment);
@@ -62,7 +62,7 @@ class TricksController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->addFlash('success', 'Votre commentaire viens d\'être envoyer et doit être valider pas les administrateurs!');
             $comment->setStatus(0);
-            $comment->setUserId($User);
+            $comment->setUserId($user);
             $comment->setTricksId($trick);
             $comment->setDate(new \DateTime());
             $entityManager = $this->getDoctrine()->getManager();
@@ -85,27 +85,26 @@ class TricksController extends AbstractController
      * Create trick
      * 
      * @param object $request 
-     * @param object $File  
+     * @param object $file  
      * 
      * @Route("/auth/tricks/create", name="create_trick")
      *
      * @return response
      */
-    public function createTricks(Request $request, File $File)
+    public function createTricks(Request $request, File $file)
     {
         $trick = new Tricks;
 
         $form = $this->createForm(TricksType::class, $trick);
         $form->handleRequest($request);
-        
         if ($form->isSubmitted() && $form->isValid()) {
             $this->addFlash('success', 'Votre Tricks à étais enregistrer');
-            $Images =$form['Photos']->getData();
-            foreach ($Images as $Image) {
-                $imageFileName = $File->uploadImage($Image);
-                $Photo = new Photo;
-                $Photo->setName($imageFileName);
-                $trick->addPhoto($Photo);
+            $images =$form['photos']->getData();
+            foreach ($images as $image) {
+                $imageFileName = $file->uploadImage($image);
+                $photo = new Photo;
+                $photo->setName($imageFileName);
+                $trick->addPhoto($photo);
             }
             $trick->setCreateDate(new \DateTime());
             $trick->setUpdateDate(new \DateTime());
@@ -128,25 +127,24 @@ class TricksController extends AbstractController
      * @param object $request 
      * @param int    $id 
      * @param object $trick 
-     * @param object $File 
+     * @param object $file 
      * 
      * @Route("/auth/tricks/update/{id}", name="update_trick", requirements={"id"="\d+"})
      *
      * @return response 
      */
-    public function updateTricks(Request $request,int $id, Tricks $trick, File $File)
+    public function updateTricks(Request $request,int $id, Tricks $trick, File $file)
     {
         if (!$trick) {
             throw $this->createNotFoundException('No product found for id '.$id);
         }
         $form = $this->createForm(TricksType::class, $trick);
         $form->handleRequest($request);
-        
         if ($form->isSubmitted() && $form->isValid()) {
             $this->addFlash('success', 'Votre Tricks à étais modifier');
-            $Images =$form['Photos']->getData();
+            $Images =$form['photos']->getData();
             foreach ($Images as $Image) {
-                $imageFileName = $File->uploadImage($Image);
+                $imageFileName = $file->uploadImage($Image);
                 $Photo = new Photo;
                 $Photo->setName($imageFileName);
                 $trick->addPhoto($Photo);
@@ -168,25 +166,25 @@ class TricksController extends AbstractController
      * Remove one trick
      * 
      * @param int    $id 
-     * @param object $File 
+     * @param object $file 
      * @param object $trick 
      * 
      * @Route("/auth/tricks/delete/{id}", name="remove_trick", requirements={"id"="\d+"})
      *
      * @return response 
      */
-    public function removeTricks(int $id, File $File, Tricks $trick)
+    public function removeTricks(int $id, File $file, Tricks $trick)
     {
         $photos = $this->getDoctrine()
             ->getRepository(Photo::class)
-            ->findBy(['TricksId'=>$id]);
+            ->findBy(['tricksId'=>$id]);
         foreach ($photos as $photo) {
-            $File->removeImage($photo->getName());
+            $file->removeImage($photo->getName());
         }
         $this->addFlash('success', 'Votre Tricks à étais supprimer');
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($trick);
-        $em->flush();
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($trick);
+        $entityManager->flush();
         return $this->redirectToRoute('home_page');
     }
 }

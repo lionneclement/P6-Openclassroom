@@ -19,20 +19,20 @@ class TricksType extends AbstractType
     {
         $builder
             ->add(
-                'Title', TextType::class, [
+                'title', TextType::class, [
                 'label'=>'Titre'
                 ]
             )
-            ->add('Description', TextareaType::class)
+            ->add('description', TextareaType::class)
             ->add(
-                'StyleId', EntityType::class, [
+                'styleId', EntityType::class, [
                 'class' => Style::class,
                 'choice_label'=>'name',
                 'label'=>'Style'
                 ]
             )
             ->add(
-                'Photos', FileType::class, [
+                'photos', FileType::class, [
                     'mapped' => false,
                     'multiple'=> true,
                     'required'=>false,

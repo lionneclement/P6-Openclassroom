@@ -19,12 +19,12 @@
     <div class="row pb-5">
       {% for comment in comments %}
         <div class="col-md-4 py-4">
-          <p class="card-text">Auteur: {{ comment.UserId.email }}</p>
-          <p class="card-text">Message: {{ comment.Message }}</p>
-          <i class="card-text">Date: {{ comment.Date|date("d/m/Y")}}</i>
+          <p class="card-text">Auteur: {{ comment.userId.email }}</p>
+          <p class="card-text">Message: {{ comment.message }}</p>
+          <i class="card-text">Date: {{ comment.date|date("d/m/Y")}}</i>
           <br>
           <p class="card-text">Status: 
-            {% if comment.Status %}
+            {% if comment.status %}
               Valide
             {% else %}
               Invalide

@@ -22,7 +22,7 @@
             <div class="col-md-3 py-3" id="{{style.id}}">
                 <div class="card text-center">
                     <div class="card-body">
-                      <h5 class="card-title">{{style.Name|capitalize}}</h5>
+                      <h5 class="card-title">{{style.name|capitalize}}</h5>
                       <a href="{{ path('style-remove', {'id':style.id}) }}" class="btn btn-secondary btn-sm mt-1">Supprimer</a>
                       <a href="{{ path('style-update', {'id':style.id}) }}" class="btn btn-secondary btn-sm mt-1">Modifier</a>
                     </div>
@@ -33,7 +33,7 @@
         <div class="py-5">
             <h3 class="text-center">Ajouter un style</h3>
             {{ form_start(form) }}
-                {{ form_row(form.Name) }}
+                {{ form_row(form.name) }}
                 <div class="text-center">
                     <button class="btn btn-secondary" type="submit">Ajouter</button>
                 </div>

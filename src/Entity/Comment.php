@@ -19,29 +19,29 @@ class Comment
     /**
      * @ORM\Column(type="datetime")
      */
-    private $Date;
+    private $date;
 
     /**
      * @ORM\Column(type="text")
      */
-    private $Message;
+    private $message;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="comments")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $UserId;
+    private $userId;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Tricks", inversedBy="comments")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $TricksId;
+    private $tricksId;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $Status;
+    private $status;
 
     public function getId(): ?int
     {
@@ -50,60 +50,60 @@ class Comment
 
     public function getDate(): ?\DateTimeInterface
     {
-        return $this->Date;
+        return $this->date;
     }
 
-    public function setDate(\DateTimeInterface $Date): self
+    public function setDate(\DateTimeInterface $date): self
     {
-        $this->Date = $Date;
+        $this->date = $date;
 
         return $this;
     }
 
     public function getMessage(): ?string
     {
-        return $this->Message;
+        return $this->message;
     }
 
-    public function setMessage(string $Message): self
+    public function setMessage(string $message): self
     {
-        $this->Message = $Message;
+        $this->message = $message;
 
         return $this;
     }
 
     public function getUserId(): ?User
     {
-        return $this->UserId;
+        return $this->userId;
     }
 
-    public function setUserId(?User $UserId): self
+    public function setUserId(?User $userId): self
     {
-        $this->UserId = $UserId;
+        $this->userId = $userId;
 
         return $this;
     }
 
     public function getTricksId(): ?tricks
     {
-        return $this->TricksId;
+        return $this->tricksId;
     }
 
-    public function setTricksId(?tricks $TricksId): self
+    public function setTricksId(?tricks $tricksId): self
     {
-        $this->TricksId = $TricksId;
+        $this->tricksId = $tricksId;
 
         return $this;
     }
 
     public function getStatus(): ?bool
     {
-        return $this->Status;
+        return $this->status;
     }
 
-    public function setStatus(bool $Status): self
+    public function setStatus(bool $status): self
     {
-        $this->Status = $Status;
+        $this->status = $status;
 
         return $this;
     }

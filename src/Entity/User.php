@@ -45,12 +45,12 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $Name;
+    private $name;
 
     /**
      * @ORM\Column(type="text")
      */
-    private $ImageName;
+    private $imageName;
 
     public function __construct()
     {
@@ -168,24 +168,24 @@ class User implements UserInterface
 
     public function getName(): ?string
     {
-        return $this->Name;
+        return $this->name;
     }
 
-    public function setName(string $Name): self
+    public function setName(string $name): self
     {
-        $this->Name = $Name;
+        $this->name = $name;
 
         return $this;
     }
 
     public function getImageName(): ?string
     {
-        return $this->ImageName;
+        return $this->imageName;
     }
 
-    public function setImageName(?string $ImageName): self
+    public function setImageName(?string $imageName): self
     {
-        $this->ImageName = $ImageName;
+        $this->imageName = $imageName;
 
         return $this;
     }

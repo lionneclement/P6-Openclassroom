@@ -12,7 +12,7 @@ class StyleType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('Name');
+            ->add('name');
     }
 
     public function configureOptions(OptionsResolver $resolver)
