@@ -27,7 +27,7 @@
     <div class="container text-center pb-5" id="tricks">
         <div class="row">
             {% for trick in tricks %}
-              <div class="col-md-6 col-lg-3 py-3">
+              <div class="col-md-6 col-lg-3 py-3" id="trickJs">
                  <div class="card h-100">
                     <img src="{{ asset('Images/default.jpg')}}" class="card-img-top" alt="Snowboard freestyle">
                     <div class="card-body">
@@ -43,6 +43,7 @@
             </div>
             {% endfor %}
         </div>
+        <button class="btn btn-secondary" id="buttonMoreJs">Voir plus</button>
           {% if not tricks %}
               <div class="alert alert-danger text-center" role="alert">
                 Il n'y as pas encore de trick.
@@ -51,4 +52,10 @@
           {% endif %}
     </div>
 </section>
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/paginationHome.js') }}"></script>
 {% endblock %}
