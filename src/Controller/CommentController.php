@@ -42,7 +42,7 @@ class CommentController extends AbstractController
             ->findAll();
 
         return $this->render(
-            'comment/Comment.html.twig', [
+            'comment/comment.html.twig', [
             'comments' => $comments,
             ]
         );
@@ -62,7 +62,7 @@ class CommentController extends AbstractController
             ->findBy(['status'=>0]);
 
         return $this->render(
-            'comment/Comment.html.twig', [
+            'comment/comment.html.twig', [
             'comments' => $comments,
             ]
         );

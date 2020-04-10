@@ -57,5 +57,5 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script type="text/javascript" src="{{ asset('js/paginationHome.js') }}"></script>
+    <script id="myscript" src="{{ asset('js/pagination.js') }}" listsId="#trickJs" buttonId="#buttonMoreJs" max="4"></script>
 {% endblock %}

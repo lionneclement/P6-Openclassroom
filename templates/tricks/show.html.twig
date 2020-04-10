@@ -88,7 +88,7 @@
             {% else %}
                 {% set directory = 'Upload' %}
             {% endif %}
-            <div class="container  pt-4">
+            <div class="container pt-4" id="commentJs">
               <div class="media media-commentaire">
                 <img src="{{asset(directory ~'/'~ comment.userId.imageName)}}" class="avatar-min mr-3" alt="Photo de profil">
                 <div class="media-body">
@@ -99,7 +99,12 @@
               </div>
             </div>
         {% endfor %}
+        <button class="btn btn-secondary" id="buttonMoreJs">Voir plus</button>
       </div>
   </div>
 </section>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script id="myscript" src="{{ asset('js/pagination.js') }}" listsId="#commentJs" buttonId="#buttonMoreJs" max="4"></script>
 {% endblock %}
