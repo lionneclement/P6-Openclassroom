@@ -6,8 +6,12 @@ $(document).ready(function () {
 
   var lists = document.querySelectorAll(listsSelector);
   var button = document.querySelector(buttonSelector);
-  var max = maxInit-1;
   var hiddenJs = "hiddenJs";
+  var max = maxInit-1;
+
+  if(lists.length-1 <= max){
+    button.classList.add(hiddenJs);
+  }
   [].forEach.call(lists, function(list, key){
     if (key > max) {
       list.classList.add(hiddenJs);
@@ -16,7 +20,6 @@ $(document).ready(function () {
 
   button.addEventListener('click', function(){
     max += maxInit; 
-    console.log(max);
     [].forEach.call(lists, function(list, key){
       if (key <= max) {
         list.classList.remove(hiddenJs);
