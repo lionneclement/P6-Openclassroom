@@ -1,32 +1,31 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Trick{% endblock %}
-
-{% block body %}
+{% extends 'base.html.twig' %} {% block title %}Trick{% endblock %} {% block
+body %}
 <div class="container py-5">
-    <div class="py-5">
-        <h1 class="text-center">Trick</h1>
-        {{ form_start(form) }}
-            {{ form_row(form.title) }}
-            {{ form_row(form.description) }}
-            {{ form_row(form.styleId) }}
-            {{ form_row(form.photos) }}
-            <div class="container text-center">
-                <h3>Video</h3>
-                <div class="video row" data-prototype="{{ form_widget(form.videos.vars.prototype)|e('html_attr') }}">
-                    {% for video in form.videos %}
-                        <div class="col-3">{{ form_row(video.name) }}</div>
-                    {% endfor %}
-                </div>
-            </div>
-            <div class="text-center pt-3">
-                <button class="btn btn-secondary btn-lg" type="submit">Valider</button>
-            </div>
-        {{ form_end(form) }}
+  <div class="py-5">
+    <h1 class="text-center">Trick</h1>
+    {{ form_start(form) }}
+    {{ form_row(form.title) }}
+    {{ form_row(form.description) }}
+    {{ form_row(form.styleId) }}
+    {{ form_row(form.photos) }}
+    <div class="container text-center">
+      <h3>Video</h3>
+      <div
+        class="video row"
+        data-prototype="{{ form_widget(form.videos.vars.prototype)|e('html_attr') }}"
+      >
+        {% for video in form.videos %}
+        <div class="col-3">{{ form_row(video.name) }}</div>
+        {% endfor %}
+      </div>
     </div>
+    <div class="text-center pt-3">
+      <button class="btn btn-secondary btn-lg" type="submit">Valider</button>
+    </div>
+    {{ form_end(form) }}
+  </div>
 </div>
-{% endblock %}
-{% block javascripts %}
-    {{ parent() }}
-    <script type="text/javascript" src="{{ asset('js/formVideo.js') }}"></script>
+{% endblock %} {% block javascripts %}
+{{ parent() }}
+<script type="text/javascript" src="{{ asset('js/formVideo.js') }}"></script>
 {% endblock %}

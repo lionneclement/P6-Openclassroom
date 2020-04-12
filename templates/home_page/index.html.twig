@@ -1,79 +1,123 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Accueil !{% endblock %}
-
-{% block body %}
-  <header>
-    <div class="jumbotron jumbotron-fluid mt-5" id="accueil">
-      <div class="container text-center">
-        <h1>Snowboard</h1>
-        <p>
-            Mon objectif est de crée un site collaboratif pour faire connaître ce sport auprès du grand public et aider à l'apprentissage des tricks.
-        </p>
-      </div>
-      <div class="scroll-container">
-        <a href="/#tricks">
-          <i class="fas fa-arrow-down hover-arrow fa-2x"></i>
-        </a>
-   </div>
+{% extends 'base.html.twig' %} {% block title %}Accueil !{% endblock %} {% block
+body %}
+<header>
+  <div class="jumbotron jumbotron-fluid mt-5" id="accueil">
+    <div class="container text-center">
+      <h1>Snowboard</h1>
+      <p>
+        Mon objectif est de crée un site collaboratif pour faire connaître ce
+        sport auprès du grand public et aider à l'apprentissage des tricks.
+      </p>
     </div>
-  </header>
-    {% for message in app.flashes('success') %}
-      <div class="alert alert-success text-center" role="alert">
-          {{ message }}
-      </div>
-    {% endfor %}
+    <div class="scroll-container">
+      <a href="/#tricks">
+        <i class="fas fa-arrow-down hover-arrow fa-2x"></i>
+      </a>
+    </div>
+  </div>
+</header>
+{% for message in app.flashes('success') %}
+<div class="alert alert-success text-center" role="alert">
+  {{ message }}
+</div>
+{% endfor %}
 <section class="pb-5">
-    <div class="container text-center pb-5" id="tricks">
-        <div class="row">
-            {% for trick in tricks %}
-              <div class="col-md-6 col-lg-3 py-3" id="trickJs">
-                 <div class="card h-100">
-                    <img src="{{ asset('Images/default.jpg')}}" class="card-img-top" alt="Snowboard freestyle">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ trick.title|capitalize }} </h5>
-                        <p class="card-text">{{ trick.description|slice(0, 50)}} ...</p>
-                        <a class="btn btn-secondary" href="{{ path('show_trick', {'id':trick.id}) }}">Voir plus</a>
-                        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                          <a class="btn btn-secondary" href="{{ path('update_trick', {'id':trick.id}) }}"><i class="fas fa-pen"></i></a>
-                          <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModal">
-                            <i class="fas fa-trash-restore"></i>
-                          </button>
-                          <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                              <div class="modal-content">
-                                <div class="modal-header">
-                                  <h5 class="modal-title" id="exampleModalLabel">Êtes-vous sûr de vouloir supprimer ?</h5>
-                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                  </button>
-                                </div>
-                                <div class="modal-footer">
-                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-                                  <a href="{{ path('remove_trick', {'id':trick.id}) }}" class="btn btn-danger">Supprimer</a>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        {% endif %}
-                    </div>
+  <div class="container text-center pb-5" id="tricks">
+    <div class="row">
+      {% for trick in tricks %}
+      <div class="col-md-6 col-lg-3 py-3" id="trickJs">
+        <div class="card h-100">
+          <img
+            src="{{ asset('Images/default.jpg') }}"
+            class="card-img-top"
+            alt="Snowboard freestyle"
+          />
+          <div class="card-body">
+            <h5 class="card-title">{{ trick.title | capitalize }}</h5>
+            <p class="card-text">{{ trick.description|slice(0, 50)}} ...</p>
+            <a
+              class="btn btn-secondary"
+              href="{{ path('show_trick', { id: trick.id }) }}"
+              >Voir plus</a
+            >
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <a
+              class="btn btn-secondary"
+              href="{{ path('update_trick', { id: trick.id }) }}"
+              ><i class="fas fa-pen"></i
+            ></a>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-toggle="modal"
+              data-target="#exampleModal"
+            >
+              <i class="fas fa-trash-restore"></i>
+            </button>
+            <div
+              class="modal fade"
+              id="exampleModal"
+              tabindex="-1"
+              role="dialog"
+              aria-labelledby="exampleModalLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                      Êtes-vous sûr de vouloir supprimer ?
+                    </h5>
+                    <button
+                      type="button"
+                      class="close"
+                      data-dismiss="modal"
+                      aria-label="Close"
+                    >
+                      <span aria-hidden="true">&times;</span>
+                    </button>
                   </div>
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      data-dismiss="modal"
+                    >
+                      Fermer
+                    </button>
+                    <a
+                      href="{{ path('remove_trick', { id: trick.id }) }}"
+                      class="btn btn-danger"
+                      >Supprimer</a
+                    >
+                  </div>
+                </div>
+              </div>
             </div>
-            {% endfor %}
+            {% endif %}
+          </div>
         </div>
-        <button class="btn btn-secondary" id="buttonMoreJs">Voir plus</button>
-          {% if not tricks %}
-              <div class="alert alert-danger text-center" role="alert">
-                Il n'y as pas encore de trick.
-              </div>     
-              <a href="{{ path('create_trick') }}" class="btn btn-secondary">Ajouter un trick</a>      
-          {% endif %}
+      </div>
+      {% endfor %}
     </div>
+    <button class="btn btn-secondary" id="buttonMoreJs">Voir plus</button>
+    {% if not tricks %}
+    <div class="alert alert-danger text-center" role="alert">
+      Il n'y as pas encore de trick.
+    </div>
+    <a href="{{ path('create_trick') }}" class="btn btn-secondary"
+      >Ajouter un trick</a
+    >
+    {% endif %}
+  </div>
 </section>
-{% endblock %}
-
-
-{% block javascripts %}
-    {{ parent() }}
-    <script id="myscript" src="{{ asset('js/pagination.js') }}" listsId="#trickJs" buttonId="#buttonMoreJs" max="4"></script>
+{% endblock %} {% block javascripts %}
+{{ parent() }}
+<script
+  id="myscript"
+  src="{{ asset('js/pagination.js') }}"
+  listsId="#trickJs"
+  buttonId="#buttonMoreJs"
+  max="4"
+></script>
 {% endblock %}

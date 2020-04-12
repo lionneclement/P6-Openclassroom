@@ -1,42 +1,42 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Les commentaires{% endblock %}
-
+{% extends 'base.html.twig' %} {% block title %}Les commentaires{% endblock %}
 {% block body %}
 <section class="pt-5">
- <div class="container py-5 text-center">
-   <h1>Les Commentaires</h1>
-   {% if not comments %}
-        <div class="alert alert-danger text-center" role="alert">
-            Il n'y a pas encore de commentaires.
-        </div>
-    {% endif %}
-    {% for message in app.flashes('success') %}
-      <div class="alert alert-success text-center" role="alert">
-          {{ message }}
-      </div>
+  <div class="container py-5 text-center">
+    <h1>Les Commentaires</h1>
+    {% if not comments %}
+    <div class="alert alert-danger text-center" role="alert">
+      Il n'y a pas encore de commentaires.
+    </div>
+    {% endif %} {% for message in app.flashes('success') %}
+    <div class="alert alert-success text-center" role="alert">
+      {{ message }}
+    </div>
     {% endfor %}
     <div class="row pb-5">
       {% for comment in comments %}
-        <div class="col-md-4 py-4">
-          <p class="card-text">Auteur: {{ comment.userId.email }}</p>
-          <p class="card-text">Message: {{ comment.message }}</p>
-          <i class="card-text">Date: {{ comment.date|date("d/m/Y")}}</i>
-          <br>
-          <p class="card-text">Status: 
-            {% if comment.status %}
-              Valide
-            {% else %}
-              Invalide
-            {% endif %}
-          </p>
-          <div class="text-center">
-            <a class="btn btn-secondary mt-1" href="{{ path('delete_comment', {'id':comment.id}) }}">Supprimer</a>
-            <a class="btn btn-secondary mt-1" href="{{ path('change_status_comment', {'id':comment.id}) }}">Changer le status</a>
-          </div>
+      <div class="col-md-4 py-4">
+        <p class="card-text">Auteur: {{ comment.userId.email }}</p>
+        <p class="card-text">Message: {{ comment.message }}</p>
+        <i class="card-text">Date: {{ comment.date|date("d/m/Y")}}</i>
+        <br />
+        <p class="card-text">
+          Status: {% if comment.status %} Valide {% else %} Invalide {% endif %}
+        </p>
+        <div class="text-center">
+          <a
+            class="btn btn-secondary mt-1"
+            href="{{ path('delete_comment', { id: comment.id }) }}"
+            >Supprimer</a
+          >
+          <a
+            class="btn btn-secondary mt-1"
+            href="{{ path('change_status_comment', { id: comment.id }) }}"
+            >Changer le status</a
+          >
         </div>
+      </div>
       {% endfor %}
     </div>
- </div>
+  </div>
 </section>
 {% endblock %}
