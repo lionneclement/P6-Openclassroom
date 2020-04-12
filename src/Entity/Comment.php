@@ -25,7 +25,7 @@ class Comment
     /**
      * @ORM\Column(type="text")
      * @Assert\Length(min=5,
-     * minMessage="Le message doit contenir au minimun {{ limit }} caractères"
+     * minMessage="This value is too short. It should have {{ limit }} character or more.|This value is too short. It should have {{ limit }} characters or more."
      * )
      */
     private $message;

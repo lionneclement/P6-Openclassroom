@@ -24,7 +24,7 @@ class Style
     /**
      * @ORM\Column(type="string", length=255, unique=true)
      * @Assert\Length(min=2,
-     * minMessage="Le nom doit contenir au minimun {{ limit }} caractères"
+     * minMessage="This value is too short. It should have {{ limit }} character or more.|This value is too short. It should have {{ limit }} characters or more."
      * )
      */
     private $name;

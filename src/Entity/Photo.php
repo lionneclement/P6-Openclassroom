@@ -46,7 +46,7 @@ class Photo
 
     public function getTricksId(): ?Tricks
     {
-        return $this->TricksId;
+        return $this->tricksId;
     }
 
     public function setTricksId(?Tricks $tricksId): self
