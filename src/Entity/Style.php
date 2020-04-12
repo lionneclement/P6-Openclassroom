@@ -30,7 +30,7 @@ class Style
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Tricks", mappedBy="styleId", orphanRemoval=true, cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="App\Entity\Tricks", mappedBy="styleId", orphanRemoval=true, cascade={"remove", "persist"})
      */
     private $tricks;
 
