@@ -64,7 +64,7 @@ class SecurityController extends AbstractController
      */
     public function logout()
     {
-        throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
+        throw new \LogicException('Cette méthode peut être vide - elle sera interceptée par la clé de déconnexion sur votre pare-feu.');
     }
     /**
      * Register
@@ -140,7 +140,7 @@ class SecurityController extends AbstractController
                 $session->set('email', $email);
                 $mail->forgotPassword($tokenGenerate, $user);
                 
-                $this->addFlash('success', 'Vous aller recevoir un mail');
+                $this->addFlash('success', 'Vous allez recevoir un email');
             }
         }
         return $this->render(
@@ -179,7 +179,7 @@ class SecurityController extends AbstractController
                 $entityManager->persist($user);
                 $entityManager->flush();
                 
-                $this->addFlash('success', 'Votre mot de passe a etais changer');
+                $this->addFlash('success', 'Votre mot de passe a été modifié');
                 $session->clear();
                 return $this->redirectToRoute('app_login');
             }

@@ -61,7 +61,7 @@ class TricksController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->addFlash('success', 'Votre commentaire viens d\'être envoyer et doit être valider pas les administrateurs!');
+            $this->addFlash('success', 'Votre commentaire vient d\'être envoyé et doit être valide pas les administrateurs!');
             $comment->setStatus(0);
             $comment->setUserId($user);
             $comment->setTricksId($trick);
@@ -99,7 +99,7 @@ class TricksController extends AbstractController
         $form = $this->createForm(TricksType::class, $trick);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->addFlash('success', 'Votre Tricks à étais enregistrer');
+            $this->addFlash('success', 'Votre Tricks à été enregistré');
             $images =$form['photos']->getData();
             foreach ($images as $image) {
                 $imageFileName = $file->uploadImage($image);
@@ -137,12 +137,12 @@ class TricksController extends AbstractController
     public function updateTricks(Request $request,int $id, Tricks $trick, File $file): Response
     {
         if (!$trick) {
-            throw $this->createNotFoundException('No product found for id '.$id);
+            throw $this->createNotFoundException('Aucun produit trouvé pour id '.$id);
         }
         $form = $this->createForm(TricksType::class, $trick);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->addFlash('success', 'Votre Tricks à étais modifier');
+            $this->addFlash('success', 'Votre Tricks à été modifié');
             $Images =$form['photos']->getData();
             foreach ($Images as $Image) {
                 $imageFileName = $file->uploadImage($Image);
@@ -182,7 +182,7 @@ class TricksController extends AbstractController
         foreach ($photos as $photo) {
             $file->removeImage($photo->getName());
         }
-        $this->addFlash('success', 'Votre Tricks à étais supprimer');
+        $this->addFlash('success', 'Votre Tricks à été supprimé');
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($trick);
         $entityManager->flush();

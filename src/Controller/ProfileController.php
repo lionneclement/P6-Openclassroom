@@ -46,7 +46,7 @@ class ProfileController extends AbstractController
         $form = $this->createForm(ProfileType::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->addFlash('success', 'Votre profile à étais modifier');
+            $this->addFlash('success', 'Votre profile à été modifié');
             $profile = $form->getData();
             
             $image =$form['imageName']->getData();

@@ -50,7 +50,7 @@ class StyleController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($form->getData());
             $entityManager->flush();
-            $this->addFlash('success', 'Votre style à étais enregistrer');
+            $this->addFlash('success', 'Votre style à été enregistré');
             return $this->redirect($request->getUri());
         }
         return $this->render(
@@ -74,7 +74,7 @@ class StyleController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($style);
         $entityManager->flush();
-        $this->addFlash('success', 'Votre style à étais supprimer');
+        $this->addFlash('success', 'Votre style à été supprimé');
         return $this->redirectToRoute('style');
     }
     /**
@@ -96,7 +96,7 @@ class StyleController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($style);
             $entityManager->flush();
-            $this->addFlash('success', 'Votre style à étais modifier');
+            $this->addFlash('success', 'Votre style à été modifié');
             return $this->redirectToRoute('style', ['_fragment' => $id]);
         }
         return $this->render(
