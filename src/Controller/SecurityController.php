@@ -137,8 +137,9 @@ class SecurityController extends AbstractController
             $user = $this->getDoctrine()
                 ->getRepository(User::class)
                 ->findOneBy(['email' => $email]);
-
-            if ($user) {
+            if (!$user) {
+                $this->addFlash('error', 'Le compte n\'existe pas.');
+            } else {
                 $tokenGenerate = $token->generator(10);
                 $session->set('token', $tokenGenerate);
                 $session->set('email', $email);
