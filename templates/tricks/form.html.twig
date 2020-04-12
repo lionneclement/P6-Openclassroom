@@ -10,7 +10,17 @@
             {{ form_row(form.title) }}
             {{ form_row(form.description) }}
             {{ form_row(form.styleId) }}
-            {{ form_row(form.photos) }}
+            <div class="container text-center">
+                <h3>Photo</h3>
+                <div class="photo row" data-prototype="{{ form_widget(form.photos.vars.prototype)|e('html_attr') }}">
+                    {% for photo in form.photos %}
+                        <div class="col-3">
+                            {{ form_errors(photo) }}
+                            {{ form_widget(photo) }}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
             <div class="container text-center">
                 <h3>Video</h3>
                 <div class="video row" data-prototype="{{ form_widget(form.videos.vars.prototype)|e('html_attr') }}">
@@ -29,4 +39,5 @@
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript" src="{{ asset('js/formVideo.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/formPhoto.js') }}"></script>
 {% endblock %}

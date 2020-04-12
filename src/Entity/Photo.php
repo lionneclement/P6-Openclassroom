@@ -3,7 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PhotoRepository")
  */
@@ -26,6 +26,11 @@ class Photo
      * @ORM\JoinColumn(nullable=false,                  onDelete="CASCADE")
      */
     private $tricksId;
+    
+     /**
+     * @var UploadedFile
+     */
+    private $file;
 
     public function getId(): ?int
     {
@@ -46,7 +51,7 @@ class Photo
 
     public function getTricksId(): ?Tricks
     {
-        return $this->TricksId;
+        return $this->tricksId;
     }
 
     public function setTricksId(?Tricks $tricksId): self
@@ -54,5 +59,24 @@ class Photo
         $this->tricksId = $tricksId;
 
         return $this;
+    }
+    /**
+     * Sets file.
+     *
+     * @param UploadedFile $file
+     */
+    public function setFile(UploadedFile $file = null)
+    {
+        $this->file = $file;
+    }
+
+    /**
+     * Get file.
+     *
+     * @return UploadedFile
+     */
+    public function getFile()
+    {
+        return $this->file;
     }
 }

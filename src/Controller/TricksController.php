@@ -102,10 +102,8 @@ class TricksController extends AbstractController
             $this->addFlash('success', 'Votre Tricks à étais enregistrer');
             $images =$form['photos']->getData();
             foreach ($images as $image) {
-                $imageFileName = $file->uploadImage($image);
-                $photo = new Photo;
-                $photo->setName($imageFileName);
-                $trick->addPhoto($photo);
+                $imageFileName = $file->uploadImage($image->getFile());
+                $image->setName($imageFileName);
             }
             $trick->setCreateDate(new \DateTime());
             $trick->setUpdateDate(new \DateTime());
@@ -143,12 +141,10 @@ class TricksController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $this->addFlash('success', 'Votre Tricks à étais modifier');
-            $Images =$form['photos']->getData();
-            foreach ($Images as $Image) {
-                $imageFileName = $file->uploadImage($Image);
-                $Photo = new Photo;
-                $Photo->setName($imageFileName);
-                $trick->addPhoto($Photo);
+            $images =$form['photos']->getData();
+            foreach ($images as $image) {
+                $imageFileName = $file->uploadImage($image->getFile());
+                $image->setName($imageFileName);
             }
             $trick->setUpdateDate(new \DateTime());
             $entityManager = $this->getDoctrine()->getManager();
