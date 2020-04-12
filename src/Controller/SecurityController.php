@@ -1,4 +1,5 @@
 <?php
+
 /** 
  * The file is for security
  * 
@@ -10,6 +11,7 @@
  * @license  https://opensource.org/licenses/MIT MIT License
  * @link     http://localhost:8000
  */
+
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -27,6 +29,7 @@ use App\Form\ResetPasswordType;
 use App\Mail\Mail;
 use App\Tools\Token;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+
 /** 
  * The class is for security
  * 
@@ -52,7 +55,7 @@ class SecurityController extends AbstractController
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->render('security/login.html.twig', ['last_username'=>$lastUsername,'error'=>$error]);
+        return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
     }
 
     /**
@@ -105,8 +108,9 @@ class SecurityController extends AbstractController
         }
 
         return $this->render(
-            'security/register.html.twig', [
-            'registrationForm' => $form->createView(),
+            'security/register.html.twig',
+            [
+                'registrationForm' => $form->createView(),
             ]
         );
     }
@@ -129,27 +133,28 @@ class SecurityController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $email = $form['email']->getData();
-            
+
             $user = $this->getDoctrine()
                 ->getRepository(User::class)
                 ->findOneBy(['email' => $email]);
 
             if ($user) {
-                $tokenGenerate= $token->generator(10);
+                $tokenGenerate = $token->generator(10);
                 $session->set('token', $tokenGenerate);
                 $session->set('email', $email);
                 $mail->forgotPassword($tokenGenerate, $user);
-                
+
                 $this->addFlash('success', 'Vous allez recevoir un email');
             }
         }
         return $this->render(
-            'security/forgot.html.twig', [
-            'form' => $form->createView(),
+            'security/forgot.html.twig',
+            [
+                'form' => $form->createView(),
             ]
         );
     }
-    
+
     /**
      * Reset password
      * 
@@ -171,21 +176,22 @@ class SecurityController extends AbstractController
 
             $form = $this->createForm(ResetPasswordType::class, $user);
             $form->handleRequest($request);
-            
+
             if ($form->isSubmitted() && $form->isValid()) {
                 $password = $form['password']->getData();
                 $user->setPassword($passwordEncoder->encodePassword($user, $password));
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($user);
                 $entityManager->flush();
-                
+
                 $this->addFlash('success', 'Votre mot de passe a été modifié');
                 $session->clear();
                 return $this->redirectToRoute('app_login');
             }
             return $this->render(
-                'security/reset.html.twig', [
-                'form' => $form->createView(),
+                'security/reset.html.twig',
+                [
+                    'form' => $form->createView(),
                 ]
             );
         }

@@ -1,4 +1,5 @@
 <?php
+
 /** 
  * The file is for home page
  * 
@@ -10,12 +11,14 @@
  * @license  https://opensource.org/licenses/MIT MIT License
  * @link     http://localhost:8000
  */
+
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Tricks;
 use Symfony\Component\HttpFoundation\Response;
+
 /** 
  * The class is for home page
  * 
@@ -41,8 +44,9 @@ class HomePageController extends AbstractController
             ->findAll();
 
         return $this->render(
-            'home_page/index.html.twig', [
-            'tricks' => $tricks
+            'home_page/index.html.twig',
+            [
+                'tricks' => $tricks
             ]
         );
     }

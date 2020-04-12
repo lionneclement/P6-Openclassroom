@@ -1,4 +1,5 @@
 <?php
+
 /** 
  * The file is for comment
  * 
@@ -10,6 +11,7 @@
  * @license  https://opensource.org/licenses/MIT MIT License
  * @link     http://localhost:8000
  */
+
 namespace App\Controller;
 
 use App\Entity\Comment;
@@ -17,6 +19,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+
 /** 
  * The class is for comment
  * 
@@ -36,14 +39,15 @@ class CommentController extends AbstractController
      * @return response
      */
     public function allComment(): Response
-    {        
+    {
         $comments = $this->getDoctrine()
             ->getRepository(Comment::class)
             ->findAll();
 
         return $this->render(
-            'comment/comment.html.twig', [
-            'comments' => $comments,
+            'comment/comment.html.twig',
+            [
+                'comments' => $comments,
             ]
         );
     }
@@ -59,11 +63,12 @@ class CommentController extends AbstractController
     {
         $comments = $this->getDoctrine()
             ->getRepository(Comment::class)
-            ->findBy(['status'=>0]);
+            ->findBy(['status' => 0]);
 
         return $this->render(
-            'comment/comment.html.twig', [
-            'comments' => $comments,
+            'comment/comment.html.twig',
+            [
+                'comments' => $comments,
             ]
         );
     }
@@ -84,7 +89,7 @@ class CommentController extends AbstractController
         $entityManager->remove($comment);
         $entityManager->flush();
         $this->addFlash('success', 'Le commentaire à été supprimé');
-        
+
         return $this->redirect($request->headers->get('referer'));
     }
     /**
@@ -105,7 +110,7 @@ class CommentController extends AbstractController
         $entityManager->persist($comment);
         $entityManager->flush();
         $this->addFlash('success', 'Le commentaire à été modifié');
-        
+
         return $this->redirect($request->headers->get('referer'));
     }
 }
