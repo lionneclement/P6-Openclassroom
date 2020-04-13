@@ -62,6 +62,15 @@ class AppFixtures extends Fixture
             $user->setImageName('default-user.png');
             $manager->persist($user);
             
+            $user = new User();
+        
+            $user->setEmail("user@gmail.com");
+            $user->setName("User");
+            $password = $this->encoder->encodePassword($user, 'password');
+            $user->setPassword($password);
+            $user->setImageName('default-user.png');
+            $manager->persist($user);
+
             foreach ($dataWikipedia as $data) {
                 /**
                  * Add style
