@@ -1,5 +1,5 @@
 # P6_Openclassroom
-
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/9ee3de9b9dbe448cb7fa6698a3fc93f8)](https://www.codacy.com/manual/lionneclement/P6-Openclassroom?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=lionneclement/P6-Openclassroom&amp;utm_campaign=Badge_Grade)
 ## Prerequisite 
 1) Php
 2) MySQL
