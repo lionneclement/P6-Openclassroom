@@ -1,4 +1,5 @@
 <?php
+
 /** 
  * The file is for style
  * 
@@ -10,6 +11,7 @@
  * @license  https://opensource.org/licenses/MIT MIT License
  * @link     http://localhost:8000
  */
+
 namespace App\Controller;
 
 use App\Entity\Style;
@@ -18,6 +20,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+
 /** 
  * The class is for style
  * 
@@ -50,13 +53,14 @@ class StyleController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($form->getData());
             $entityManager->flush();
-            $this->addFlash('success', 'Votre style à étais enregistrer');
+            $this->addFlash('success', 'Votre style à été enregistré');
             return $this->redirect($request->getUri());
         }
         return $this->render(
-            'style/index.html.twig', [
-            'styles' => $styles,
-            'form' => $form->createView(),
+            'style/index.html.twig',
+            [
+                'styles' => $styles,
+                'form' => $form->createView(),
             ]
         );
     }
@@ -74,7 +78,7 @@ class StyleController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($style);
         $entityManager->flush();
-        $this->addFlash('success', 'Votre style à étais supprimer');
+        $this->addFlash('success', 'Votre style à été supprimé');
         return $this->redirectToRoute('style');
     }
     /**
@@ -88,7 +92,7 @@ class StyleController extends AbstractController
      * 
      * @return response
      */
-    public function update(int $id, Style $style ,Request $request): Response
+    public function update(int $id, Style $style, Request $request): Response
     {
         $form = $this->createForm(StyleType::class, $style);
         $form->handleRequest($request);
@@ -96,12 +100,13 @@ class StyleController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($style);
             $entityManager->flush();
-            $this->addFlash('success', 'Votre style à étais modifier');
+            $this->addFlash('success', 'Votre style à été modifié');
             return $this->redirectToRoute('style', ['_fragment' => $id]);
         }
         return $this->render(
-            'style/update.html.twig', [
-            'form' => $form->createView(),
+            'style/update.html.twig',
+            [
+                'form' => $form->createView(),
             ]
         );
     }

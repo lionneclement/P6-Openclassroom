@@ -30,13 +30,13 @@ class RegistrationFormType extends AbstractType
                 'constraints' => [
                     new NotBlank(
                         [
-                        'message' => 'Veuillez entrer un mot de passe',
+                        'message' => 'This field is missing.',
                         ]
                     ),
                     new Length(
                         [
                         'min' => 6,
-                        'minMessage' => 'Votre mot de passe doit contenir au moins 6 caractères',
+                        'minMessage' => 'This value is too short. It should have {{ limit }} character or more.|This value is too short. It should have {{ limit }} characters or more.' ,
                         'max' => 4096,
                         ]
                     ),

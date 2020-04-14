@@ -1,8 +1,5 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Trick{% endblock %}
-
-{% block body %}
+{% extends 'base.html.twig' %} {% block title %}Trick{% endblock %} {% block
+body %}
 <div class="container py-5">
     <div class="py-5">
         <h1 class="text-center">Trick</h1>
@@ -34,6 +31,11 @@
             </div>
         {{ form_end(form) }}
     </div>
+    <div class="text-center pt-3">
+      <button class="btn btn-secondary btn-lg" type="submit">Valider</button>
+    </div>
+    {{ form_end(form) }}
+  </div>
 </div>
 {% endblock %}
 {% block javascripts %}

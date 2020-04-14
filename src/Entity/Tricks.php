@@ -24,8 +24,8 @@ class Tricks
     /**
      * @ORM\Column(type="string", length=255, unique=true)
      * @Assert\Length(min=2,max=255,
-     * minMessage="Le titre doit contenir au minimun {{ limit }} caractères",
-     * maxMessage="Le titre doit contenir moins de {{ limit }} caractères"
+     * minMessage="This value is too short. It should have {{ limit }} character or more.|This value is too short. It should have {{ limit }} characters or more.",
+     * maxMessage="This value is too long. It should have {{ limit }} character or less.|This value is too long. It should have {{ limit }} characters or less."
      * )
      */
     private $title;
@@ -33,7 +33,7 @@ class Tricks
     /**
      * @ORM\Column(type="text")
      * @Assert\Length(min=10,
-     * minMessage="La description doit contenir au minimun {{ limit }} caractères"
+     * minMessage="This value is too short. It should have {{ limit }} character or more.|This value is too short. It should have {{ limit }} characters or more."
      * )
      */
     private $description;

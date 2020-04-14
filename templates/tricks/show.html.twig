@@ -1,40 +1,102 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}{{ trick.title }}{% endblock %}
-
+{% extends 'base.html.twig' %} {% block title %}{{ trick.title }}{% endblock %}
 {% block body %}
 <header>
-  <div class="view" style="background-image: url({{ asset('Images/default-top.jpg') }})">
-        <div class="container">
-          <div class="header-text text-center">
-            <h1>{{ trick.title }}</h1>
-            <p>{{ trick.description|slice(0, 100) }}...</p>
-            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-            <a class="btn btn-secondary btn-sm" href="{{path('update_trick', {'id':trick.id})}}"><i class="fas fa-pen"></i></a>
-            <a class="btn btn-secondary btn-sm" href="{{path('remove_trick', {'id':trick.id})}}"><i class="fas fa-trash-restore"></i></a>
-            {% endif %}
-          </div>
+  <div
+    class="view"
+    style="background-image: url({{ asset('Images/default-top.jpg') }})"
+  >
+    <div class="container">
+      <div class="header-text text-center">
+        <h1>{{ trick.title }}</h1>
+        <p>{{ trick.description|slice(0, 100) }}...</p>
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <a
+          class="btn btn-secondary btn-sm"
+          href="{{ path('update_trick', { id: trick.id }) }}"
+          ><i class="fas fa-pen"></i
+        ></a>
+        <button
+          type="button"
+          class="btn btn-secondary btn-sm"
+          data-toggle="modal"
+          data-target="#exampleModal"
+        >
+          <i class="fas fa-trash-restore"></i>
+        </button>
+        {% endif %}
       </div>
     </div>
+  </div>
+  <div
+    class="modal fade"
+    id="exampleModal"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">
+            Êtes-vous sûr de vouloir supprimer ?
+          </h5>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            Fermer
+          </button>
+          <a
+            href="{{ path('remove_trick', { id: trick.id }) }}"
+            class="btn btn-danger"
+            >Supprimer</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
 </header>
 {% if photos %}
 <section class="py-3">
   <div class="text-center">
-    <a class="btn btn-secondary" data-toggle="collapse" href="#mediaCollapse" role="button" aria-expanded="false" aria-controls="mediaCollapse">
+    <a
+      class="btn btn-secondary"
+      data-toggle="collapse"
+      href="#mediaCollapse"
+      role="button"
+      aria-expanded="false"
+      aria-controls="mediaCollapse"
+    >
       Voir les médias
     </a>
   </div>
   <div class="collapse" id="mediaCollapse">
-      <div class="container">
-        <div class="row">
+    <div class="container">
+      <div class="row">
         {% for photo in photos %}
-            <div class="card col-md-3">
-              <img class="card-img-top" src="{{asset('Upload/'~ photo.name)}}" alt="{{trick.title}}">
-              <div class="card-body text-center">
-                <a class="btn btn-secondary btn-sm" href="{{path('remove_photo', {'id':photo.id})}}">Supprimer</a>
-              </div>
-            </div>
-        {% endfor %} 
+        <div class="card col-md-3">
+          <img
+            class="card-img-top"
+            src="{{asset('Upload/'~ photo.name)}}"
+            alt="{{ trick.title }}"
+          />
+          <div class="card-body text-center">
+            <a
+              class="btn btn-secondary btn-sm"
+              href="{{ path('remove_photo', { id: photo.id }) }}"
+              >Supprimer</a
+            >
+          </div>
+        </div>
+        {% endfor %}
       </div>
     </div>
   </div>
@@ -42,69 +104,73 @@
 {% endif %}
 <div class="container pt-3">
   <div class="text-center">
-        <p class="card-text">{{ trick.description }}</p>
-        <h5>Groupe</h5>
-        <p class="card-title">{{ trick.styleId.name}}</p>
-  </div>  
+    <p class="card-text">{{ trick.description }}</p>
+    <h5>Groupe</h5>
+    <p class="card-title">{{ trick.styleId.name }}</p>
+  </div>
 </div>
 
 <section id="commentaire">
-  <hr>
+  <hr />
   <div class="container text-center">
-      <h4 class="mb-4">Commentaire</h4>
-        {% for message in app.flashes('success') %}
-          <div class="alert alert-success text-center" role="alert">
-              {{ message }}
-          </div>
-        {% endfor %}
-        {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
-          <div class="alert alert-danger" role="alert">
-              Connecter vous pour pouvoir commenter.
-          </div>
-        {% endif %}
-        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-        {{ form_start(form) }}
-          {{ form_row(form.message) }}
-          <button class="btn btn-secondary" type="submit">Confirmer</button>
-        {{ form_end(form) }}
-        {% endif %}
+    <h4 class="mb-4">Commentaire</h4>
+    {% for message in app.flashes('success') %}
+    <div class="alert alert-success text-center" role="alert">
+      {{ message }}
+    </div>
+    {% endfor %} {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+    <div class="alert alert-danger" role="alert">
+      Connecter vous pour pouvoir commenter.
+    </div>
+    {% endif %} {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+    {{ form_start(form) }}
+    {{ form_row(form.message) }}
+    <button class="btn btn-secondary" type="submit">Confirmer</button>
+    {{ form_end(form) }}
+    {% endif %}
   </div>
 </section>
 <section class="pb-5">
-  <hr>
+  <hr />
   <div class="pb-5 container">
     <div class="text-center">
-        <h4>Tout les commentaires</h4>
-        {% if not comments %}
-          <div class="alert alert-danger" role="alert">
-              Il n'y a pas encore de commentaires.
-          </div>
-        {% endif %}
-    </div>
-      <div class="show-comment">
-        {% for comment in comments %}
-            {% if comment.userId.imageName == 'default-user.png' %}
-                {% set directory = 'Images' %}
-            {% else %}
-                {% set directory = 'Upload' %}
-            {% endif %}
-            <div class="container pt-4" id="commentJs">
-              <div class="media media-commentaire">
-                <img src="{{asset(directory ~'/'~ comment.userId.imageName)}}" class="avatar-min mr-3" alt="Photo de profil">
-                <div class="media-body">
-                  <h5 class="mt-0">{{ comment.userId.name }}</h5>
-                  <i>{{ comment.Date|date("d/m/Y")}}</i>
-                  <p class="card-text">{{ comment.message }}</p> 
-                </div>
-              </div>
-            </div>
-        {% endfor %}
-        <button class="btn btn-secondary" id="buttonMoreJs">Voir plus</button>
+      <h4>Tout les commentaires</h4>
+      {% if not comments %}
+      <div class="alert alert-danger" role="alert">
+        Il n'y a pas encore de commentaires.
       </div>
+      {% endif %}
+    </div>
+    <div class="show-comment">
+      {% for comment in comments %} {% if comment.userId.imageName ==
+      'default-user.png' %} {% set directory = 'Images' %} {% else %} {% set
+      directory = 'Upload' %} {% endif %}
+      <div class="container pt-4" id="commentJs">
+        <div class="media media-commentaire">
+          <img
+            src="{{asset(directory ~'/'~ comment.userId.imageName)}}"
+            class="avatar-min mr-3"
+            alt="Photo de profil"
+          />
+          <div class="media-body">
+            <h5 class="mt-0">{{ comment.userId.name }}</h5>
+            <i>{{ comment.Date|date("d/m/Y")}}</i>
+            <p class="card-text">{{ comment.message }}</p>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+      <button class="btn btn-secondary" id="buttonMoreJs">Voir plus</button>
+    </div>
   </div>
 </section>
-{% endblock %}
-{% block javascripts %}
-    {{ parent() }}
-    <script id="myscript" src="{{ asset('js/pagination.js') }}" listsId="#commentJs" buttonId="#buttonMoreJs" max="4"></script>
+{% endblock %} {% block javascripts %}
+{{ parent() }}
+<script
+  id="myscript"
+  src="{{ asset('js/pagination.js') }}"
+  listsId="#commentJs"
+  buttonId="#buttonMoreJs"
+  max="4"
+></script>
 {% endblock %}

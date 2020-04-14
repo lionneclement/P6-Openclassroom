@@ -1,4 +1,5 @@
 <?php
+
 /** 
  * The file is for profile
  * 
@@ -10,6 +11,7 @@
  * @license  https://opensource.org/licenses/MIT MIT License
  * @link     http://localhost:8000
  */
+
 namespace App\Controller;
 
 use App\Form\ProfileType;
@@ -19,6 +21,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
+
 /** 
  * The class is for profile
  * 
@@ -46,10 +49,10 @@ class ProfileController extends AbstractController
         $form = $this->createForm(ProfileType::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->addFlash('success', 'Votre profile à étais modifier');
+            $this->addFlash('success', 'Votre profile à été modifié');
             $profile = $form->getData();
-            
-            $image =$form['imageName']->getData();
+
+            $image = $form['imageName']->getData();
             if ($image) {
                 if ($user->getImageName() != 'default-user.png') {
                     $file->removeImage($user->getImageName());
@@ -64,9 +67,10 @@ class ProfileController extends AbstractController
             return $this->redirect($request->getUri());
         }
         return $this->render(
-            'profile/index.html.twig', [
-            'form' => $form->createView(),
-            'user' => $user,
+            'profile/index.html.twig',
+            [
+                'form' => $form->createView(),
+                'user' => $user,
             ]
         );
     }
