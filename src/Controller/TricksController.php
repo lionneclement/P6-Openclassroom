@@ -42,7 +42,6 @@ class TricksController extends AbstractController
      * Show tricks
      * 
      * @param object $request 
-     * @param int    $id 
      * @param object $user 
      * @param object $trick 
      * 
@@ -131,7 +130,7 @@ class TricksController extends AbstractController
      * Update trick
      * 
      * @param object $request 
-     * @param int    $id 
+     * @param string $slug 
      * @param object $trick 
      * @param object $file 
      * 

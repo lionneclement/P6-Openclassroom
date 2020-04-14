@@ -23,7 +23,7 @@ class PhotoType extends AbstractType
                         'mimeTypes' => [
                             'image/jpeg',
                             'image/png'],
-                        'mimeTypesMessage' => 'Le format du fichier n\'est pas valide ({{type}}) les formats autorisés sont {{types}}',
+                        'mimeTypesMessage' => 'The mime type of the file is invalid ({{ type }}). Allowed mime types are {{ types }}.',
                     ])
                 ],
             ])
