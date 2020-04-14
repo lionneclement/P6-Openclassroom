@@ -64,7 +64,7 @@
     </div>
   </div>
 </header>
-{% if photos %}
+{% if photos[0] is defined or videos[0] is defined%}
 <section class="py-3">
   <div class="text-center">
     <a
@@ -110,7 +110,7 @@
               {% if is_granted('IS_AUTHENTICATED_FULLY') %}
               <a
                 class="btn btn-secondary btn-sm"
-                href=""
+                href="{{ path('remove_video', { id: video.id }) }}"
                 >Supprimer</a
               >
               {% endif %}
