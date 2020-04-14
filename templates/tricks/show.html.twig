@@ -141,26 +141,27 @@
       </div>
       {% endif %}
     </div>
-    <div class="show-comment">
-      {% for comment in comments %} {% if comment.userId.imageName ==
-      'default-user.png' %} {% set directory = 'Images' %} {% else %} {% set
-      directory = 'Upload' %} {% endif %}
+    <div class="show-comment text-center">
+      {% for comment in comments %} 
+      {% if comment.userId.imageName =='default-user.png' %}
+      {% set directory = 'Images' %} 
+      {% else %} 
+      {% set directory = 'Upload' %} 
+      {% endif %}
       <div class="container pt-4" id="commentJs">
-        <div class="media media-commentaire">
-          <img
-            src="{{asset(directory ~'/'~ comment.userId.imageName)}}"
-            class="avatar-min mr-3"
-            alt="Photo de profil"
-          />
-          <div class="media-body">
-            <h5 class="mt-0">{{ comment.userId.name }}</h5>
-            <i>{{ comment.Date|date("d/m/Y")}}</i>
-            <p class="card-text">{{ comment.message }}</p>
+          <div class="media">
+            <div class="media-body">
+              <img src="{{asset(directory ~'/'~ comment.userId.imageName)}}"
+              class="avatar-min"
+              alt="Photo de profil" />
+              <h5 class="mt-0">{{ comment.userId.name }}</h5>
+              <i>{{ comment.Date|date("d/m/Y")}}</i>
+              <p class="card-text">{{ comment.message }}</p>
+            </div>
           </div>
-        </div>
       </div>
       {% endfor %}
-      <button class="btn btn-secondary" id="buttonMoreJs">Voir plus</button>
+      <button class="btn btn-secondary mt-3" id="buttonMoreJs">Voir plus</button>
     </div>
   </div>
 </section>
