@@ -15,6 +15,7 @@
 namespace App\Controller;
 
 use App\Entity\Photo;
+use App\Entity\Video;
 use App\Tools\File;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -38,21 +39,39 @@ class MediaController extends AbstractController
      * Remove one photo
      * 
      * @param object $photo 
-     * @param object $File 
+     * @param object $file 
      * @param object $request 
      * 
      * @Route("/auth/tricks/photo/delete/{id}", name="remove_photo", requirements={"id"="\d+"})
      * 
      * @return response
      */
-    public function removeOnePhoto(Photo $photo, File $File, Request $request): Response
+    public function removeOnePhoto(Photo $photo, File $file, Request $request): Response
     {
         $filename = $photo->getName();
-        $File->removeImage($filename);
+        $file->removeImage($filename);
 
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($photo);
-        $em->flush();
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($photo);
+        $entityManager->flush();
+
+        return $this->redirect($request->headers->get('referer'));
+    }
+    /**
+     * Remove one video
+     * 
+     * @param object $video 
+     * @param object $request 
+     * 
+     * @Route("/auth/tricks/video/delete/{id}", name="remove_video", requirements={"id"="\d+"})
+     * 
+     * @return response
+     */
+    public function removeOneVideo(Video $video, Request $request): Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($video);
+        $entityManager->flush();
 
         return $this->redirect($request->headers->get('referer'));
     }
