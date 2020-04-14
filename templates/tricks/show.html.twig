@@ -12,7 +12,7 @@
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
         <a
           class="btn btn-secondary btn-sm"
-          href="{{ path('update_trick', { id: trick.id }) }}"
+          href="{{ path('update_trick', { slug: trick.slug }) }}"
           ><i class="fas fa-pen"></i
         ></a>
         <button

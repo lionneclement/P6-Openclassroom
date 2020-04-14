@@ -37,13 +37,13 @@ body %}
             <p class="card-text">{{ trick.description|slice(0, 50)}} ...</p>
             <a
               class="btn btn-secondary"
-              href="{{ path('show_trick', { id: trick.id }) }}"
+              href="{{ path('show_trick', { slug: trick.slug }) }}"
               >Voir plus</a
             >
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
             <a
               class="btn btn-secondary"
-              href="{{ path('update_trick', { id: trick.id }) }}"
+              href="{{ path('update_trick', { slug: trick.slug }) }}"
               ><i class="fas fa-pen"></i
             ></a>
             <button

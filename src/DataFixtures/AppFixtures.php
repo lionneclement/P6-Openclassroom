@@ -5,6 +5,7 @@ namespace App\DataFixtures;
 use App\Entity\Style;
 use App\Entity\Tricks;
 use App\Entity\User;
+use App\Tools\Slugify;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -86,6 +87,7 @@ class AppFixtures extends Fixture
                 $trick = new Tricks();
 
                 $trick->setTitle($data['title']);
+                $trick->setSlug((new Slugify())->sluggerLowerCase($data['title']));
                 $trick->setDescription($data['description']);
                 $trick->setCreateDate(new \DateTime());
                 $trick->setUpdateDate(new \DateTime());
