@@ -105,8 +105,26 @@
 <div class="container pt-3">
   <div class="text-center">
     <p class="card-text">{{ trick.description }}</p>
-    <h5>Groupe</h5>
-    <p class="card-title">{{ trick.styleId.name }}</p>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="alert alert-secondary" role="alert">
+            <h6>Groupe</h6>
+            <p class="card-title">{{ trick.styleId.name }}</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="alert alert-secondary" role="alert">
+            <h6>Date de creation</h6>
+            <p class="card-title">{{ trick.createDate|date("d/m/Y") }}</p>
+          </div>
+        </div>
+        <div class="col-md-4">         
+          <div class="alert alert-secondary" role="alert">
+            <h6>Date de derniere modification</h6>
+            <p class="card-title">{{ trick.updateDate|date("d/m/Y") }}</p>
+          </div>
+        </div>
+      </div>
   </div>
 </div>
 
