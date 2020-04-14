@@ -51,10 +51,6 @@ class TricksController extends AbstractController
      */
     public function showTricks(Request $request, UserInterface $user = null, Tricks $trick): Response
     {
-        $photos = $this->getDoctrine()
-            ->getRepository(Photo::class)
-            ->findBy(['tricksId' => $trick->getId()]);
-
         $comments = $this->getDoctrine()
             ->getRepository(Comment::class)
             ->findBy(['tricksId' => $trick->getId(), 'status' => 1]);
@@ -80,7 +76,8 @@ class TricksController extends AbstractController
             'tricks/show.html.twig',
             [
                 'form' => $form->createView(),
-                'photos' => $photos,
+                'photos' => $trick->getPhotos(),
+                'videos' => $trick->getVideos(),
                 'trick' => $trick,
                 'comments' => $comments,
             ]
