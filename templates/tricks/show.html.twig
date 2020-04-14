@@ -78,26 +78,44 @@
       Voir les médias
     </a>
   </div>
-  <div class="collapse" id="mediaCollapse">
+  <div class="collapse mt-3" id="mediaCollapse">
     <div class="container">
       <div class="row">
         {% for photo in photos %}
-        <div class="card col-md-3">
-          <img
-            class="card-img-top"
-            src="{{asset('Upload/'~ photo.name)}}"
-            alt="{{ trick.title }}"
-          />
-          <div class="card-body text-center">
-            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-            <a
-              class="btn btn-secondary btn-sm"
-              href="{{ path('remove_photo', { id: photo.id }) }}"
-              >Supprimer</a
-            >
-            {% endif %}
+        <div class="col-md-3 my-2">
+          <div class="photo-container">
+            <img
+              class="card-img-top"
+              src="{{asset('Upload/'~ photo.name)}}"
+              alt="{{ trick.title }}"
+            />
           </div>
+            <div class="card-body text-center">
+              {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+              <a
+                class="btn btn-secondary btn-sm"
+                href="{{ path('remove_photo', { id: photo.id }) }}"
+                >Supprimer</a
+              >
+              {% endif %}
+            </div>
         </div>
+        {% endfor %}
+        {% for video in videos %}
+          <div class="col-md-3 my-2">
+            <div class="video-container">
+              <iframe src="{{ video.name }}" frameborder="0" allowfullscreen></iframe>
+            </div>
+            <div class="card-body text-center">
+              {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+              <a
+                class="btn btn-secondary btn-sm"
+                href=""
+                >Supprimer</a
+              >
+              {% endif %}
+            </div>  
+          </div>
         {% endfor %}
       </div>
     </div>
