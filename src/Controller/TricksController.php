@@ -117,7 +117,7 @@ class TricksController extends AbstractController
             return $this->redirectToRoute('home_page');
         }
         return $this->render(
-            'tricks/form.html.twig',
+            'tricks/create.html.twig',
             [
                 'form' => $form->createView(),
             ]
@@ -139,7 +139,7 @@ class TricksController extends AbstractController
     public function updateTricks(Request $request, string $slug, Tricks $trick, File $file): Response
     {
         if (!$trick) {
-            throw $this->createNotFoundException('Aucun produit trouvé pour ' . $slug);
+            throw $this->createNotFoundException('Aucun produit trouvé pour '.$slug);
         }
         $oldPhotos = new ArrayCollection();
         foreach ($trick->getPhotos() as $image) {
@@ -151,7 +151,10 @@ class TricksController extends AbstractController
             $this->addFlash('success', 'Votre Tricks à étais modifier');
             $images =$form['photos']->getData();
             foreach ($images as $image) {
-                if (!$image->getId()) {
+                if ($image->getFile()) {
+                    if ($image->getId()) {
+                        $file->removeImage($image->getName());
+                    }
                     $imageFileName = $file->uploadImage($image->getFile());
                     $image->setName($imageFileName);
                 }
@@ -162,7 +165,6 @@ class TricksController extends AbstractController
             foreach ($oldPhotos as $image) {
                 if (!$trick->getPhotos()->contains($image)) {
                     $file->removeImage($image->getName());
-                    $entityManager->remove($image);
                 }
             }
             $entityManager->persist($trick);
@@ -171,8 +173,10 @@ class TricksController extends AbstractController
             return $this->redirectToRoute('home_page');
         }
         return $this->render(
-            'tricks/form.html.twig',
+            'tricks/update.html.twig',
             [
+                'photos' => $trick->getPhotos(),
+                'trick' => $trick,
                 'form' => $form->createView(),
             ]
         );

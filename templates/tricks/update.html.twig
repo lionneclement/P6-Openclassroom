@@ -1,0 +1,117 @@
+{% extends 'base.html.twig' %} {% block title %}{{ trick.title }}{% endblock %}
+{% block body %}
+<header>
+  {% if photos[0] is defined %}
+    {% set mainPicture = 'Upload/'~photos[0].name %}
+  {% else %}
+    {% set mainPicture = 'Images/default-top.jpg' %}
+  {% endif %}
+  <div
+    class="view"
+    style="background-image: url({{ asset(mainPicture) }})"
+  >
+    <div class="container">
+      <div class="header-text text-center">
+        <h1>{{ trick.title }}</h1>
+        <p>{{ trick.description|slice(0, 100) }}...</p>
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <button
+          type="button"
+          class="btn btn-secondary btn-sm"
+          data-toggle="modal"
+          data-target="#exampleModal"
+        >
+          <i class="fas fa-trash-restore"></i>
+        </button>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  <div
+    class="modal fade"
+    id="exampleModal"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">
+            Êtes-vous sûr de vouloir supprimer ?
+          </h5>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            Fermer
+          </button>
+          <a
+            href="{{ path('remove_trick', { id: trick.id }) }}"
+            class="btn btn-danger"
+            >Supprimer</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+<div class="container pb-5">
+  <div class="py-5">
+      {{ form_start(form) }}
+            <div class="container text-center">
+              <h3>Photo</h3>
+              <div class="photo row" data-prototype="{{ form_widget(form.photos.vars.prototype)|e('html_attr') }}">
+                  {% for photo in form.photos %}
+                      <div class="col-3">
+                        <div class="photo-container">
+                          <img src="{{asset('Upload/'~photo.vars.value.name)}}" alt="main picture">
+                        </div>
+                        <div class="pt-3">
+                          {{ form_errors(photo) }}
+                          {{ form_widget(photo) }}
+                        </div>
+
+                      </div>
+                  {% endfor %}
+              </div>
+          </div>
+          <div class="container text-center py-3">
+              <h3>Video</h3>
+              <div class="video row" data-prototype="{{ form_widget(form.videos.vars.prototype)|e('html_attr') }}">
+                  {% for video in form.videos %}
+
+                      <div class="col-3">
+                        
+                        <div class="video-container">
+                          <iframe src="{{ video.vars.value.name }}" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                        {{ form_errors(video) }}
+                        {{ form_widget(video) }}
+                      </div>
+                  {% endfor %}
+              </div>
+          </div>
+          {{ form_row(form.title) }}
+          {{ form_row(form.description) }}
+          {{ form_row(form.styleId) }}
+          <div class="text-center pt-3">
+            <button class="btn btn-secondary btn-lg" type="submit">Valider</button>
+          </div>  
+      {{ form_end(form) }}
+</div>
+</div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/formVideo.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/formPhoto.js') }}"></script>
+{% endblock %}
