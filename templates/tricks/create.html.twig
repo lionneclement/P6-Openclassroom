@@ -7,7 +7,7 @@ body %}
             {{ form_row(form.title) }}
             {{ form_row(form.description) }}
             {{ form_row(form.styleId) }}
-            <div class="container text-center">
+            <div class="container text-center py-3">
                 <h3>Photo</h3>
                 <div class="photo row" data-prototype="{{ form_widget(form.photos.vars.prototype)|e('html_attr') }}">
                     {% for photo in form.photos %}
@@ -18,7 +18,7 @@ body %}
                     {% endfor %}
                 </div>
             </div>
-            <div class="container text-center">
+            <div class="container text-center py-3">
                 <h3>Video</h3>
                 <div class="video row" data-prototype="{{ form_widget(form.videos.vars.prototype)|e('html_attr') }}">
                     {% for video in form.videos %}

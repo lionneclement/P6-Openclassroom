@@ -1,9 +1,14 @@
 {% extends 'base.html.twig' %} {% block title %}{{ trick.title }}{% endblock %}
 {% block body %}
 <header>
+  {% if photos[0] is defined %}
+    {% set mainPicture = 'Upload/'~photos[0].name %}
+  {% else %}
+    {% set mainPicture = 'Images/default-top.jpg' %}
+  {% endif %}
   <div
     class="view"
-    style="background-image: url({{ asset('Images/default-top.jpg') }})"
+    style="background-image: url({{ asset(mainPicture) }})"
   >
     <div class="container">
       <div class="header-text text-center">
