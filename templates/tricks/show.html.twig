@@ -95,15 +95,6 @@
               alt="{{ trick.title }}"
             />
           </div>
-            <div class="card-body text-center">
-              {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-              <a
-                class="btn btn-secondary btn-sm"
-                href="{{ path('remove_photo', { id: photo.id }) }}"
-                >Supprimer</a
-              >
-              {% endif %}
-            </div>
         </div>
         {% endfor %}
         {% for video in videos %}
@@ -111,15 +102,6 @@
             <div class="video-container">
               <iframe src="{{ video.name }}" frameborder="0" allowfullscreen></iframe>
             </div>
-            <div class="card-body text-center">
-              {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-              <a
-                class="btn btn-secondary btn-sm"
-                href="{{ path('remove_video', { id: video.id }) }}"
-                >Supprimer</a
-              >
-              {% endif %}
-            </div>  
           </div>
         {% endfor %}
       </div>
