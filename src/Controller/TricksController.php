@@ -21,6 +21,7 @@ use App\Form\CommentType;
 use App\Form\TricksType;
 use App\Tools\File;
 use App\Tools\Slugify;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -140,18 +141,30 @@ class TricksController extends AbstractController
         if (!$trick) {
             throw $this->createNotFoundException('Aucun produit trouvé pour ' . $slug);
         }
+        $oldPhotos = new ArrayCollection();
+        foreach ($trick->getPhotos() as $image) {
+            $oldPhotos->add($image);
+        }
         $form = $this->createForm(TricksType::class, $trick);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $this->addFlash('success', 'Votre Tricks à étais modifier');
             $images =$form['photos']->getData();
             foreach ($images as $image) {
-                $imageFileName = $file->uploadImage($image->getFile());
-                $image->setName($imageFileName);
+                if (!$image->getId()) {
+                    $imageFileName = $file->uploadImage($image->getFile());
+                    $image->setName($imageFileName);
+                }
             }
             $trick->setSlug((new Slugify())->sluggerLowerCase($trick->getTitle()));
             $trick->setUpdateDate(new \DateTime());
             $entityManager = $this->getDoctrine()->getManager();
+            foreach ($oldPhotos as $image) {
+                if (!$trick->getPhotos()->contains($image)) {
+                    $file->removeImage($image->getName());
+                    $entityManager->remove($image);
+                }
+            }
             $entityManager->persist($trick);
             $entityManager->flush();
 
