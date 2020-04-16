@@ -2,9 +2,9 @@
 {% block body %}
 <header>
   {% if photos[0] is defined %}
-    {% set mainPicture = 'Upload/'~photos[0].name %}
+    {% set mainPicture = 'upload/'~photos[0].name %}
   {% else %}
-    {% set mainPicture = 'Images/default-top.jpg' %}
+    {% set mainPicture = 'images/default-top.jpg' %}
   {% endif %}
   <div
     class="view"
@@ -91,7 +91,7 @@
           <div class="photo-container">
             <img
               class="card-img-top"
-              src="{{asset('Upload/'~ photo.name)}}"
+              src="{{asset('upload/'~ photo.name)}}"
               alt="{{ trick.title }}"
             />
           </div>
@@ -169,9 +169,9 @@
     <div class="show-comment text-center">
       {% for comment in comments %} 
       {% if comment.userId.imageName =='default-user.png' %}
-      {% set directory = 'Images' %} 
+      {% set directory = 'images' %} 
       {% else %} 
-      {% set directory = 'Upload' %} 
+      {% set directory = 'upload' %} 
       {% endif %}
       <div class="container pt-4" id="commentJs">
           <div class="media">

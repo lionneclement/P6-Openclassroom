@@ -2,8 +2,8 @@
 body %}
 <section class="py-5">
   <div class="container py-5">
-    {% if user.imageName == 'default-user.png' %} {% set directory = 'Images' %}
-    {% else %} {% set directory = 'Upload' %} {% endif %}
+    {% if user.imageName == 'default-user.png' %} {% set directory = 'images' %}
+    {% else %} {% set directory = 'upload' %} {% endif %}
     <div class="text-center pb-5">
       <img
         src="{{asset(directory ~'/'~ user.imageName)}}"

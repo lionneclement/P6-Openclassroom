@@ -2,9 +2,9 @@
 {% block body %}
 <header>
   {% if photos[0] is defined %}
-    {% set mainPicture = 'Upload/'~photos[0].name %}
+    {% set mainPicture = 'upload/'~photos[0].name %}
   {% else %}
-    {% set mainPicture = 'Images/default-top.jpg' %}
+    {% set mainPicture = 'images/default-top.jpg' %}
   {% endif %}
   <div
     class="view"
@@ -73,13 +73,12 @@
                   {% for photo in form.photos %}
                       <div class="col-3">
                         <div class="photo-container">
-                          <img src="{{asset('Upload/'~photo.vars.value.name)}}" class="{{'tricks_photos_'~photo.vars.name~'_file'}}" alt="main picture">
+                          <img src="{{asset('upload/'~photo.vars.value.name)}}" class="{{'tricks_photos_'~photo.vars.name~'_file'}}" alt="main picture">
                         </div>
                         <div class="pt-3">
                           {{ form_errors(photo) }}
                           {{ form_widget(photo) }}
                         </div>
-
                       </div>
                   {% endfor %}
               </div>

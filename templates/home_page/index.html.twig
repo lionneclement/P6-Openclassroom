@@ -28,9 +28,9 @@ body %}
       <div class="col-md-6 col-lg-3 py-3" id="trickJs">
         <div class="card h-100">
           {% if trick.photos[0] is defined %}
-            {% set mainPicture = 'Upload/'~trick.photos[0].name %}
+            {% set mainPicture = 'upload/'~trick.photos[0].name %}
           {% else %}
-            {% set mainPicture = 'Images/default.jpg' %}
+            {% set mainPicture = 'images/default.jpg' %}
           {% endif %}
           <img
             src="{{ asset(mainPicture) }}"
