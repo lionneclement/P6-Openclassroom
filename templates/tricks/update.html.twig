@@ -87,14 +87,14 @@
               <h3>Video</h3>
               <div class="video row" data-prototype="{{ form_widget(form.videos.vars.prototype)|e('html_attr') }}">
                   {% for video in form.videos %}
-
                       <div class="col-3">
-                        
                         <div class="video-container">
-                          <iframe src="{{ video.vars.value.name }}" frameborder="0" allowfullscreen></iframe>
+                          <iframe src="{{ video.vars.value.name }}" class="{{'tricks_videos_'~video.vars.name~'_name'}}" frameborder="0" allowfullscreen></iframe>
                         </div>
-                        {{ form_errors(video) }}
-                        {{ form_widget(video) }}
+                        <div class="pt-3">
+                          {{ form_errors(video) }}
+                          {{ form_widget(video) }}
+                        </div>
                       </div>
                   {% endfor %}
               </div>
@@ -111,6 +111,5 @@
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
-    <script type="text/javascript" src="{{ asset('js/formVideo.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/formPhoto.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/formMedia.js') }}"></script>
 {% endblock %}

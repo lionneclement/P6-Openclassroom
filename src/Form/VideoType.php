@@ -15,6 +15,7 @@ class VideoType extends AbstractType
         $builder
             ->add('name', UrlType::class, [
                 'label'=> false,
+                'attr'=>['class' => 'classVideo']
             ])
         ;
     }

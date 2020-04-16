@@ -54,7 +54,7 @@ function addPhotoForm($collectionHolder, $button) {
 function addVideoForm($collectionHolder, $button) {
     var newForm = intForm($collectionHolder);
     var $col = $('<div class="col-3"><div class="video-container"><iframe src="https://www.youtube.com/embed/ZnuwB35GYMY" class="tricks_videos_'+newForm[1]+'_name" frameborder="0" allowfullscreen></iframe></div></div>');
-    var $formBootstrap = $('<div class="formVideo pt-3"></div>').append(newForm[0]);
+    var $formBootstrap = $('<div class="pt-3"></div>').append(newForm[0]);
     var $newFormLi = $col.append($formBootstrap);
     $button.before($newFormLi);
     buttonDelete($newFormLi);
