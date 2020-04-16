@@ -32,11 +32,13 @@ body %}
           {% else %}
             {% set mainPicture = 'images/default.jpg' %}
           {% endif %}
-          <img
+          <div class="photo-container">
+            <img
             src="{{ asset(mainPicture) }}"
             class="card-img-top"
             alt="Snowboard freestyle"
-          />
+            />
+          </div>
           <div class="card-body">
             <h5 class="card-title">{{ trick.title | capitalize }}</h5>
             <p class="card-text">{{ trick.description|slice(0, 50)}} ...</p>
