@@ -3,7 +3,6 @@ var $addTagButton1 = $('<div class="col-12"><button type="button" class="btn btn
 
 jQuery(document).ready(function() {
     $collectionHolder1 = $('div.photo');
-    
     $collectionHolder1.append($addTagButton1);
     $collectionHolder1.data('index', $collectionHolder1.find('input').length);
     $addTagButton1.on('click', function(e) {
@@ -12,6 +11,15 @@ jQuery(document).ready(function() {
     $collectionHolder1.find('div.col-3').each(function() {
         addTagFormDeleteLink($(this));
     });
+    $("input").change(function(e) {
+        var idInput = e.target.id;
+        var file = e.originalEvent.srcElement.files[0];
+        var reader = new FileReader();
+        reader.onload = function (e1) {
+            $("."+idInput).attr('src', e1.target.result)
+        };
+        reader.readAsDataURL(file);
+    })
 });
 function addTagForm($collectionHolder, $addTagButton) {
     var prototype = $collectionHolder.data('prototype');

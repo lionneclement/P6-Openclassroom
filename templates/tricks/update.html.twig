@@ -73,7 +73,7 @@
                   {% for photo in form.photos %}
                       <div class="col-3">
                         <div class="photo-container">
-                          <img src="{{asset('Upload/'~photo.vars.value.name)}}" alt="main picture">
+                          <img src="{{asset('Upload/'~photo.vars.value.name)}}" class="{{'tricks_photos_'~photo.vars.name~'_file'}}" alt="main picture">
                         </div>
                         <div class="pt-3">
                           {{ form_errors(photo) }}
