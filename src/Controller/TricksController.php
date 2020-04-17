@@ -52,10 +52,6 @@ class TricksController extends AbstractController
      */
     public function showTricks(Request $request, UserInterface $user = null, Tricks $trick): Response
     {
-        $comments = $this->getDoctrine()
-            ->getRepository(Comment::class)
-            ->findBy(['tricksId' => $trick->getId(), 'status' => 1]);
-
         $comment = new Comment;
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
@@ -80,7 +76,6 @@ class TricksController extends AbstractController
                 'photos' => $trick->getPhotos(),
                 'videos' => $trick->getVideos(),
                 'trick' => $trick,
-                'comments' => $comments,
             ]
         );
     }

@@ -160,14 +160,12 @@
   <div class="pb-5 container">
     <div class="text-center">
       <h4>Tout les commentaires</h4>
-      {% if not comments %}
-      <div class="alert alert-danger" role="alert">
+      <div class="alert alert-danger" id="alertComment" role="alert">
         Il n'y a pas encore de commentaires.
       </div>
-      {% endif %}
     </div>
     <div class="show-comment text-center" data-id="{{ trick.id}}">
-      <button class="btn btn-secondary mt-3" id="buttonMoreJs">Voir plus</button>
+      <button class="btn btn-secondary mt-3 hiddenJs" id="buttonMoreJs">Voir plus</button>
     </div>
   </div>
 </section>

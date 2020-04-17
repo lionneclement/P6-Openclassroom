@@ -30,14 +30,24 @@ $(document).ready(function () {
       }else if (commentStart+maxResult > maxComment){
         maxResult = maxComment-commentStart
         hiddenButton();
+      }else{
+        showButton();
       }
       if (maxResult != 0){
+        hiddenAlert();
         requestPostComment(trickId, commentStart, maxResult);
         commentStart+=maxResult;
       }
     }
     function hiddenButton(){
       button.classList.add("hiddenJs");
+    }
+    function showButton(){
+      button.classList.remove("hiddenJs");
+    }
+    function hiddenAlert(){
+      var alert = document.querySelector('#alertComment');
+      alert.classList.add("hiddenJs");
     }
     function requestPostComment(trickId, commentStart, maxResult){
     var data = {
