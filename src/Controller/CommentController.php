@@ -16,6 +16,7 @@ namespace App\Controller;
 
 use App\Entity\Comment;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -112,5 +113,61 @@ class CommentController extends AbstractController
         $this->addFlash('success', 'Le commentaire à été modifié');
 
         return $this->redirect($request->headers->get('referer'));
+    }
+  
+    /**
+     * Found comment
+     * 
+     * @param object $request 
+     * 
+     * @Route("/comment/api/found", name="found_comment", methods={"POST"})
+     * 
+     * @return response
+     */
+    public function foundComment(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+        
+        $comments = $this->getDoctrine()
+            ->getRepository(Comment::class)
+            ->commentPagination(1, $data['trickId'], $data['commentStart'], $data['maxResult']);
+
+        foreach ($comments as $comment) {
+            $commentData[] = [
+                'id' => $comment->getId(),
+                'userName' => $comment->getUserId()->getName(),
+                'userImageName' => $comment->getUserId()->getImageName(),
+                'date' => $comment->getDate(),
+                'message' => $comment->getMessage(),
+            ];
+        }
+
+        return new JsonResponse(
+            [
+            'comments' => $commentData
+            ]
+        );
+    }
+    
+    /**
+     * Count comment
+     * 
+     * @param object $request 
+     * 
+     * @Route("/comment/api/count/{id}", name="count_comment", requirements={"id"="\d+"}, methods={"GET"})
+     * 
+     * @return response
+     */
+    public function countComment(int $id): JsonResponse
+    {
+         $commentCount = $this->getDoctrine()
+             ->getRepository(Comment::class)
+             ->commentCount(1, $id);
+
+        return new JsonResponse(
+            [
+            'commentCount' => $commentCount
+            ]
+        );
     }
 }
