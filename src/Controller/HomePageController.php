@@ -41,7 +41,7 @@ class HomePageController extends AbstractController
     {
         $tricks = $this->getDoctrine()
             ->getRepository(Tricks::class)
-            ->findAll();
+            ->tricksPagination(0, 4);
 
         return $this->render(
             'home_page/index.html.twig',
