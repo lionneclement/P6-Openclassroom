@@ -124,7 +124,7 @@ class CommentController extends AbstractController
      * 
      * @return response
      */
-    public function foundComment(Request $request): JsonResponse
+    public function foundComment(Request $request): Response
     {
         $data = json_decode($request->getContent(), true);
         
@@ -132,21 +132,12 @@ class CommentController extends AbstractController
             ->getRepository(Comment::class)
             ->commentPagination(1, $data['trickId'], $data['commentStart'], $data['maxResult']);
 
-        foreach ($comments as $comment) {
-            $commentData[] = [
-                'id' => $comment->getId(),
-                'userName' => $comment->getUserId()->getName(),
-                'userImageName' => $comment->getUserId()->getImageName(),
-                'date' => $comment->getDate(),
-                'message' => $comment->getMessage(),
-            ];
-        }
-
-        return new JsonResponse(
-            [
-            'comments' => $commentData
-            ]
-        );
+            return $this->render(
+                'comment/moreComment.html.twig',
+                [
+                    'comments' => $comments,
+                ]
+            );
     }
     
     /**

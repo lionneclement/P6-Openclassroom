@@ -158,13 +158,16 @@
 <section class="pb-5">
   <hr />
   <div class="pb-5 container">
+  {% if not comments %}
     <div class="text-center">
       <h4>Tout les commentaires</h4>
       <div class="alert alert-danger" id="alertComment" role="alert">
         Il n'y a pas encore de commentaires.
       </div>
     </div>
-    <div class="show-comment text-center" data-id="{{ trick.id}}">
+  {% endif %}
+    <div class="show-comment text-center" data-id="{{ trick.id}}">  
+      {% include 'comment/moreComment.html.twig' with {'comments': comments } %}
       <button class="btn btn-secondary mt-3 hiddenJs" id="buttonMoreJs">Voir plus</button>
     </div>
   </div>
@@ -173,6 +176,6 @@
 {{ parent() }}
 <script src="https://code.jquery.com/jquery-3.5.0.js" integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc=" crossorigin="anonymous"></script>
 <script
-  src="{{ asset('js/pagination.js') }}"
+  src="{{ asset('js/paginationShow.js') }}"
 ></script>
 {% endblock %}

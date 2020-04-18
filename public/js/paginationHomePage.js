@@ -3,7 +3,6 @@ $(document).ready(function () {
   requestGetCountTrick();
   var button = document.querySelector('#buttonMoreJs');
   button.addEventListener('click', function(){
-    console.log('click');
     checkNumberTrick()
   });
 });
@@ -23,7 +22,7 @@ function handleGetData(data){
 }
 function checkNumberTrick(){
   if (maxTrick > 4 && trickStart < maxTrick){
-    requestPostComment(trickStart, maxResult);
+    requestPostTrick(trickStart, maxResult);
     if(trickStart+maxResult >= maxTrick){
       hiddenButton();
     }
@@ -40,7 +39,7 @@ function showButton(){
   button.classList.remove("hiddenJs");
 }
 
-function requestPostComment(trickStart, maxResult){
+function requestPostTrick(trickStart, maxResult){
   var data = {
     "trickStart": trickStart,
     "maxResult": maxResult
