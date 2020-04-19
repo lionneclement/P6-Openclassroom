@@ -18,4 +18,20 @@ class TricksRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Tricks::class);
     }
+    public function tricksPagination(int $firstTrick, int $maxTrick)
+    {
+        return $this->createQueryBuilder('a')
+            ->orderBy('a.updateDate', 'DESC')
+            ->setFirstResult($firstTrick)
+            ->setMaxResults($maxTrick)
+            ->getQuery()
+            ->getResult();
+    }
+    public function tricksCount()
+    {
+        return $this->createQueryBuilder('a')
+            ->select('count(a.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 }

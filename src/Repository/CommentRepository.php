@@ -18,4 +18,28 @@ class CommentRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Comment::class);
     }
+    public function commentPagination(int $status, int $tricksId,int $firstComment,int $maxComment)
+    {
+        return $this->createQueryBuilder('a')
+            ->andWhere('a.status = :status')
+            ->andWhere('a.tricksId = :tricksId')
+            ->setParameter('tricksId', $tricksId)
+            ->setParameter('status', $status)
+            ->orderBy('a.date', 'DESC')
+            ->setFirstResult($firstComment)
+            ->setMaxResults($maxComment)
+            ->getQuery()
+            ->getResult();
+    }
+    public function commentCount(int $status, int $tricksId)
+    {
+        return $this->createQueryBuilder('a')
+            ->andWhere('a.status = :status')
+            ->andWhere('a.tricksId = :tricksId')
+            ->setParameter('tricksId', $tricksId)
+            ->setParameter('status', $status)
+            ->select('count(a.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 }

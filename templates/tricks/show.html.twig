@@ -158,45 +158,24 @@
 <section class="pb-5">
   <hr />
   <div class="pb-5 container">
+  {% if not comments %}
     <div class="text-center">
       <h4>Tout les commentaires</h4>
-      {% if not comments %}
-      <div class="alert alert-danger" role="alert">
+      <div class="alert alert-danger" id="alertComment" role="alert">
         Il n'y a pas encore de commentaires.
       </div>
-      {% endif %}
     </div>
-    <div class="show-comment text-center">
-      {% for comment in comments %} 
-      {% if comment.userId.imageName =='default-user.png' %}
-      {% set directory = 'images' %} 
-      {% else %} 
-      {% set directory = 'upload' %} 
-      {% endif %}
-      <div class="container pt-4" id="commentJs">
-          <div class="media">
-            <div class="media-body">
-              <img src="{{asset(directory ~'/'~ comment.userId.imageName)}}"
-              class="avatar-min"
-              alt="Photo de profil" />
-              <h5 class="mt-0">{{ comment.userId.name }}</h5>
-              <i>{{ comment.Date|date("d/m/Y")}}</i>
-              <p class="card-text">{{ comment.message }}</p>
-            </div>
-          </div>
-      </div>
-      {% endfor %}
-      <button class="btn btn-secondary mt-3" id="buttonMoreJs">Voir plus</button>
+  {% endif %}
+    <div class="show-comment text-center" data-id="{{ trick.id}}">  
+      {% include 'comment/moreComment.html.twig' with {'comments': comments } %}
+      <button class="btn btn-secondary mt-3 hiddenJs" id="buttonMoreJs">Voir plus</button>
     </div>
   </div>
 </section>
 {% endblock %} {% block javascripts %}
 {{ parent() }}
+<script src="https://code.jquery.com/jquery-3.5.0.js" integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc=" crossorigin="anonymous"></script>
 <script
-  id="myscript"
-  src="{{ asset('js/pagination.js') }}"
-  listsId="#commentJs"
-  buttonId="#buttonMoreJs"
-  max="4"
+  src="{{ asset('js/paginationShow.js') }}"
 ></script>
 {% endblock %}

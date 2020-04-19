@@ -23,6 +23,7 @@ use App\Tools\File;
 use App\Tools\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -51,10 +52,10 @@ class TricksController extends AbstractController
      * @return response
      */
     public function showTricks(Request $request, UserInterface $user = null, Tricks $trick): Response
-    {
+    {   
         $comments = $this->getDoctrine()
             ->getRepository(Comment::class)
-            ->findBy(['tricksId' => $trick->getId(), 'status' => 1]);
+            ->commentPagination(1, $trick->getId(), 0, 4);
 
         $comment = new Comment;
         $form = $this->createForm(CommentType::class, $comment);
@@ -80,7 +81,7 @@ class TricksController extends AbstractController
                 'photos' => $trick->getPhotos(),
                 'videos' => $trick->getVideos(),
                 'trick' => $trick,
-                'comments' => $comments,
+                'comments'=> $comments
             ]
         );
     }
@@ -205,5 +206,49 @@ class TricksController extends AbstractController
         $entityManager->remove($trick);
         $entityManager->flush();
         return $this->redirectToRoute('home_page');
+    }
+    /**
+     * Found tricks
+     * 
+     * @param object $request 
+     * 
+     * @Route("/tricks/api/found", name="found_tricks", methods={"POST"})
+     * 
+     * @return response
+     */
+    public function foundTricks(Request $request)
+    {
+        $data = json_decode($request->getContent(), true);
+                
+        $tricks = $this->getDoctrine()
+            ->getRepository(Tricks::class)
+            ->tricksPagination($data['trickStart'], $data['maxResult']);
+
+        return $this->render(
+            'tricks/moreTrick.html.twig', [
+                'tricks'=> $tricks
+            ]
+        );
+    }
+    /**
+     * Count trick
+     * 
+     * @param object $request 
+     * 
+     * @Route("/tricks/api/count", name="count_tricks", methods={"GET"})
+     * 
+     * @return response
+     */
+    public function countTricks(): JsonResponse
+    {
+         $trickCount = $this->getDoctrine()
+             ->getRepository(Tricks::class)
+             ->tricksCount();
+
+        return new JsonResponse(
+            [
+            'trickCount' => $trickCount
+            ]
+        );
     }
 }
