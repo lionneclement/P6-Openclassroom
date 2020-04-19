@@ -1,0 +1,65 @@
+{% set arrayMedia = [] %}
+{% for photo in photos %}
+  {% set arrayMedia = arrayMedia|merge([photo]) %}
+{% endfor %}
+{% for video in videos %}
+  {% set arrayMedia = arrayMedia|merge([video]) %}
+{% endfor %}
+<section class="py-3">
+  <div class="text-center">
+    <div class="container">
+      <div class="row">
+        {% for i in range(0,3) %}
+        <div class="col-md-3 my-2">
+        {% if arrayMedia[i].name matches '{^[images]}' %}
+          <div class="photo-container">
+            <img
+              class="card-img-top"
+              src="{{asset('upload/'~ arrayMedia[i].name)}}"
+              alt="{{ trick.title }}"
+            />
+          </div>
+        {% else %}
+          <div class="video-container">
+            <iframe src="{{ arrayMedia[i].name }}" frameborder="0" allowfullscreen></iframe>
+          </div>
+        {% endif %}
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    <a
+      class="btn btn-secondary"
+      data-toggle="collapse"
+      href="#mediaCollapse"
+      role="button"
+      aria-expanded="false"
+      aria-controls="mediaCollapse"
+    >
+      Voir les médias
+    </a>
+  </div>
+  <div class="collapse mt-3" id="mediaCollapse">
+    <div class="container">
+      <div class="row">
+        {% for y in range(4,arrayMedia|length -1 ) %}
+        <div class="col-md-3 my-2">
+          {% if arrayMedia[y].name matches '{^[images]}' %}
+            <div class="photo-container">
+              <img
+                class="card-img-top"
+                src="{{asset('upload/'~ arrayMedia[y].name)}}"
+                alt="{{ trick.title }}"
+              />
+            </div>
+          {% else %}
+            <div class="video-container">
+              <iframe src="{{ arrayMedia[y].name }}" frameborder="0" allowfullscreen></iframe>
+            </div>
+          {% endif %}
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
