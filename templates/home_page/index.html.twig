@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %} {% block title %}Accueil !{% endblock %} {% block
+body %}
+<header>
+  <div class="jumbotron jumbotron-fluid mt-5" id="accueil">
+    <div class="container text-center">
+      <h1>Snowboard</h1>
+      <p>
+        Mon objectif est de crée un site collaboratif pour faire connaître ce
+        sport auprès du grand public et aider à l'apprentissage des tricks.
+      </p>
+    </div>
+    <div class="scroll-container">
+      <a href="/#tricks">
+        <i class="fas fa-arrow-down hover-arrow fa-2x"></i>
+      </a>
+    </div>
+  </div>
+</header>
+{% for message in app.flashes('success') %}
+<div class="alert alert-success text-center" role="alert">
+  {{ message }}
+</div>
+{% endfor %}
+<section class="pb-5">
+  <div class="container text-center pb-5" id="tricks">
+    <div class="row" id="trickRow">
+      {% include 'tricks/moreTrick.html.twig' with {'tricks': tricks } %}
+    </div>
+    
+    {% if not tricks %}
+    <div id="alertTrick">
+        <div class="alert alert-danger text-center" role="alert">
+          Il n'y as pas encore de trick.
+        </div>
+        <a href="{{ path('create_trick') }}" class="btn btn-secondary">Ajouter un trick</a>
+    </div>
+    {% endif %}
+    <button class="btn btn-secondary hiddenJs" id="buttonMoreJs">Voir plus</button>
+  </div>
+</section>
+{% endblock %} {% block javascripts %}
+{{ parent() }}
+<script src="https://code.jquery.com/jquery-3.5.0.js" integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc=" crossorigin="anonymous"></script>
+<script
+  src="{{ asset('js/paginationHomePage.js') }}"
+></script>
+{% endblock %}

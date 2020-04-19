@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %} {% block title %}Profile{% endblock %} {% block
+body %}
+<section class="py-5">
+  <div class="container py-5">
+    {% if user.imageName == 'default-user.png' %} {% set directory = 'images' %}
+    {% else %} {% set directory = 'upload' %} {% endif %}
+    <div class="text-center pb-5">
+      <img
+        src="{{asset(directory ~'/'~ user.imageName)}}"
+        class="avatar"
+        alt="Photo de profil"
+      />
+      <h3>{{ user.Name }}</h3>
+    </div>
+    {% for message in app.flashes('success') %}
+    <div class="alert alert-success text-center" role="alert">
+      {{ message }}
+    </div>
+    {% endfor %}
+    <div class="text-center">
+      <h1>Modifier votre profile</h1>
+    </div>
+    {{ form_start(form) }}
+    {{ form_row(form.name) }}
+    {{ form_row(form.imageName) }}
+    <div class="text-center">
+      <button class="btn btn-secondary btn-lg" type="submit">Modifier</button>
+    </div>
+    {{ form_end(form) }}
+  </div>
+</section>
+{% endblock %}

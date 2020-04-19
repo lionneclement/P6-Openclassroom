@@ -1,0 +1,22 @@
+{% block body %}
+{% for comment in comments %}
+{% set directory = 'images' %}
+{% if comment.userId.imageName != 'default-user.png'%}
+  {% set directory = 'upload' %}
+{% endif %}
+<div class="container pt-4" id="commentJs">
+  <div class="media">
+    <div class="media-body">
+      <img
+        src='/{{directory}}/{{comment.userId.imageName}}'
+        class="avatar-min"
+        alt="Photo de profil"
+      />
+      <h5 class="mt-0">{{comment.userId.name}}</h5>
+      <i>{{comment.date|date("d/m/Y")}}</i>
+      <p class="card-text">{{comment.message}}</p>
+    </div>
+  </div>
+</div>
+{% endfor %}
+{% endblock %}
