@@ -32,11 +32,11 @@ function checkNumberTrick(){
 
 function hiddenButton(){
   var button = document.querySelector('#buttonMoreJs');
-  button.classList.add("hiddenJs");
+  button.addClass("hiddenJs");
 }
 function showButton(){
   var button = document.querySelector('#buttonMoreJs');
-  button.classList.remove("hiddenJs");
+  button.removeClass("hiddenJs");
 }
 
 function requestPostTrick(trickStart, maxResult){
