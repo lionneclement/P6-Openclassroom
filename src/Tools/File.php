@@ -14,6 +14,7 @@ namespace App\Tools;
 
 use App\Entity\Photo;
 use App\Entity\Tricks;
+use App\Entity\User;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -138,6 +139,24 @@ class File
     {
         foreach ($images as $image) {
             $this->removeImage($image->getName());
+        }
+    }
+    /**
+     * Update user profile image
+     * 
+     * @param object $image 
+     * @param object $user 
+     * 
+     * @return void
+     */
+    public function updateProfileImage(object $image,User $user): void
+    { 
+        if ($image) {
+            if ($user->getImageName() != 'default-user.png') {
+                $this->removeImage($user->getImageName());
+            }
+            $imageFileName = $this->uploadImage($image);
+            $user->setImageName($imageFileName);
         }
     }
 }
