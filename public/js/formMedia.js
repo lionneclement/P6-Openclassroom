@@ -18,7 +18,9 @@ jQuery(document).ready(function() {
   
     //startPhoto
     var $collectionPhoto = $('div.photo');
-    var $photoButton = $('<div class="col-12"><button type="button" class="btn btn-secondary add_photo_link">Ajouter une photo</button></div>');
+    var $photoButton = $('<div class="col-12"><button type="button" class="btn btn-secondary add_photo_link m-2">Ajouter une photo</button></div>');
+    var $photoButton1 = $('<a href="https://bit.ly/3amy1Tw" target="_blank" type="button" class="btn btn-secondary m-2">Comment ajouter une video</a>');
+    $photoButton.append($photoButton1);
     $collectionPhoto.append($photoButton);
     $collectionPhoto.data('index', $collectionPhoto.find('input').length);
     $photoButton.on('click', function() {
@@ -57,7 +59,7 @@ function addPhotoForm($collectionHolder, $button) {
 }
 function addVideoForm($collectionHolder, $button) {
     var newForm = intForm($collectionHolder);
-    var $col = $('<div class="col-3"><div class="video-container"><iframe src="https://www.youtube.com/embed/ZnuwB35GYMY" class="tricks_videos_'+newForm[1]+'_name" frameborder="0" allowfullscreen></iframe></div></div>');
+    var $col = $('<div class="col-3"><div class="video-container"><iframe src="https://www.youtube.com" class="tricks_videos_'+newForm[1]+'_name" frameborder="0" allowfullscreen></iframe></div></div>');
     var $formBootstrap = $('<div class="pt-3 inputMedia"></div>').append(newForm[0]);
     var $newFormLi = $col.append($formBootstrap);
     $button.before($newFormLi);
