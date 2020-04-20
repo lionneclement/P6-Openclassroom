@@ -8,6 +8,7 @@ jQuery(document).ready(function() {
         addVideoForm($collectionVideo, $videoButton);
     });
     $collectionVideo.find('div.col-3').each(function() {
+      buttonUpdate($(this));
       buttonDelete($(this));
     });
     $("input.classVideo").on('change',function(e) {
@@ -24,12 +25,14 @@ jQuery(document).ready(function() {
         addPhotoForm($collectionPhoto, $photoButton);
     });
     $collectionPhoto.find('div.col-3').each(function() {
+      buttonUpdate($(this));
       buttonDelete($(this));
     });
     $("input.classPhoto").on('change',function(e) {
         onChangePhoto(e);
     })
     //endPhoto
+    $(".inputMedia").addClass("hiddenJs");
 });
 //function
 function intForm($collectionHolder){
@@ -43,9 +46,10 @@ function intForm($collectionHolder){
 function addPhotoForm($collectionHolder, $button) {
     var newForm = intForm($collectionHolder);
     var $col = $('<div class="col-3"><div class="photo-container"><img src="/images/download.png" class="tricks_photos_'+newForm[1]+'_file" alt="main picture"></div></div>');
-    var $formBootstrap = $('<div class="pt-3"></div>').append(newForm[0]);
+    var $formBootstrap = $('<div class="pt-3 inputMedia"></div>').append(newForm[0]);
     var $newFormLi = $col.append($formBootstrap);
     $button.before($newFormLi);
+    buttonUpdate($newFormLi);
     buttonDelete($newFormLi);
     $("input.classPhoto").on('input',function(e) {
       onChangePhoto(e);
@@ -54,9 +58,11 @@ function addPhotoForm($collectionHolder, $button) {
 function addVideoForm($collectionHolder, $button) {
     var newForm = intForm($collectionHolder);
     var $col = $('<div class="col-3"><div class="video-container"><iframe src="https://www.youtube.com/embed/ZnuwB35GYMY" class="tricks_videos_'+newForm[1]+'_name" frameborder="0" allowfullscreen></iframe></div></div>');
-    var $formBootstrap = $('<div class="pt-3"></div>').append(newForm[0]);
+    var $formBootstrap = $('<div class="pt-3 inputMedia"></div>').append(newForm[0]);
     var $newFormLi = $col.append($formBootstrap);
     $button.before($newFormLi);
+
+    buttonUpdate($newFormLi);
     buttonDelete($newFormLi);
     $("input.classVideo").on('change',function(e) {
       onChangeVideo(e);
@@ -81,10 +87,22 @@ function onChangePhoto(e) {
   reader.readAsDataURL(file);
 }
 function buttonDelete($form) {
-  var $removeFormButton = $('<button class="btn btn-secondary mb-3" type="button">Supprimer</button>');
+  var $removeFormButton = $('<button class="btn btn-secondary m-2" type="button"><i class="fas fa-trash-restore"></i></button>');
   $form.append($removeFormButton);
 
   $removeFormButton.on('click', function() {
       $form.remove();
+  });
+}
+function buttonUpdate($form) {
+  var $updateFormButton = $('<button class="btn btn-secondary m-2" type="button"><i class="fas fa-pen"></i></button>');
+  $form.append($updateFormButton);
+
+  $updateFormButton.on('click', function() {
+    if($form.find('.hiddenJs').length){
+      $form.find('.inputMedia').removeClass("hiddenJs");
+    }else{
+      $form.find('.inputMedia').addClass("hiddenJs");
+    }
   });
 }
