@@ -1,6 +1,8 @@
 jQuery(document).ready(function() {
     //startVideo
     var $videoButton = $('<div class="col-12"><button type="button" class="btn btn-secondary add_video_link">Ajouter une video</button></div>');
+    var $videoButton1 = $('<a href="https://bit.ly/3amy1Tw" target="_blank" type="button" class="btn btn-secondary m-2">Comment ajouter une video</a>');
+    $videoButton.append($videoButton1);
     var $collectionVideo = $('div.video');
     $collectionVideo.append($videoButton);
     $collectionVideo.data('index', $collectionVideo.find('input').length);
@@ -19,8 +21,6 @@ jQuery(document).ready(function() {
     //startPhoto
     var $collectionPhoto = $('div.photo');
     var $photoButton = $('<div class="col-12"><button type="button" class="btn btn-secondary add_photo_link m-2">Ajouter une photo</button></div>');
-    var $photoButton1 = $('<a href="https://bit.ly/3amy1Tw" target="_blank" type="button" class="btn btn-secondary m-2">Comment ajouter une video</a>');
-    $photoButton.append($photoButton1);
     $collectionPhoto.append($photoButton);
     $collectionPhoto.data('index', $collectionPhoto.find('input').length);
     $photoButton.on('click', function() {
