@@ -1,42 +1,10 @@
-{% set arrayMedia = [] %}
-{% for photo in photos %}
-  {% set arrayMedia = arrayMedia|merge([photo]) %}
-{% endfor %}
-{% for video in videos %}
-  {% set arrayMedia = arrayMedia|merge([video]) %}
-{% endfor %}
-{% if arrayMedia[0] is defined %}
+{% block body %}
+{% if photos[0] is defined or videos[0] is defined %}
 <section class="py-3">
   <div class="text-center">
-    <div class="container">
-      <div class="row">
-        {% if arrayMedia|length < 4 %}
-          {% set firstFor = arrayMedia|length -1 %}
-        {% else %}
-          {% set firstFor = 3 %}
-        {% endif %}
-        {% for i in range(0,firstFor) %}
-        <div class="col-md-3 my-2">
-        {% if arrayMedia[i].name matches '{^[images]}' %}
-          <div class="photo-container">
-            <img
-              class="card-img-top"
-              src="{{asset('upload/'~ arrayMedia[i].name)}}"
-              alt="{{ trick.title }}"
-            />
-          </div>
-        {% else %}
-          <div class="video-container">
-            <iframe src="{{ arrayMedia[i].name }}" frameborder="0" allowfullscreen></iframe>
-          </div>
-        {% endif %}
-        </div>
-        {% endfor %}
-      </div>
-    </div>
-    {% if arrayMedia|length > 4 %}
     <a
       class="btn btn-secondary"
+      id="btn-mediaCollapse"
       data-toggle="collapse"
       href="#mediaCollapse"
       role="button"
@@ -47,27 +15,27 @@
     </a>
   </div>
   <div class="collapse mt-3" id="mediaCollapse">
-    <div class="container">
       <div class="row">
-        {% for y in range(4,arrayMedia|length -1 ) %}
-        <div class="col-md-3 my-2">
-          {% if arrayMedia[y].name matches '{^[images]}' %}
-            <div class="photo-container">
-              <img
-                class="card-img-top"
-                src="{{asset('upload/'~ arrayMedia[y].name)}}"
-                alt="{{ trick.title }}"/>
-            </div>
-          {% else %}
-            <div class="video-container">
-              <iframe src="{{ arrayMedia[y].name }}" frameborder="0" allowfullscreen></iframe>
-            </div>
-          {% endif %}
+        {% for photo in photos %}
+        <div class="col-6 col-md-3 col-lg-2 my-2">
+          <div class="photo-container">
+            <img
+              class="card-img-top"
+              src="{{asset('upload/'~ photo.name)}}"
+              alt="{{ trick.title }}"
+            />
+          </div>
+        </div>
+        {% endfor %}
+        {% for video in videos %}
+        <div class="col-6 col-md-3 col-lg-2 my-2">
+          <div class="video-container">
+            <iframe src="{{ video.name }}" frameborder="0" allowfullscreen></iframe>
+          </div>
         </div>
         {% endfor %}
       </div>
-    </div>
   </div>
-  {% endif %}
 </section>
 {% endif %}
+{% endblock %}
