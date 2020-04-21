@@ -75,7 +75,7 @@
                         <div class="photo-container">
                           <img src="{{asset('upload/'~photo.vars.value.name)}}" class="{{'tricks_photos_'~photo.vars.name~'_file'}}" alt="main picture">
                         </div>
-                        <div class="pt-3">
+                        <div class="pt-3 inputMedia">
                           {{ form_errors(photo) }}
                           {{ form_widget(photo) }}
                         </div>
@@ -91,7 +91,7 @@
                         <div class="video-container">
                           <iframe src="{{ video.vars.value.name }}" class="{{'tricks_videos_'~video.vars.name~'_name'}}" frameborder="0" allowfullscreen></iframe>
                         </div>
-                        <div class="pt-3">
+                        <div class="pt-3 inputMedia">
                           {{ form_errors(video) }}
                           {{ form_widget(video) }}
                         </div>

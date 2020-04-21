@@ -69,46 +69,7 @@
     </div>
   </div>
 </header>
-{% if photos[0] is defined or videos[0] is defined%}
-<section class="py-3">
-  <div class="text-center">
-    <a
-      class="btn btn-secondary"
-      data-toggle="collapse"
-      href="#mediaCollapse"
-      role="button"
-      aria-expanded="false"
-      aria-controls="mediaCollapse"
-    >
-      Voir les médias
-    </a>
-  </div>
-  <div class="collapse mt-3" id="mediaCollapse">
-    <div class="container">
-      <div class="row">
-        {% for photo in photos %}
-        <div class="col-md-3 my-2">
-          <div class="photo-container">
-            <img
-              class="card-img-top"
-              src="{{asset('upload/'~ photo.name)}}"
-              alt="{{ trick.title }}"
-            />
-          </div>
-        </div>
-        {% endfor %}
-        {% for video in videos %}
-          <div class="col-md-3 my-2">
-            <div class="video-container">
-              <iframe src="{{ video.name }}" frameborder="0" allowfullscreen></iframe>
-            </div>
-          </div>
-        {% endfor %}
-      </div>
-    </div>
-  </div>
-</section>
-{% endif %}
+{% include 'media/showMedia.html.twig' with {'videos': videos, 'photos': photos, 'trick': trick } %}
 <div class="container pt-3">
   <div class="text-center">
     <p class="card-text">{{ trick.description }}</p>
@@ -127,7 +88,7 @@
         </div>
         <div class="col-md-4">         
           <div class="alert alert-secondary" role="alert">
-            <h6>Date de derniere modification</h6>
+            <h6>Date de modification</h6>
             <p class="card-title">{{ trick.updateDate|date("d/m/Y") }}</p>
           </div>
         </div>

@@ -1,27 +1,28 @@
-var trickStart=4,maxResult=4,maxTrick=0;
+var trickStart=4,maxResult=4,maxTrick=0,trickPerPage=4;
+var urlCountTrick="/tricks/api/count",urlFoundTrick="/tricks/api/found";
 $(document).ready(function () { 
   requestGetCountTrick();
-  var button = document.querySelector('#buttonMoreJs');
-  button.addEventListener('click', function(){
+  var button = document.querySelector("#buttonMoreJs");
+  button.onclick = function(){
     checkNumberTrick()
-  });
+  };
 });
 
 function requestGetCountTrick(){
   return $.ajax({
-    url: 'http://localhost:8000/tricks/api/count',
+    url: urlCountTrick,
     type: "GET",
     success: handleGetData,
   });
 }
 function handleGetData(data){
   maxTrick = parseInt(data.trickCount);
-  if (maxTrick > 4){
+  if (maxTrick > trickPerPage){
     showButton();
   }
 }
 function checkNumberTrick(){
-  if (maxTrick > 4 && trickStart < maxTrick){
+  if (maxTrick > trickPerPage && trickStart < maxTrick){
     requestPostTrick(trickStart, maxResult);
     if(trickStart+maxResult >= maxTrick){
       hiddenButton();
@@ -31,11 +32,11 @@ function checkNumberTrick(){
 }
 
 function hiddenButton(){
-  var button = document.querySelector('#buttonMoreJs');
+  var button = document.querySelector("#buttonMoreJs");
   button.classList.add("hiddenJs");
 }
 function showButton(){
-  var button = document.querySelector('#buttonMoreJs');
+  var button = document.querySelector("#buttonMoreJs");
   button.classList.remove("hiddenJs");
 }
 
@@ -45,7 +46,7 @@ function requestPostTrick(trickStart, maxResult){
     "maxResult": maxResult
   }
   $.ajax({
-    url: 'http://localhost:8000/tricks/api/found',
+    url: urlFoundTrick,
     type: "POST",
     data: JSON.stringify(data),
     contentType: "application/json",
@@ -53,6 +54,6 @@ function requestPostTrick(trickStart, maxResult){
   });
   }
   function handlePostData(responsedata) {
-    var trickRow = $('#trickRow');
+    var trickRow = $("#trickRow");
     trickRow.append(responsedata);
   }

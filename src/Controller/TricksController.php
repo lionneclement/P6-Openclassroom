@@ -104,10 +104,7 @@ class TricksController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->addFlash('success', 'Votre Tricks à été enregistré');
             $images = $form['photos']->getData();
-            foreach ($images as $image) {
-                $imageFileName = $file->uploadImage($image->getFile());
-                $image->setName($imageFileName);
-            }
+            $file->uploadMultipleImage($images);
             $trick->setSlug((new Slugify())->sluggerLowerCase($trick->getTitle()));
             $trick->setCreateDate(new \DateTime());
             $trick->setUpdateDate(new \DateTime());
@@ -151,23 +148,11 @@ class TricksController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->addFlash('success', 'Votre Tricks à étais modifier');
             $images =$form['photos']->getData();
-            foreach ($images as $image) {
-                if ($image->getFile()) {
-                    if ($image->getId()) {
-                        $file->removeImage($image->getName());
-                    }
-                    $imageFileName = $file->uploadImage($image->getFile());
-                    $image->setName($imageFileName);
-                }
-            }
+            $file->updateMultipleImage($images);
             $trick->setSlug((new Slugify())->sluggerLowerCase($trick->getTitle()));
             $trick->setUpdateDate(new \DateTime());
             $entityManager = $this->getDoctrine()->getManager();
-            foreach ($oldPhotos as $image) {
-                if (!$trick->getPhotos()->contains($image)) {
-                    $file->removeImage($image->getName());
-                }
-            }
+            $file->removeMultipleOldImage($oldPhotos, $trick);
             $entityManager->persist($trick);
             $entityManager->flush();
 
@@ -198,9 +183,8 @@ class TricksController extends AbstractController
         $photos = $this->getDoctrine()
             ->getRepository(Photo::class)
             ->findBy(['tricksId' => $id]);
-        foreach ($photos as $photo) {
-            $file->removeImage($photo->getName());
-        }
+
+        $file->removeMultipleImage($photos);
         $this->addFlash('success', 'Votre Tricks à été supprimé');
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($trick);
@@ -232,8 +216,6 @@ class TricksController extends AbstractController
     }
     /**
      * Count trick
-     * 
-     * @param object $request 
      * 
      * @Route("/tricks/api/count", name="count_tricks", methods={"GET"})
      * 

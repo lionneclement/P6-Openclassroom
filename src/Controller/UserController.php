@@ -218,18 +218,10 @@ class UserController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $this->addFlash('success', 'Votre profile à été modifié');
-            $profile = $form->getData();
-
             $image = $form['imageName']->getData();
-            if ($image) {
-                if ($user->getImageName() != 'default-user.png') {
-                    $file->removeImage($user->getImageName());
-                }
-                $imageFileName = $file->uploadImage($image);
-                $profile->setImageName($imageFileName);
-            }
+            $file->updateProfileImage($image, $user);
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($profile);
+            $entityManager->persist($user);
             $entityManager->flush();
 
             return $this->redirect($request->getUri());
