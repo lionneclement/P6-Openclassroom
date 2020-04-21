@@ -1,7 +1,7 @@
 jQuery(document).ready(function() {
     //startVideo
-    var $videoButton = "<div class='col-12'><button type='button' class='btn btn-secondary add_video_link'>Ajouter une video</button></div>";
-    var $videoButton1 = "<a href='https://bit.ly/3amy1Tw' target='_blank' type='button' class='btn btn-secondary m-2'>Comment ajouter une video</a>";
+    var $videoButton = $("<div class='col-12'><button type='button' class='btn btn-secondary add_video_link'>Ajouter une video</button></div>");
+    var $videoButton1 = $("<a href='https://bit.ly/3amy1Tw' target='_blank' type='button' class='btn btn-secondary m-2'>Comment ajouter une video</a>");
     $videoButton.append($videoButton1);
     var $collectionVideo = $("div.video");
     $collectionVideo.append($videoButton);
@@ -20,7 +20,7 @@ jQuery(document).ready(function() {
   
     //startPhoto
     var $collectionPhoto = $("div.photo");
-    var $photoButton = "<div class='col-12'><button type='button' class='btn btn-secondary add_photo_link m-2'>Ajouter une photo</button></div>";
+    var $photoButton = $("<div class='col-12'><button type='button' class='btn btn-secondary add_photo_link m-2'>Ajouter une photo</button></div>");
     $collectionPhoto.append($photoButton);
     $collectionPhoto.data("index", $collectionPhoto.find("input").length);
     $photoButton.on("click", function() {
@@ -47,23 +47,22 @@ function intForm($collectionHolder){
 }
 function addPhotoForm($collectionHolder, $button) {
     var newForm = intForm($collectionHolder);
-    var $col = "<div class='col-3'><div class='photo-container'><img src='/images/download.png' class='tricks_photos_'+newForm[1]+'_file' alt='main picture'></div></div>";
+    var $col = $("<div class='col-3'><div class='photo-container'><img src='/images/download.png' class='tricks_photos_"+ newForm[1] +"_file' alt='main picture'></div></div>");
     var $formBootstrap = $("<div class='pt-3 inputMedia'></div>").append(newForm[0]);
     var $newFormLi = $col.append($formBootstrap);
     $button.before($newFormLi);
     buttonUpdate($newFormLi);
     buttonDelete($newFormLi);
-    $("input.classPhoto").on("input",function(e) {
+    $("input.classPhoto").on("change",function(e) {
       onChangePhoto(e);
     })
 }
 function addVideoForm($collectionHolder, $button) {
     var newForm = intForm($collectionHolder);
-    var $col = "<div class='col-3'><div class='video-container'><iframe src='https://www.youtube.com' class='tricks_videos_'+newForm[1]+'_name' frameborder='0' allowfullscreen></iframe></div></div>";
-    var $formBootstrap = "<div class='pt-3 inputMedia'></div>".append(newForm[0]);
+    var $col = $("<div class='col-3'><div class='video-container'><iframe src='https://www.youtube.com' class='tricks_videos_"+newForm[1]+"_name' frameborder='0' allowfullscreen></iframe></div></div>");
+    var $formBootstrap = $("<div class='pt-3 inputMedia'></div>").append(newForm[0]);
     var $newFormLi = $col.append($formBootstrap);
     $button.before($newFormLi);
-
     buttonUpdate($newFormLi);
     buttonDelete($newFormLi);
     $("input.classVideo").on("change",function(e) {
@@ -84,12 +83,12 @@ function onChangePhoto(e) {
   var file = e.originalEvent.srcElement.files[0];
   var reader = new FileReader();
   reader.onload = function (e1) {
-      $("."+idInput).attr("src", e1.target.result)
+      $("."+idInput).attr("src", e1.target.result);
   };
   reader.readAsDataURL(file);
 }
 function buttonDelete($form) {
-  var $removeFormButton = "<button class='btn btn-secondary m-2' type='button'><i class='fas fa-trash-restore'></i></button>";
+  var $removeFormButton = $("<button class='btn btn-secondary m-2' type='button'><i class='fas fa-trash-restore'></i></button>");
   $form.append($removeFormButton);
 
   $removeFormButton.on("click", function() {
@@ -97,7 +96,7 @@ function buttonDelete($form) {
   });
 }
 function buttonUpdate($form) {
-  var $updateFormButton = "<button class='btn btn-secondary m-2' type='button'><i class='fas fa-pen'></i></button>";
+  var $updateFormButton = $("<button class='btn btn-secondary m-2' type='button'><i class='fas fa-pen'></i></button>");
   $form.append($updateFormButton);
 
   $updateFormButton.on("click", function() {
