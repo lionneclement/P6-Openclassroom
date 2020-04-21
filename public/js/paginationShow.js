@@ -29,10 +29,10 @@ $(document).ready(function () {
       }
     }
     function hiddenButton(){
-      button.addClass("hiddenJs");
+      button.classList.add("hiddenJs");
     }
     function showButton(){
-      button.removeClass("hiddenJs");
+      button.classList.remove("hiddenJs");
     }
     function requestPostComment(trickId, commentStart, maxResult){
     var data = {

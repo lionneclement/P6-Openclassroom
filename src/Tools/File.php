@@ -86,7 +86,7 @@ class File
      * 
      * @return void
      */
-    public function uploadMultipleImage(Photo $images): void
+    public function uploadMultipleImage(object $images): void
     {
         foreach ($images as $image) {
             $imageFileName = $this->uploadImage($image->getFile());
