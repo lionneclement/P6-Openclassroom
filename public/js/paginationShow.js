@@ -1,5 +1,6 @@
+var trickId=$('.show-comment').data('id'), commentStart=4, maxResult=4, maxComment=0, commentPerPage=4;
+var urlCountComment="/comment/api/count",urlFoundComment="/comment/api/found";
 $(document).ready(function () {
-    var trickId=$('.show-comment').data('id'), commentStart=4, maxResult=4, maxComment=0;
     requestGetComment(trickId);
     var button = document.querySelector('#buttonMoreJs');
     button.addEventListener('click', function(){
@@ -8,19 +9,19 @@ $(document).ready(function () {
 
     function requestGetComment(id){
       $.ajax({
-        url: 'http://localhost:8000/comment/api/count/'+id+'',
+        url: urlCountComment+"/"+id,
         type: "GET",
         success: handleGetData,
       });
     }
     function handleGetData(data){
       maxComment=parseInt(data.commentCount);
-      if (maxComment > 4){
+      if (maxComment > commentPerPage){
         showButton();
       }
     }
     function checkNumberComment(){
-      if (maxComment > 4 && commentStart < maxComment){
+      if (maxComment > commentPerPage && commentStart < maxComment){
         requestPostComment(trickId, commentStart, maxResult);
         if(commentStart+maxResult >= maxComment){
           hiddenButton();
@@ -41,7 +42,7 @@ $(document).ready(function () {
       "maxResult": maxResult
     }
     $.ajax({
-      url: 'http://localhost:8000/comment/api/found',
+      url: urlFoundComment,
       type: "POST",
       data: JSON.stringify(data),
       contentType: "application/json",
