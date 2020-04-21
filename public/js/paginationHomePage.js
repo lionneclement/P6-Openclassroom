@@ -2,10 +2,10 @@ var trickStart=4,maxResult=4,maxTrick=0,trickPerPage=4;
 var urlCountTrick="/tricks/api/count",urlFoundTrick="/tricks/api/found";
 $(document).ready(function () { 
   requestGetCountTrick();
-  var button = document.querySelector('#buttonMoreJs');
-  button.addEventListener('click', function(){
+  var button = document.querySelector("#buttonMoreJs");
+  button.onclick = function(){
     checkNumberTrick()
-  });
+  };
 });
 
 function requestGetCountTrick(){
@@ -32,11 +32,11 @@ function checkNumberTrick(){
 }
 
 function hiddenButton(){
-  var button = document.querySelector('#buttonMoreJs');
+  var button = document.querySelector("#buttonMoreJs");
   button.classList.add("hiddenJs");
 }
 function showButton(){
-  var button = document.querySelector('#buttonMoreJs');
+  var button = document.querySelector("#buttonMoreJs");
   button.classList.remove("hiddenJs");
 }
 
@@ -54,6 +54,6 @@ function requestPostTrick(trickStart, maxResult){
   });
   }
   function handlePostData(responsedata) {
-    var trickRow = $('#trickRow');
+    var trickRow = $("#trickRow");
     trickRow.append(responsedata);
   }

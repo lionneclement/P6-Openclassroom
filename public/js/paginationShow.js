@@ -1,11 +1,11 @@
-var trickId=$('.show-comment').data('id'), commentStart=4, maxResult=4, maxComment=0, commentPerPage=4;
+var trickId=$(".show-comment").data("id"), commentStart=4, maxResult=4, maxComment=0, commentPerPage=4;
 var urlCountComment="/comment/api/count",urlFoundComment="/comment/api/found";
 $(document).ready(function () {
     requestGetComment(trickId);
-    var button = document.querySelector('#buttonMoreJs');
-    button.addEventListener('click', function(){
+    var button = document.querySelector("#buttonMoreJs");
+    button.onclick =function(){
       checkNumberComment()
-    });
+    };
 
     function requestGetComment(id){
       $.ajax({
@@ -50,7 +50,7 @@ $(document).ready(function () {
     });
     }
     function handlePostData(responsedata) {
-      var button = $('#buttonMoreJs');
+      var button = $("#buttonMoreJs");
       button.before(responsedata);
     }
 })
