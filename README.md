@@ -11,13 +11,14 @@ Use Wamp, Xampp or Lamp
 
 ## Clone
 1) Make a clone with `https://github.com/lionneclement/P6-Openclassroom.git` and cd P6-Openclassroom
-2) Install composer with `composer install` 
-3) Create database with `bin/console doctrine:schema:create`
-4) Create data with `bin/console doctrine:fixtures:load`
+2) Install composer with `composer install`
+3) Create database with `php bin/console doctrine:database:create`
+4) Create table with `php bin/console doctrine:schema:create`
+5) Create data with `php bin/console doctrine:fixtures:load`
 
    By default a user was created with email=admin@gmail.com and password=password
    
-5) Run server with `bin/console server:run` or `symfony server:start`
+6) Run server with `bin/console server:run` or `symfony server:start`
    
    Go to localhost with port 8000
    
